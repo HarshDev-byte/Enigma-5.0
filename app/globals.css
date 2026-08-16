@@ -65,6 +65,12 @@ body {
   selection-color: #000;
 }
 
+@media (min-width: 1024px) {
+  body {
+    zoom: 0.9;
+  }
+}
+
 ::selection {
   background: var(--color-cyan);
   color: #000000;
