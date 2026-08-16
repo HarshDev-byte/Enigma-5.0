@@ -4,6 +4,7 @@ import React from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
 import { Terminal, ExternalLink, ArrowUp, MapPin, Mail, Phone, UserCheck, ShieldCheck } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import HoloCard from '@/components/ui/HoloCard';
 
 export default function FinalTransmission() {
   const scrollToTop = () => {
@@ -37,18 +38,22 @@ export default function FinalTransmission() {
 
           {/* Return to Summit Button */}
           <button
+            type="button"
             onClick={scrollToTop}
-            className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 border border-[#312856] hover:border-cyan-500/50 px-4 py-2.5 bg-[#060410] tracking-widest uppercase text-[11px] font-bold transition-all hover:shadow-[0_0_15px_rgba(0,240,255,0.25)] hud-bracket"
+            className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 border border-[#312856] hover:border-cyan-500/50 px-4 py-2.5 bg-[#060410] tracking-widest uppercase text-[11px] font-bold transition-all hover:shadow-[0_0_15px_rgba(0,240,255,0.25)] hud-bracket cursor-pointer"
           >
             <span>RETURN TO TOP</span>
             <ArrowUp className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* 3-Column Sleek Footer Architecture */}
+        {/* 3-Column Sleek Footer Architecture (HoloCards) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Column 1: College Location & Venue Box (4 cols) */}
-          <div className="lg:col-span-4 bg-[#060410]/95 border border-[#312856] p-6 hud-bracket space-y-4 backdrop-blur-md shadow-xl">
+          <HoloCard
+            glowColor="rgba(0, 240, 255, 0.4)"
+            className="lg:col-span-4 bg-[#060410]/95 border border-[#312856] p-6 space-y-4 backdrop-blur-md shadow-xl"
+          >
             <div className="text-cyan-400 font-bold uppercase tracking-widest text-xs flex items-center gap-2 border-b border-[#241a45] pb-2">
               <MapPin className="w-4 h-4 text-cyan-400" />
               <span>COLLEGE LOCATION & VENUE</span>
@@ -67,15 +72,19 @@ export default function FinalTransmission() {
               href={EVENT_CONFIG.locationUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs font-black text-black bg-gradient-to-r from-purple-400 to-cyan-400 hover:brightness-110 px-4 py-2.5 uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(168,85,247,0.4)] w-full justify-center"
+              onClick={() => sound.playClick()}
+              className="inline-flex items-center gap-2 text-xs font-black text-black bg-gradient-to-r from-purple-400 to-cyan-400 hover:brightness-110 px-4 py-2.5 uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(168,85,247,0.4)] w-full justify-center cursor-pointer"
             >
               <MapPin className="w-3.5 h-3.5" />
               <span>OPEN GOOGLE MAPS LOCATION →</span>
             </a>
-          </div>
+          </HoloCard>
 
           {/* Column 2: Persons of Contact (POC) Box (5 cols) */}
-          <div className="lg:col-span-5 bg-[#060410]/95 border border-[#312856] p-6 hud-bracket space-y-4 backdrop-blur-md shadow-xl">
+          <HoloCard
+            glowColor="rgba(16, 255, 136, 0.4)"
+            className="lg:col-span-5 bg-[#060410]/95 border border-[#312856] p-6 space-y-4 backdrop-blur-md shadow-xl"
+          >
             <div className="text-emerald-400 font-bold uppercase tracking-widest text-xs flex items-center gap-2 border-b border-[#241a45] pb-2">
               <UserCheck className="w-4 h-4 text-emerald-400" />
               <span>PERSONS OF CONTACT // ORGANIZING COUNCIL</span>
@@ -102,10 +111,13 @@ export default function FinalTransmission() {
                 </div>
               ))}
             </div>
-          </div>
+          </HoloCard>
 
           {/* Column 3: Registration Portals & Social Endpoints (3 cols) */}
-          <div className="lg:col-span-3 bg-[#060410]/95 border border-[#312856] p-6 hud-bracket space-y-4 backdrop-blur-md shadow-xl">
+          <HoloCard
+            glowColor="rgba(236, 72, 153, 0.4)"
+            className="lg:col-span-3 bg-[#060410]/95 border border-[#312856] p-6 space-y-4 backdrop-blur-md shadow-xl"
+          >
             <div className="text-pink-400 font-bold uppercase tracking-widest text-xs flex items-center gap-2 border-b border-[#241a45] pb-2">
               <ShieldCheck className="w-4 h-4 text-pink-400" />
               <span>PORTALS & CHANNELS</span>
@@ -116,7 +128,8 @@ export default function FinalTransmission() {
                 href={EVENT_CONFIG.socials.unstop}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2.5 bg-[#0b081a] border border-[#241a45] hover:border-cyan-400 text-slate-300 hover:text-white transition-colors"
+                onClick={() => sound.playClick()}
+                className="flex items-center justify-between p-2.5 bg-[#0b081a] border border-[#241a45] hover:border-cyan-400 text-slate-300 hover:text-white transition-colors cursor-pointer"
               >
                 <span>UNSTOP PORTAL</span>
                 <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
@@ -126,7 +139,8 @@ export default function FinalTransmission() {
                 href={EVENT_CONFIG.socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2.5 bg-[#0b081a] border border-[#241a45] hover:border-pink-400 text-slate-300 hover:text-white transition-colors"
+                onClick={() => sound.playClick()}
+                className="flex items-center justify-between p-2.5 bg-[#0b081a] border border-[#241a45] hover:border-pink-400 text-slate-300 hover:text-white transition-colors cursor-pointer"
               >
                 <span>INSTAGRAM COMMUNITY</span>
                 <ExternalLink className="w-3.5 h-3.5 text-pink-400" />
@@ -136,13 +150,14 @@ export default function FinalTransmission() {
                 href={EVENT_CONFIG.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2.5 bg-[#0b081a] border border-[#241a45] hover:border-blue-400 text-slate-300 hover:text-white transition-colors"
+                onClick={() => sound.playClick()}
+                className="flex items-center justify-between p-2.5 bg-[#0b081a] border border-[#241a45] hover:border-blue-400 text-slate-300 hover:text-white transition-colors cursor-pointer"
               >
                 <span>LINKEDIN DISPATCHES</span>
                 <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
               </a>
             </div>
-          </div>
+          </HoloCard>
         </div>
 
         {/* Bottom Copyright & Institutional Credit */}
