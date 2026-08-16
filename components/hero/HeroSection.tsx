@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import CitySkylineCanvas from './CitySkylineCanvas';
-import { ShieldAlert, ArrowDownRight, Terminal, Cpu, Compass, Activity, Radio, Sparkles, Trophy, ExternalLink, Zap, Clock, MapPin, CheckCircle2, ChevronRight, Layers, Flame } from 'lucide-react';
+import { ShieldAlert, ArrowDownRight, Terminal, Cpu, Compass, Activity, Radio, Sparkles, Trophy, ExternalLink, Zap, Clock, MapPin, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { sound } from '@/lib/audio';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
@@ -14,22 +14,10 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ isGenesisActive, onInitializeGenesis }: HeroSectionProps) {
-  const [timeStr, setTimeStr] = useState('2097.10.24 // 00:00:00 UTC');
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
   const [isSynthPlaying, setIsSynthPlaying] = useState(false);
   const [isGlitching, setIsGlitching] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const d = new Date();
-      const s = d.getSeconds().toString().padStart(2, '0');
-      const m = d.getMinutes().toString().padStart(2, '0');
-      const h = d.getHours().toString().padStart(2, '0');
-      setTimeStr(`2097.10.24 // ${h}:${m}:${s} UTC`);
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY } = e;
@@ -49,7 +37,7 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
     }
   };
 
-  const triggerShockwave = (e?: React.MouseEvent) => {
+  const triggerShockwave = () => {
     sound.playGenesisActivation();
     setIsSynthPlaying(true);
     setIsGlitching(true);
@@ -77,7 +65,7 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
       aria-label="Enigma 5.0 Genesis Introduction"
       onMouseMove={handleMouseMove}
       onTouchMove={handleTouchMove}
-      className="relative min-h-screen flex flex-col justify-between pt-24 pb-12 px-4 sm:px-8 lg:px-12 overflow-hidden border-b border-[#1a1630]"
+      className="relative min-h-screen flex flex-col justify-between pt-16 sm:pt-20 pb-10 px-4 sm:px-8 lg:px-12 overflow-hidden border-b border-[#1a1630]"
     >
       {/* Background 2097 Skyline Canvas with Dynamic Parallax */}
       <CitySkylineCanvas isGenesisActive={isGenesisActive} />
@@ -85,59 +73,31 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
       {/* Cybernetic Volumetric Atmospheric Glow Orbs */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] sm:w-[900px] h-[500px] bg-gradient-to-tr from-purple-600/20 via-cyan-500/15 to-pink-500/20 blur-[150px] pointer-events-none" />
 
-      {/* Top Aerospace Telemetry Overlay */}
+      {/* Main Foreground Typography & Cinematic Composition — Centered Clean Layout */}
       <div
-        className="relative z-10 max-w-7xl w-full mx-auto flex flex-wrap justify-between items-center gap-3 text-[10px] sm:text-xs font-mono text-slate-300 transition-transform duration-300 ease-out"
-        style={{
-          transform: `translate3d(${mouseOffset.x * 0.25}px, ${mouseOffset.y * 0.25}px, 0)`,
-        }}
-      >
-        <div className="flex items-center gap-2.5 bg-[#060410]/95 px-3.5 py-1.5 border border-[#312856] hud-bracket shadow-lg">
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-          <span className="text-cyan-400 font-black uppercase tracking-widest">
-            // ENIGMA 5.0 // GENESIS
-          </span>
-          <span className="text-slate-600">|</span>
-          <span className="text-purple-300 font-bold">NODE 07</span>
-          <span className="text-slate-600 hidden sm:inline">|</span>
-          <span className="text-amber-300 font-bold hidden sm:inline">ARCHITECT CLEARANCE: VERIFIED</span>
-        </div>
-
-        <div className="flex items-center gap-3 bg-[#060410]/95 px-3.5 py-1.5 border border-[#312856] hud-bracket shadow-lg">
-          <span className="text-slate-300">{timeStr}</span>
-          <span className="text-slate-600">|</span>
-          <span className="text-emerald-400 font-bold flex items-center gap-1.5">
-            <Radio className="w-3.5 h-3.5 animate-pulse" />
-            <span>PORTAL: ONLINE</span>
-          </span>
-        </div>
-      </div>
-
-      {/* Main Foreground Typography & Cinematic Composition — Banger Centered Composition */}
-      <div
-        className="relative z-10 max-w-5xl w-full mx-auto my-auto py-6 sm:py-8 flex flex-col items-center justify-center text-center transition-transform duration-500 ease-out"
+        className="relative z-10 max-w-5xl w-full mx-auto my-auto py-4 sm:py-6 flex flex-col items-center justify-center text-center transition-transform duration-500 ease-out"
         style={{
           transform: `translate3d(${mouseOffset.x * 0.6}px, ${mouseOffset.y * 0.6}px, 0)`,
         }}
       >
         {/* Floating High-Voltage Telemetry Chips */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-4">
-          <div className="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-xs tracking-[0.25em] uppercase text-cyan-300 bg-[#060410]/95 px-3.5 py-1.5 border border-cyan-400/80 hud-bracket shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-3">
+          <div className="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-xs tracking-[0.25em] uppercase text-cyan-300 bg-[#060410]/95 px-3 py-1 border border-cyan-400/80 hud-bracket shadow-[0_0_15px_rgba(0,240,255,0.3)]">
             <Cpu className="w-3.5 h-3.5 text-cyan-400" />
             <span className="font-black">SPEC: 2097.GENESIS</span>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-xs tracking-wider uppercase text-amber-300 bg-[#060410]/95 px-3.5 py-1.5 border border-amber-500/70 shadow-[0_0_15px_rgba(252,238,10,0.35)]">
+          <div className="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-xs tracking-wider uppercase text-amber-300 bg-[#060410]/95 px-3 py-1 border border-amber-500/70 shadow-[0_0_15px_rgba(252,238,10,0.35)]">
             <Trophy className="w-3.5 h-3.5 text-amber-400" />
             <span className="font-black">{EVENT_CONFIG.prizes.totalPool} VAULT</span>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-xs tracking-wider uppercase text-emerald-300 bg-[#060410]/95 px-3.5 py-1.5 border border-emerald-500/70 shadow-[0_0_15px_rgba(16,255,136,0.25)]">
+          <div className="inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-xs tracking-wider uppercase text-emerald-300 bg-[#060410]/95 px-3 py-1 border border-emerald-500/70 shadow-[0_0_15px_rgba(16,255,136,0.25)]">
             <Zap className="w-3.5 h-3.5 text-emerald-400" />
             <span className="font-bold">100% FREE ENTRY</span>
           </div>
 
-          <div className="hidden md:inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-xs tracking-wider uppercase text-purple-300 bg-[#060410]/95 px-3.5 py-1.5 border border-purple-500/70 shadow-[0_0_15px_rgba(168,85,247,0.25)]">
+          <div className="hidden md:inline-flex items-center gap-1.5 font-mono text-[10px] sm:text-xs tracking-wider uppercase text-purple-300 bg-[#060410]/95 px-3 py-1 border border-purple-500/70 shadow-[0_0_15px_rgba(168,85,247,0.25)]">
             <MapPin className="w-3.5 h-3.5 text-purple-400" />
             <span className="font-bold">SIES GST // MUMBAI</span>
           </div>
@@ -163,10 +123,14 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
             </span>
           </h1>
 
-          <div className="font-mono text-base xs:text-lg sm:text-3xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 via-cyan-300 to-purple-400 tracking-[0.15em] sm:tracking-[0.25em] font-black uppercase pt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4">
-            <span>GENESIS</span>
-            <span className="text-slate-600 hidden xs:inline">|</span>
-            <span className="text-slate-200 font-light text-xs xs:text-base sm:text-2xl md:text-3xl">BEYOND THE FUTURE</span>
+          {/* Subtitle: GENESIS in one line, and BEYOND THE FUTURE in the next line */}
+          <div className="pt-2 sm:pt-3 space-y-1">
+            <div className="font-mono text-3xl sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 via-cyan-300 to-purple-400 tracking-[0.2em] sm:tracking-[0.3em] font-black uppercase">
+              GENESIS
+            </div>
+            <div className="font-mono text-xs sm:text-lg md:text-xl text-slate-300 tracking-[0.3em] font-light uppercase">
+              BEYOND THE FUTURE
+            </div>
           </div>
         </div>
 
@@ -202,7 +166,7 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
         {/* 3D Holographic Foil Manifesto Card with Prismatic Foil Glare */}
         <HoloCard
           glowColor="rgba(0, 240, 255, 0.45)"
-          className="mt-6 max-w-2xl w-full bg-[#060410]/95 backdrop-blur-md p-5 sm:p-7 border border-[#312856] border-t-2 border-t-cyan-400 shadow-2xl text-center"
+          className="mt-5 max-w-2xl w-full bg-[#060410]/95 backdrop-blur-md p-5 sm:p-6 border border-[#312856] border-t-2 border-t-cyan-400 shadow-2xl text-center"
         >
           <blockquote className="font-mono text-base sm:text-lg text-slate-100 leading-relaxed italic">
             "The future isn't waiting for us.
@@ -216,7 +180,7 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
         </HoloCard>
 
         {/* High-Voltage Action Buttons */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 w-full">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4 w-full">
           {/* 01. Enter Genesis Button */}
           <a
             href="#archive"
@@ -224,7 +188,7 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
               triggerShockwave();
               onInitializeGenesis();
             }}
-            className={`group relative font-mono text-xs sm:text-sm font-black uppercase px-8 sm:px-10 py-4 tracking-widest border transition-all duration-300 focus:outline-none focus:ring-2 overflow-hidden cursor-pointer ${
+            className={`group relative font-mono text-xs sm:text-sm font-black uppercase px-8 sm:px-10 py-3.5 sm:py-4 tracking-widest border transition-all duration-300 focus:outline-none focus:ring-2 overflow-hidden cursor-pointer ${
               isGenesisActive
                 ? 'bg-gradient-to-r from-emerald-400 to-teal-300 text-black border-emerald-300 hover:from-emerald-300 hover:to-teal-200 shadow-[0_0_35px_rgba(16,255,136,0.7)] focus:ring-emerald-400'
                 : 'bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 text-black border-cyan-300 hover:brightness-110 shadow-[0_0_40px_rgba(168,85,247,0.7)] focus:ring-cyan-400'
@@ -243,7 +207,7 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => sound.playClick()}
-            className="group relative font-mono text-xs sm:text-sm font-black uppercase px-8 sm:px-10 py-4 tracking-widest border border-cyan-400/80 bg-[#061524] text-cyan-200 hover:text-white hover:border-cyan-300 hover:bg-[#0a2038] transition-all shadow-[0_0_25px_rgba(0,240,255,0.4)] flex items-center gap-2.5 cursor-pointer active:scale-95"
+            className="group relative font-mono text-xs sm:text-sm font-black uppercase px-8 sm:px-10 py-3.5 sm:py-4 tracking-widest border border-cyan-400/80 bg-[#061524] text-cyan-200 hover:text-white hover:border-cyan-300 hover:bg-[#0a2038] transition-all shadow-[0_0_25px_rgba(0,240,255,0.4)] flex items-center gap-2.5 cursor-pointer active:scale-95"
           >
             <Sparkles className="w-4 h-4 text-cyan-400 animate-pulse" />
             <span>UNSTOP PORTAL</span>
@@ -254,7 +218,7 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
 
       {/* Bottom Technical Telemetry Grid with Holographic Prismatic Foil */}
       <div
-        className="relative z-10 max-w-7xl w-full mx-auto pt-6 border-t border-[#312856]/80 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-slate-300 font-mono text-[11px] transition-transform duration-300 ease-out"
+        className="relative z-10 max-w-7xl w-full mx-auto pt-4 border-t border-[#312856]/80 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-slate-300 font-mono text-[11px] transition-transform duration-300 ease-out"
         style={{
           transform: `translate3d(${mouseOffset.x * 0.2}px, ${mouseOffset.y * 0.2}px, 0)`,
         }}
