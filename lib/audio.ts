@@ -5,20 +5,49 @@ class SoundEngine {
   private ctx: AudioContext | null = null;
   private isMuted: boolean = false;
   private masterGain: GainNode | null = null;
+  private hasInteracted: boolean = false;
 
-  private init() {
+  constructor() {
+    if (typeof window !== 'undefined') {
+      const unlockAudio = () => {
+        this.hasInteracted = true;
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume().catch(() => {});
+        }
+        window.removeEventListener('pointerdown', unlockAudio);
+        window.removeEventListener('keydown', unlockAudio);
+        window.removeEventListener('touchstart', unlockAudio);
+      };
+      window.addEventListener('pointerdown', unlockAudio, { passive: true });
+      window.addEventListener('keydown', unlockAudio, { passive: true });
+      window.addEventListener('touchstart', unlockAudio, { passive: true });
+    }
+  }
+
+  private init(): boolean {
     if (!this.ctx && typeof window !== 'undefined') {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (AudioCtx) {
-        this.ctx = new AudioCtx();
-        this.masterGain = this.ctx.createGain();
-        this.masterGain.gain.value = this.isMuted ? 0 : 0.25;
-        this.masterGain.connect(this.ctx.destination);
+      try {
+        const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        if (AudioCtx) {
+          this.ctx = new AudioCtx();
+          this.masterGain = this.ctx.createGain();
+          this.masterGain.gain.value = this.isMuted ? 0 : 0.25;
+          this.masterGain.connect(this.ctx.destination);
+        }
+      } catch {
+        return false;
       }
     }
+
     if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume().catch(() => {});
+      if (this.hasInteracted) {
+        this.ctx.resume().catch(() => {});
+      } else {
+        return false;
+      }
     }
+
+    return Boolean(this.ctx && this.masterGain && this.ctx.state === 'running');
   }
 
   // Mobile Tactile Haptic Vibration Trigger
@@ -45,11 +74,11 @@ class SoundEngine {
 
   // Tactile Cybernetic Click with Mobile Haptic Pulse
   public playClick() {
+    this.hasInteracted = true;
     this.triggerHaptic(12);
     if (this.isMuted) return;
     try {
-      this.init();
-      if (!this.ctx || !this.masterGain) return;
+      if (!this.init() || !this.ctx || !this.masterGain) return;
 
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
@@ -71,10 +100,9 @@ class SoundEngine {
 
   // Soft Cyber Hover Frequency Chirp
   public playHover() {
-    if (this.isMuted) return;
+    if (this.isMuted || !this.hasInteracted) return;
     try {
-      this.init();
-      if (!this.ctx || !this.masterGain) return;
+      if (!this.init() || !this.ctx || !this.masterGain) return;
 
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
@@ -96,11 +124,11 @@ class SoundEngine {
 
   // Terminal Keystroke Blip
   public playKeypress() {
+    this.hasInteracted = true;
     this.triggerHaptic(8);
     if (this.isMuted) return;
     try {
-      this.init();
-      if (!this.ctx || !this.masterGain) return;
+      if (!this.init() || !this.ctx || !this.masterGain) return;
 
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
@@ -124,8 +152,7 @@ class SoundEngine {
     this.triggerHaptic([20, 30, 20]);
     if (this.isMuted) return;
     try {
-      this.init();
-      if (!this.ctx || !this.masterGain) return;
+      if (!this.init() || !this.ctx || !this.masterGain) return;
 
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
@@ -148,11 +175,11 @@ class SoundEngine {
 
   // Genesis Activation / Hyper-Warp Chord with Cosmic Haptic Pulse
   public playGenesisActivation() {
+    this.hasInteracted = true;
     this.triggerHaptic([30, 50, 40, 60, 30]);
     if (this.isMuted) return;
     try {
-      this.init();
-      if (!this.ctx || !this.masterGain) return;
+      if (!this.init() || !this.ctx || !this.masterGain) return;
 
       const now = this.ctx.currentTime;
       const frequencies = [220, 330, 440, 660, 880];
@@ -180,11 +207,11 @@ class SoundEngine {
 
   // Access Granted Chime
   public playAccessGranted() {
+    this.hasInteracted = true;
     this.triggerHaptic([25, 40, 50]);
     if (this.isMuted) return;
     try {
-      this.init();
-      if (!this.ctx || !this.masterGain) return;
+      if (!this.init() || !this.ctx || !this.masterGain) return;
 
       const now = this.ctx.currentTime;
       const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
