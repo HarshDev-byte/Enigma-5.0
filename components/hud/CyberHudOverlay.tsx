@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
-import { Compass, Radio, Menu, X, ArrowRight, ShieldCheck, Zap, Layers, Trophy, Sparkles, ExternalLink, Volume2, VolumeX, Terminal } from 'lucide-react';
+import { Compass, Radio, Menu, X, ArrowRight, ShieldCheck, Zap, Layers, Trophy, Sparkles, ExternalLink, Volume2, VolumeX, Terminal, Crosshair, Cpu } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import CyberTerminalModal from '@/components/terminal/CyberTerminalModal';
+import HoloCard from '@/components/ui/HoloCard';
 
 interface CyberHudOverlayProps {
   scrollProgress: number;
@@ -33,7 +34,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
     { id: 'register', label: 'REGISTER', num: '10', desc: 'Unstop Portal', sector: 'GATEWAY 10 // ARCHITECT ACCESS' },
   ];
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleScrollDetect = () => {
       const sectionIds = navItems.map((n) => n.id);
       const scrollPosition = window.scrollY + 180;
@@ -114,29 +115,33 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
             <button
               type="button"
               onClick={toggleSound}
-              className="flex items-center gap-1.5 bg-[#060410]/95 backdrop-blur-md px-3 py-1.5 sm:py-2 border border-[#312856] hover:border-purple-400 text-slate-300 hover:text-white hud-bracket shadow-lg active:scale-95 transition-all cursor-pointer text-[10px] sm:text-xs"
+              className={`flex items-center gap-1.5 px-3 py-1.5 sm:py-2 border transition-all text-[10px] sm:text-xs font-mono font-bold backdrop-blur-md hud-bracket shadow-lg cursor-pointer active:scale-95 ${
+                isMuted
+                  ? 'bg-[#150a0a]/95 border-rose-500/50 text-rose-300 hover:border-rose-400'
+                  : 'bg-[#061510]/95 border-emerald-500/50 text-emerald-300 hover:border-emerald-400 shadow-[0_0_12px_rgba(16,255,136,0.25)]'
+              }`}
             >
               {isMuted ? (
                 <>
                   <VolumeX className="w-3.5 h-3.5 text-rose-400" />
-                  <span className="hidden xs:inline text-rose-300">SYNTH: OFF</span>
+                  <span className="hidden xs:inline">MUTED</span>
                 </>
               ) : (
                 <>
-                  <Volume2 className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                  <span className="hidden xs:inline text-cyan-300">SYNTH: ON</span>
+                  <Volume2 className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+                  <span className="hidden xs:inline">AUDIO: ON</span>
                 </>
               )}
             </button>
 
-            {/* Desktop Telemetry Data */}
-            <div className="hidden md:flex items-center gap-3 bg-[#060410]/95 backdrop-blur-md px-4 py-2 border border-[#312856] hud-bracket shadow-lg">
-              <span className="flex items-center gap-1.5 text-cyan-400 font-bold">
-                <Radio className="w-3.5 h-3.5 animate-pulse" />
-                <span>LIVE_NODE</span>
+            {/* Telemetry Indicator */}
+            <div className="hidden sm:flex items-center gap-2 bg-[#060410]/95 backdrop-blur-md px-3 py-1.5 sm:py-2 border border-[#312856] hud-bracket shadow-lg text-[10px] sm:text-xs">
+              <span className="text-cyan-400 flex items-center gap-1">
+                <Radio className="w-3 h-3 animate-pulse" />
+                <span className="font-bold">LIVE_NODE</span>
               </span>
               <span className="text-slate-600">|</span>
-              <span>ALT: {Math.round((1 - scrollProgress) * 320)}M</span>
+              <span className="text-slate-400">ALT: {Math.round(320 - scrollProgress * 240)}M</span>
               <span className="text-slate-600">|</span>
               <span className="text-purple-400 font-bold">WARP: {Math.round(scrollProgress * 100)}%</span>
             </div>
@@ -144,8 +149,8 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
         </div>
 
         {/* Bottom Floating Navigation Frame */}
-        <div className="flex flex-col gap-2 max-w-6xl w-full mx-auto pointer-events-auto pb-safe">
-          {/* 1. KILLER MOBILE TACTICAL COMMAND DECK (< 768px) */}
+        <div className="flex flex-col gap-2 max-w-6xl w-full mx-auto pointer-events-auto pb-[max(8px,env(safe-area-inset-bottom))]">
+          {/* 1. LEGENDARY MOBILE CYBERNETIC DOCK (< 768px) */}
           <nav
             aria-label="Mobile Tactical HUD Controller"
             className="md:hidden bg-[#060410]/98 backdrop-blur-2xl px-2 py-2 border-t-2 border-t-cyan-400 border-x border-b border-[#312856] shadow-[0_15px_45px_rgba(0,0,0,0.95)] hud-bracket flex items-center justify-between gap-1.5 font-mono w-full relative overflow-hidden"
@@ -173,7 +178,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
             <button
               type="button"
               onClick={() => handleNavClick('tracks')}
-              className={`flex-1 py-2 px-2 text-center text-[11px] font-bold uppercase tracking-wider border active:scale-95 transition-all truncate cursor-pointer ${
+              className={`flex-1 py-2 px-1.5 text-center text-[11px] font-bold uppercase tracking-wider border active:scale-95 transition-all truncate cursor-pointer ${
                 currentSection === 'tracks'
                   ? 'bg-cyan-950/80 text-cyan-300 border-cyan-400 shadow-[0_0_10px_rgba(0,240,255,0.4)]'
                   : 'bg-[#080f1a] text-slate-300 border-cyan-500/30 hover:border-cyan-400'
@@ -186,13 +191,26 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
             <button
               type="button"
               onClick={() => handleNavClick('prizes')}
-              className={`flex-1 py-2 px-2 text-center text-[11px] font-bold uppercase tracking-wider border active:scale-95 transition-all truncate cursor-pointer ${
+              className={`flex-1 py-2 px-1.5 text-center text-[11px] font-bold uppercase tracking-wider border active:scale-95 transition-all truncate cursor-pointer ${
                 currentSection === 'prizes'
                   ? 'bg-amber-950/80 text-amber-300 border-amber-400 shadow-[0_0_10px_rgba(252,238,10,0.4)]'
                   : 'bg-[#151104] text-slate-300 border-amber-500/30 hover:border-amber-400'
               }`}
             >
               06 PRIZES
+            </button>
+
+            {/* MOBILE TERMINAL CLI BUTTON */}
+            <button
+              type="button"
+              onClick={() => {
+                sound.playClick();
+                setIsTerminalOpen(true);
+              }}
+              className="py-2 px-2 bg-[#061520] border border-cyan-500/40 text-cyan-300 hover:text-white text-[11px] font-black uppercase tracking-wider active:scale-95 transition-all shrink-0 cursor-pointer flex items-center justify-center"
+              title="Open Cyber Terminal CLI"
+            >
+              <Terminal className="w-3.5 h-3.5 text-cyan-400" />
             </button>
 
             {/* HIGH-VOLTAGE REGISTER CTA BUTTON */}
@@ -249,7 +267,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
         </div>
       </div>
 
-      {/* 3. KILLER FULLSCREEN CYBER SECTOR MATRIX DRAWER FOR PHONES */}
+      {/* 3. LEGENDARY FULLSCREEN CYBER SECTOR MATRIX DRAWER FOR PHONES */}
       {isMobileMenuOpen && (
         <div
           role="dialog"
@@ -284,18 +302,18 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
             </button>
           </div>
 
-          {/* 10 Tactical Sector Tiles (2-Column Dense Grid on Phones) */}
-          <div className="my-auto grid grid-cols-2 gap-2 max-h-[68vh] overflow-y-auto py-2 pr-0.5">
+          {/* 10 Tactical Sector Tiles (2-Column Dense Grid on Phones with HoloCards) */}
+          <div className="my-auto grid grid-cols-2 gap-2 max-h-[68vh] overflow-y-auto py-2 pr-0.5 no-scrollbar">
             {navItems.map((item) => {
               const isActive = currentSection === item.id;
               const isRegister = item.id === 'register';
 
               return (
-                <button
+                <HoloCard
                   key={item.id}
-                  type="button"
+                  glowColor={isRegister ? 'rgba(0, 240, 255, 0.5)' : isActive ? 'rgba(168, 85, 247, 0.5)' : 'rgba(100, 116, 139, 0.3)'}
                   onClick={() => handleNavClick(item.id)}
-                  className={`p-3 border transition-all text-left flex flex-col justify-between hud-bracket active:scale-95 min-h-[76px] cursor-pointer ${
+                  className={`p-3 border transition-all text-left flex flex-col justify-between active:scale-95 min-h-[76px] cursor-pointer ${
                     isRegister
                       ? 'bg-gradient-to-br from-purple-900/40 via-pink-900/30 to-cyan-900/40 border-cyan-400 text-white shadow-[0_0_15px_rgba(0,240,255,0.3)] col-span-2'
                       : isActive
@@ -320,15 +338,15 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
                     <div className="font-mono text-xs font-black uppercase tracking-wider">{item.label}</div>
                     <div className="text-[9px] text-slate-400 truncate">{item.desc}</div>
                   </div>
-                </button>
+                </HoloCard>
               );
             })}
           </div>
 
           {/* Drawer Bottom Quick Action Bar */}
-          <div className="border-t border-[#312856] pt-3 flex flex-col gap-2">
+          <div className="border-t border-[#312856] pt-3 flex flex-col gap-2 pb-[max(8px,env(safe-area-inset-bottom))]">
             <div className="flex items-center justify-between text-[10px] text-slate-400">
-              <span className="text-slate-500">SECTOR: {sectorName}</span>
+              <span className="text-slate-500 truncate max-w-[60%]">SECTOR: {sectorName}</span>
               <span className="text-cyan-400 font-bold">WARP: {Math.round(scrollProgress * 100)}%</span>
             </div>
 
