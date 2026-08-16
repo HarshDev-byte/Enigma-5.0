@@ -48,7 +48,7 @@ export default function Home() {
     if (typeof window === 'undefined') return;
     const el = document.getElementById(id);
     if (el) {
-      const navOffset = 70;
+      const navOffset = 75;
       const elementPosition = el.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navOffset;
 
@@ -56,6 +56,11 @@ export default function Home() {
         top: Math.max(0, offsetPosition),
         behavior: 'smooth',
       });
+
+      // Update URL hash smoothly without jump
+      try {
+        window.history.pushState(null, '', `#${id}`);
+      } catch {}
     }
   };
 

@@ -67,9 +67,12 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
   const handleNavClick = (id: string) => {
     sound.playClick();
     setIsMobileMenuOpen(false);
+    requestAnimationFrame(() => {
+      onWarpToSection(id);
+    });
     setTimeout(() => {
       onWarpToSection(id);
-    }, 50);
+    }, 80);
   };
 
   const toggleSound = () => {
