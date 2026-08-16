@@ -45,9 +45,12 @@ export default function Home() {
   }, []);
 
   const handleWarpToSection = (id: string) => {
+    if (typeof window === 'undefined') return;
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      const yOffset = -20;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
     }
   };
 

@@ -64,16 +64,19 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
   const handleMobileNavWarp = (id: string) => {
     sound.playClick();
     setIsMobileMenuOpen(false);
-    onWarpToSection(id);
+    // Allow state transition to cleanly finalize before triggering smooth scroll
+    setTimeout(() => {
+      onWarpToSection(id);
+    }, 60);
   };
 
   return (
     <>
       <div className="fixed inset-0 pointer-events-none z-30 flex flex-col justify-between p-2.5 sm:p-5 lg:p-6 select-none">
         {/* Top Aerospace HUD Frame */}
-        <div className="flex justify-between items-center gap-2">
+        <div className="flex justify-between items-center gap-2 pointer-events-auto">
           {/* Top Left: Node ID & Sector Status */}
-          <div className="flex items-center gap-2 bg-[#060410]/95 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 border border-[#312856] pointer-events-auto hud-bracket shadow-lg max-w-[88vw] sm:max-w-none truncate">
+          <div className="flex items-center gap-2 bg-[#060410]/95 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 border border-[#312856] hud-bracket shadow-lg max-w-[88vw] sm:max-w-none truncate">
             <span
               className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full shrink-0 ${
                 isCollapse ? 'bg-pink-500 animate-ping' : isRebuilt ? 'bg-emerald-400 animate-pulse' : 'bg-cyan-400 animate-ping'
@@ -89,17 +92,15 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
           </div>
 
           {/* Top Right: Live Telemetry Status */}
-          <div className="flex items-center gap-2 pointer-events-auto">
-            <div className="hidden md:flex items-center gap-3 bg-[#060410]/95 backdrop-blur-md px-4 py-2 border border-[#312856] font-mono text-xs text-slate-300 hud-bracket shadow-lg">
-              <span className="flex items-center gap-1.5 text-cyan-400 font-bold">
-                <Radio className="w-3.5 h-3.5 animate-pulse" />
-                <span>LIVE_NODE</span>
-              </span>
-              <span className="text-slate-600">|</span>
-              <span>ALT: {Math.round((1 - scrollProgress) * 320)}M</span>
-              <span className="text-slate-600">|</span>
-              <span className="text-purple-400 font-bold">WARP: {Math.round(scrollProgress * 100)}%</span>
-            </div>
+          <div className="hidden md:flex items-center gap-3 bg-[#060410]/95 backdrop-blur-md px-4 py-2 border border-[#312856] font-mono text-xs text-slate-300 hud-bracket shadow-lg">
+            <span className="flex items-center gap-1.5 text-cyan-400 font-bold">
+              <Radio className="w-3.5 h-3.5 animate-pulse" />
+              <span>LIVE_NODE</span>
+            </span>
+            <span className="text-slate-600">|</span>
+            <span>ALT: {Math.round((1 - scrollProgress) * 320)}M</span>
+            <span className="text-slate-600">|</span>
+            <span className="text-purple-400 font-bold">WARP: {Math.round(scrollProgress * 100)}%</span>
           </div>
         </div>
 
@@ -107,22 +108,24 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
         <div className="flex flex-col gap-2 max-w-6xl w-full mx-auto pointer-events-auto pb-safe">
           {/* 1. KILLER MOBILE TACTICAL COMMAND DECK (< 768px) */}
           <nav
-            aria-label="Killer Mobile Tactical HUD Controller"
+            aria-label="Mobile Tactical HUD Controller"
             className="md:hidden bg-[#060410]/98 backdrop-blur-2xl px-2 py-2 border-t-2 border-t-cyan-400 border-x border-b border-[#312856] shadow-[0_15px_45px_rgba(0,0,0,0.95)] hud-bracket flex items-center justify-between gap-1.5 font-mono w-full relative overflow-hidden"
           >
             {/* Live Top Laser Progress Wire */}
             <div
-              className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 shadow-[0_0_8px_rgba(0,240,255,0.8)] transition-all duration-300"
+              className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 shadow-[0_0_8px_rgba(0,240,255,0.8)] transition-all duration-300 pointer-events-none"
               style={{ width: `${Math.max(5, Math.round(scrollProgress * 100))}%` }}
             />
 
             {/* SECTORS MATRIX TRIGGER */}
             <button
-              onClick={() => {
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
                 sound.playClick();
                 setIsMobileMenuOpen(true);
               }}
-              className="flex items-center justify-center gap-1 px-2.5 py-2 bg-[#0e0a24] border border-purple-500/60 text-purple-300 text-[11px] font-black uppercase tracking-wider active:scale-95 transition-all shadow-[0_0_12px_rgba(168,85,247,0.3)] shrink-0"
+              className="flex items-center justify-center gap-1 px-2.5 py-2 bg-[#0e0a24] border border-purple-500/60 text-purple-300 text-[11px] font-black uppercase tracking-wider active:scale-95 transition-all shadow-[0_0_12px_rgba(168,85,247,0.3)] shrink-0 cursor-pointer"
             >
               <Zap className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
               <span>SECTORS</span>
@@ -130,8 +133,13 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
 
             {/* 04 TRACKS BUTTON */}
             <button
-              onClick={() => handleMobileNavWarp('tracks')}
-              className={`flex-1 py-2 px-2 text-center text-[11px] font-bold uppercase tracking-wider border active:scale-95 transition-all truncate ${
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                sound.playClick();
+                onWarpToSection('tracks');
+              }}
+              className={`flex-1 py-2 px-2 text-center text-[11px] font-bold uppercase tracking-wider border active:scale-95 transition-all truncate cursor-pointer ${
                 currentSection === 'tracks'
                   ? 'bg-cyan-950/80 text-cyan-300 border-cyan-400 shadow-[0_0_10px_rgba(0,240,255,0.4)]'
                   : 'bg-[#080f1a] text-slate-300 border-cyan-500/30 hover:border-cyan-400'
@@ -142,8 +150,13 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
 
             {/* 06 PRIZES BUTTON */}
             <button
-              onClick={() => handleMobileNavWarp('prizes')}
-              className={`flex-1 py-2 px-2 text-center text-[11px] font-bold uppercase tracking-wider border active:scale-95 transition-all truncate ${
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                sound.playClick();
+                onWarpToSection('prizes');
+              }}
+              className={`flex-1 py-2 px-2 text-center text-[11px] font-bold uppercase tracking-wider border active:scale-95 transition-all truncate cursor-pointer ${
                 currentSection === 'prizes'
                   ? 'bg-amber-950/80 text-amber-300 border-amber-400 shadow-[0_0_10px_rgba(252,238,10,0.4)]'
                   : 'bg-[#151104] text-slate-300 border-amber-500/30 hover:border-amber-400'
@@ -154,8 +167,13 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
 
             {/* HIGH-VOLTAGE REGISTER CTA BUTTON */}
             <button
-              onClick={() => handleMobileNavWarp('register')}
-              className="py-2 px-3 text-center text-[11px] font-black text-black bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 shadow-[0_0_18px_rgba(168,85,247,0.6)] active:scale-95 transition-all shrink-0 uppercase tracking-wider"
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                sound.playClick();
+                onWarpToSection('register');
+              }}
+              className="py-2 px-3 text-center text-[11px] font-black text-black bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 shadow-[0_0_18px_rgba(168,85,247,0.6)] active:scale-95 transition-all shrink-0 uppercase tracking-wider cursor-pointer"
             >
               🚀 UNSTOP
             </button>
@@ -182,11 +200,12 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
                 return (
                   <button
                     key={item.id}
+                    type="button"
                     onClick={() => {
                       sound.playClick();
                       onWarpToSection(item.id);
                     }}
-                    className={`group relative flex-1 text-center py-1 sm:py-1.5 px-0.5 sm:px-1.5 md:px-2 transition-all duration-200 uppercase font-mono tracking-wider flex items-center justify-center gap-0.5 sm:gap-1 focus:outline-none focus:ring-1 focus:ring-purple-400 whitespace-nowrap ${
+                    className={`group relative flex-1 text-center py-1 sm:py-1.5 px-0.5 sm:px-1.5 md:px-2 transition-all duration-200 uppercase font-mono tracking-wider flex items-center justify-center gap-0.5 sm:gap-1 focus:outline-none focus:ring-1 focus:ring-purple-400 whitespace-nowrap cursor-pointer ${
                       isRegister
                         ? 'bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 text-black font-black hover:brightness-110 shadow-[0_0_15px_rgba(168,85,247,0.5)]'
                         : isActive
@@ -211,7 +230,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 bg-[#040308]/98 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-6 font-mono text-white scanlines animate-in fade-in zoom-in-95 duration-200"
+          className="fixed inset-0 z-50 bg-[#040308]/98 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-6 font-mono text-white scanlines animate-in fade-in zoom-in-95 duration-200 pointer-events-auto"
         >
           {/* Drawer Top Header */}
           <div className="flex items-center justify-between border-b border-[#312856] pb-3">
@@ -229,11 +248,12 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
             </div>
 
             <button
+              type="button"
               onClick={() => {
                 sound.playClick();
                 setIsMobileMenuOpen(false);
               }}
-              className="px-3 py-1.5 border border-purple-500/50 bg-[#0e0a24] text-purple-300 hover:text-white text-xs font-bold flex items-center gap-1 active:scale-95"
+              className="px-3 py-1.5 border border-purple-500/50 bg-[#0e0a24] text-purple-300 hover:text-white text-xs font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
             >
               <span>[ ESC ]</span>
               <X className="w-4 h-4" />
@@ -249,8 +269,9 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
               return (
                 <button
                   key={item.id}
+                  type="button"
                   onClick={() => handleMobileNavWarp(item.id)}
-                  className={`p-3 border transition-all text-left flex flex-col justify-between hud-bracket active:scale-95 min-h-[76px] ${
+                  className={`p-3 border transition-all text-left flex flex-col justify-between hud-bracket active:scale-95 min-h-[76px] cursor-pointer ${
                     isRegister
                       ? 'bg-gradient-to-br from-purple-900/40 via-pink-900/30 to-cyan-900/40 border-cyan-400 text-white shadow-[0_0_15px_rgba(0,240,255,0.3)] col-span-2'
                       : isActive
@@ -292,7 +313,8 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
                 href={EVENT_CONFIG.socials.unstop}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-2 px-3 bg-gradient-to-r from-purple-400 to-cyan-400 text-black font-black uppercase tracking-wider text-center flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,240,255,0.4)]"
+                onClick={() => sound.playClick()}
+                className="py-2 px-3 bg-gradient-to-r from-purple-400 to-cyan-400 text-black font-black uppercase tracking-wider text-center flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,240,255,0.4)] active:scale-95 cursor-pointer"
               >
                 <span>REGISTER UNSTOP</span>
                 <ExternalLink className="w-3 h-3" />
@@ -302,7 +324,8 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
                 href={EVENT_CONFIG.socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-2 px-3 bg-[#0c081e] border border-pink-500/50 text-pink-300 font-bold uppercase tracking-wider text-center flex items-center justify-center gap-1.5"
+                onClick={() => sound.playClick()}
+                className="py-2 px-3 bg-[#0c081e] border border-pink-500/50 text-pink-300 font-bold uppercase tracking-wider text-center flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
               >
                 <span>INSTAGRAM</span>
                 <ExternalLink className="w-3 h-3" />
