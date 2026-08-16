@@ -43,22 +43,17 @@ export const EVENT_CONFIG = {
     },
   ],
 
-  // EXTERNAL REGISTRATION URLS — EDIT THESE DIRECTLY
+  // EXTERNAL REGISTRATION & PORTAL URLS
   urls: {
-    primaryRegistration: 'https://devfolio.co', // Main registration link
-    devfolio: 'https://devfolio.co',
+    primaryRegistration: 'https://unstop.com',
     unstop: 'https://unstop.com',
-    googleForm: 'https://forms.google.com',
-    discord: 'https://discord.gg',
   },
 
-  // SOCIAL MEDIA & COMMUNITY ENDPOINTS
+  // SOCIAL MEDIA & COMMUNITY ENDPOINTS (ONLY UNSTOP, INSTAGRAM & LINKEDIN)
   socials: {
+    unstop: 'https://unstop.com',
     instagram: 'https://www.instagram.com/csisiesgst/',
     linkedin: 'https://linkedin.com/company/enigma-hackathon',
-    twitter: 'https://x.com/enigma_hack',
-    github: 'https://github.com/enigma-hackathon',
-    email: 'contact@enigmahack.org',
   },
 
   // 03 OFFICIAL TRACKS (HEALTHCARE, FINTECH, SUSTAINABILITY)

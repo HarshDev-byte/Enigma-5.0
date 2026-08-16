@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Orbitron, JetBrains_Mono, Rajdhani } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 const orbitron = Orbitron({
@@ -66,6 +67,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-[#030508] text-[#f0f6fc] font-mono selection:bg-[#00f0ff] selection:text-black">
         {children}
+        <Analytics />
       </body>
     </html>
   );

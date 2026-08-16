@@ -111,42 +111,32 @@ export default function FinalTransmission() {
               <span>PORTALS & CHANNELS</span>
             </div>
 
-            <div className="space-y-2 text-xs">
+            <div className="space-y-2.5 text-xs">
               <a
-                href={EVENT_CONFIG.urls.devfolio}
+                href={EVENT_CONFIG.socials.unstop}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2 bg-[#070c14] border border-[#162436] hover:border-cyan-400 text-slate-300 hover:text-white transition-colors"
-              >
-                <span>DEVFOLIO ACCESS</span>
-                <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
-              </a>
-
-              <a
-                href={EVENT_CONFIG.urls.unstop}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-2 bg-[#070c14] border border-[#162436] hover:border-pink-400 text-slate-300 hover:text-white transition-colors"
+                className="flex items-center justify-between p-2.5 bg-[#070c14] border border-[#162436] hover:border-cyan-400 text-slate-300 hover:text-white transition-colors"
               >
                 <span>UNSTOP PORTAL</span>
-                <ExternalLink className="w-3.5 h-3.5 text-pink-400" />
+                <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
               </a>
 
               <a
                 href={EVENT_CONFIG.socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2 bg-[#070c14] border border-[#162436] hover:border-purple-400 text-slate-300 hover:text-white transition-colors"
+                className="flex items-center justify-between p-2.5 bg-[#070c14] border border-[#162436] hover:border-pink-400 text-slate-300 hover:text-white transition-colors"
               >
                 <span>INSTAGRAM COMMUNITY</span>
-                <ExternalLink className="w-3.5 h-3.5 text-purple-400" />
+                <ExternalLink className="w-3.5 h-3.5 text-pink-400" />
               </a>
 
               <a
                 href={EVENT_CONFIG.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2 bg-[#070c14] border border-[#162436] hover:border-blue-400 text-slate-300 hover:text-white transition-colors"
+                className="flex items-center justify-between p-2.5 bg-[#070c14] border border-[#162436] hover:border-blue-400 text-slate-300 hover:text-white transition-colors"
               >
                 <span>LINKEDIN DISPATCHES</span>
                 <ExternalLink className="w-3.5 h-3.5 text-blue-400" />

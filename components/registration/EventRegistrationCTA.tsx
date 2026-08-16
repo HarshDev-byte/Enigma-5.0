@@ -80,33 +80,37 @@ export default function EventRegistrationCTA() {
           </button>
         </div>
 
-        {/* Direct Submission Nodes */}
+        {/* Direct Submission & Social Endpoints */}
         <div className="pt-4 flex flex-wrap items-center justify-center gap-4 font-mono text-xs">
-          <span className="text-slate-500 uppercase tracking-widest mr-2">DIRECT APPLICATION PLATFORMS:</span>
+          <span className="text-slate-500 uppercase tracking-widest mr-2">OFFICIAL PLATFORMS:</span>
 
           <button
-            onClick={() => handleRegisterClick(EVENT_CONFIG.urls.devfolio)}
-            className="px-5 py-2.5 bg-[#03060c]/90 hover:bg-[#070c14] border border-[#243b55] hover:border-cyan-400 text-slate-200 hover:text-cyan-300 flex items-center gap-2 transition-all hover:shadow-[0_0_15px_rgba(0,240,255,0.2)]"
+            onClick={() => handleRegisterClick(EVENT_CONFIG.socials.unstop)}
+            className="px-6 py-3 bg-[#03060c]/90 hover:bg-[#070c14] border border-[#243b55] hover:border-cyan-400 text-slate-200 hover:text-cyan-300 flex items-center gap-2 transition-all hover:shadow-[0_0_15px_rgba(0,240,255,0.2)]"
           >
-            <span>DEVFOLIO</span>
+            <span>UNSTOP PORTAL</span>
             <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
           </button>
 
-          <button
-            onClick={() => handleRegisterClick(EVENT_CONFIG.urls.unstop)}
-            className="px-5 py-2.5 bg-[#03060c]/90 hover:bg-[#070c14] border border-[#243b55] hover:border-fuchsia-400 text-slate-200 hover:text-fuchsia-300 flex items-center gap-2 transition-all hover:shadow-[0_0_15px_rgba(217,70,239,0.2)]"
+          <a
+            href={EVENT_CONFIG.socials.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 bg-[#03060c]/90 hover:bg-[#070c14] border border-[#243b55] hover:border-pink-400 text-slate-200 hover:text-pink-300 flex items-center gap-2 transition-all hover:shadow-[0_0_15px_rgba(236,72,153,0.2)]"
           >
-            <span>UNSTOP</span>
-            <ExternalLink className="w-3.5 h-3.5 text-fuchsia-400" />
-          </button>
+            <span>INSTAGRAM</span>
+            <ExternalLink className="w-3.5 h-3.5 text-pink-400" />
+          </a>
 
-          <button
-            onClick={() => handleRegisterClick(EVENT_CONFIG.urls.googleForm)}
-            className="px-5 py-2.5 bg-[#03060c]/90 hover:bg-[#070c14] border border-[#243b55] hover:border-emerald-400 text-slate-200 hover:text-emerald-300 flex items-center gap-2 transition-all hover:shadow-[0_0_15px_rgba(16,255,136,0.2)]"
+          <a
+            href={EVENT_CONFIG.socials.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 bg-[#03060c]/90 hover:bg-[#070c14] border border-[#243b55] hover:border-blue-400 text-slate-200 hover:text-blue-300 flex items-center gap-2 transition-all hover:shadow-[0_0_15px_rgba(96,165,250,0.2)]"
           >
-            <span>GOOGLE FORM</span>
-            <ExternalLink className="w-3.5 h-3.5 text-emerald-400" />
-          </button>
+            <span>LINKEDIN</span>
+            <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
+          </a>
         </div>
       </div>
     </section>
