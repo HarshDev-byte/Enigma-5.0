@@ -89,8 +89,8 @@ section {
   -webkit-backdrop-filter: blur(12px);
 }
 
-section[id] {
-  scroll-margin-top: 70px;
+section[id], div[id], header[id], footer[id] {
+  scroll-margin-top: 80px;
 }
 
 /* Futuristic Scanline Overlay */

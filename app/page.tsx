@@ -49,15 +49,16 @@ export default function Home() {
     const el = document.getElementById(id);
     if (el) {
       const navOffset = 75;
-      const elementPosition = el.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+      const rect = el.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const targetY = rect.top + scrollTop - navOffset;
 
       window.scrollTo({
-        top: Math.max(0, offsetPosition),
+        top: Math.max(0, targetY),
         behavior: 'smooth',
       });
 
-      // Update URL hash smoothly without jump
+      // Update URL hash smoothly
       try {
         window.history.pushState(null, '', `#${id}`);
       } catch {}
