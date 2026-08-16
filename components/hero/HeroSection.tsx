@@ -115,22 +115,28 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
           </div>
         </div>
 
-        {/* Audio Waveform Spectrum Strip (Centered) */}
-        <div className="mt-4 flex items-center justify-center gap-1.5 opacity-80">
-          {[8, 14, 22, 10, 18, 28, 16, 24, 32, 20, 14, 26, 36, 18, 12, 24, 30, 16, 8, 20, 26, 14, 10, 22, 28].map((h, i) => (
+        {/* Audio Waveform Spectrum Strip (Interactive & Reactive) */}
+        <button
+          type="button"
+          onMouseEnter={() => sound.playHover()}
+          onClick={() => sound.playGenesisActivation()}
+          className="mt-4 flex items-center justify-center gap-1.5 opacity-90 hover:opacity-100 p-2 bg-[#060410]/70 border border-[#312856] hover:border-cyan-400 rounded-full transition-all cursor-pointer shadow-lg active:scale-95 group"
+        >
+          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping mr-1" />
+          {[8, 16, 26, 12, 20, 32, 18, 28, 36, 22, 14, 30, 40, 22, 16, 28, 34, 18, 10, 24, 30, 16, 12, 26, 32].map((h, i) => (
             <span
               key={i}
-              className="w-1 bg-gradient-to-t from-purple-500 to-cyan-400 rounded-full inline-block transition-all duration-300"
+              className="w-1 bg-gradient-to-t from-purple-500 via-pink-400 to-cyan-400 rounded-full inline-block group-hover:scale-y-125 transition-transform duration-200"
               style={{
                 height: `${h}px`,
-                opacity: 0.4 + (i % 3) * 0.25,
+                opacity: 0.5 + (i % 3) * 0.25,
               }}
             />
           ))}
-          <span className="ml-3 font-mono text-[9px] text-slate-400 uppercase tracking-widest">
-            LIVE SYNTH SPECTRUM // 4.8 THz
+          <span className="mx-3 font-mono text-[9px] text-cyan-300 font-bold uppercase tracking-widest group-hover:text-white">
+            AUDIO SYNTH SPECTRUM // 4.8 THz [ TAP ]
           </span>
-        </div>
+        </button>
 
         {/* Cinematic Manifesto Quote & System Brief (Centered) */}
         <div className="mt-6 max-w-2xl w-full bg-[#060410]/90 backdrop-blur-md p-6 border border-[#312856] border-t-2 border-t-cyan-400 hud-bracket shadow-2xl text-center">

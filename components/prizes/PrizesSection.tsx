@@ -4,6 +4,7 @@ import React from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
 import { Trophy, Award, Sparkles, CheckCircle2, Zap, ShieldCheck } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import HoloCard from '@/components/ui/HoloCard';
 
 export default function PrizesSection() {
   const { prizes } = EVENT_CONFIG;
@@ -37,18 +38,19 @@ export default function PrizesSection() {
           </div>
         </div>
 
-        {/* 3 Main Prestige Podium Cards */}
+        {/* 3 Main Prestige Podium Cards with 3D Holographic Glare */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {prizes.mainPrizes.map((prize) => {
             const isFirst = prize.rank === '01';
             const isSecond = prize.rank === '02';
             const isThird = prize.rank === '03';
+            const glow = isFirst ? '#fcee0a' : isSecond ? '#a855f7' : '#00ff66';
 
             return (
-              <div
+              <HoloCard
                 key={prize.rank}
-                onMouseEnter={() => sound.playHover()}
-                className={`p-6 sm:p-8 bg-[#060410]/95 border transition-all duration-300 hud-bracket flex flex-col justify-between relative backdrop-blur-md shadow-2xl ${
+                glowColor={glow}
+                className={`p-6 sm:p-8 bg-[#060410]/95 border transition-all duration-300 flex flex-col justify-between relative backdrop-blur-md shadow-2xl ${
                   isFirst
                     ? 'border-amber-400 shadow-[0_0_35px_rgba(252,238,10,0.3)] order-first md:order-2 md:-translate-y-4 bg-gradient-to-b from-[#151004] via-[#0b081a] to-[#060410]'
                     : isSecond
@@ -119,32 +121,45 @@ export default function PrizesSection() {
 
                 {/* Bottom Assurance */}
                 <div className="mt-8 pt-4 border-t border-[#241a45] font-mono text-[10px] text-slate-400 flex items-center justify-between">
-                  <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>INSTANT DISBURSEMENT</span>
+                  <span>DISBURSEMENT: GUARANTEED</span>
+                  <span className={isFirst ? 'text-amber-400 font-bold' : isSecond ? 'text-purple-400 font-bold' : 'text-emerald-400 font-bold'}>
+                    TROPHY + VAULT ACCESS
                   </span>
-                  <span className="text-slate-500">ZERO DELAY</span>
                 </div>
-              </div>
+              </HoloCard>
             );
           })}
         </div>
 
-        {/* Global Perks & Institutional Backing Strip */}
-        <div className="bg-[#060410]/95 border border-[#312856] p-6 hud-bracket backdrop-blur-md grid grid-cols-1 sm:grid-cols-3 gap-4 text-center font-mono text-xs">
-          <div className="p-3 border border-[#241a45]">
-            <div className="text-cyan-400 font-bold uppercase tracking-wider mb-1">PARTICIPANT CREDENTIALS</div>
-            <p className="text-slate-400 text-[11px]">Verified Cryptographic Certificate of Participation for all submitted squads.</p>
+        {/* Category Bounties & Special Awards Grid */}
+        <div className="pt-8 border-t border-[#312856] space-y-6">
+          <div className="flex items-center gap-2 font-mono text-xs text-cyan-400 uppercase tracking-widest">
+            <Award className="w-3.5 h-3.5" />
+            <span>SPECIAL CATEGORY BOUNTIES & TRACK COMMENDATIONS</span>
           </div>
 
-          <div className="p-3 border border-[#241a45]">
-            <div className="text-emerald-400 font-bold uppercase tracking-wider mb-1">ACCELERATOR FAST-TRACK</div>
-            <p className="text-slate-400 text-[11px]">Direct incubation interview access and seed grant considerations for top prototypes.</p>
-          </div>
-
-          <div className="p-3 border border-[#241a45]">
-            <div className="text-purple-400 font-bold uppercase tracking-wider mb-1">DEVELOPER TOOLKITS</div>
-            <p className="text-slate-400 text-[11px]">Access to premium cloud compute credits, API quotas, and hardware kits.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {prizes.specialPrizes.map((bounty, i) => (
+              <HoloCard
+                key={i}
+                glowColor="#a855f7"
+                className="bg-[#060410]/95 border border-[#241a45] p-5 flex flex-col justify-between hover:border-purple-500/60 transition-all shadow-lg"
+              >
+                <div>
+                  <div className="flex items-center justify-between text-xs font-mono pb-2 border-b border-[#241a45]">
+                    <span className="text-cyan-400 font-bold">{bounty.title}</span>
+                    <span className="text-amber-300 font-black">{bounty.amount}</span>
+                  </div>
+                  <p className="mt-3 font-mono text-xs text-slate-300 leading-relaxed">
+                    {bounty.desc}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-[#241a45] flex items-center justify-between text-[10px] font-mono text-slate-400">
+                  <span>CATEGORY BOUNTY</span>
+                  <span className="text-purple-400 font-bold">FELLOWSHIP PASS</span>
+                </div>
+              </HoloCard>
+            ))}
           </div>
         </div>
       </div>

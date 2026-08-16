@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
 import { Activity, Cpu, Globe2, ArrowRight, Sparkles, Terminal, CheckCircle2, QrCode } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import HoloCard from '@/components/ui/HoloCard';
 
 export default function OfficialTracks() {
   const [selectedTrackId, setSelectedTrackId] = useState('healthcare');
@@ -54,23 +55,18 @@ export default function OfficialTracks() {
               const isSelected = track.id === selectedTrackId;
 
               return (
-                <button
+                <HoloCard
                   key={track.id}
-                  type="button"
-                  onMouseEnter={() => sound.playHover()}
+                  glowColor={track.themeColor}
                   onClick={() => {
                     sound.playClick();
                     setSelectedTrackId(track.id);
                   }}
-                  className={`p-5 text-left font-mono border transition-all duration-300 hud-bracket backdrop-blur-md relative flex-1 flex flex-col justify-between group ${
+                  className={`p-5 text-left font-mono border transition-all duration-300 backdrop-blur-md relative flex-1 flex flex-col justify-between group cursor-pointer ${
                     isSelected
                       ? 'bg-[#0b081a] text-white shadow-2xl scale-[1.01]'
                       : 'bg-[#060410]/90 text-slate-400 hover:text-slate-200 hover:border-purple-800'
                   }`}
-                  style={{
-                    borderColor: isSelected ? track.themeColor : '#241a45',
-                    boxShadow: isSelected ? `0 0 25px ${track.accentGlow}` : 'none',
-                  }}
                 >
                   <div>
                     <div className="flex items-center justify-between pb-2 border-b border-[#241a45] text-[11px]">
@@ -109,18 +105,15 @@ export default function OfficialTracks() {
                     <span className="truncate">{track.tagline}</span>
                     <ArrowRight className="w-3.5 h-3.5 shrink-0 ml-1 transition-transform group-hover:translate-x-1" style={{ color: track.themeColor }} />
                   </div>
-                </button>
+                </HoloCard>
               );
             })}
           </div>
 
           {/* Right Column: Deep Dossier Terminal for Selected Track (8 cols) */}
-          <div
-            className="lg:col-span-8 bg-[#060410]/95 border p-6 sm:p-8 hud-bracket backdrop-blur-md shadow-2xl flex flex-col justify-between relative space-y-6"
-            style={{
-              borderColor: currentTrack.themeColor,
-              boxShadow: `0 0 40px ${currentTrack.accentGlow}`,
-            }}
+          <HoloCard
+            glowColor={currentTrack.themeColor}
+            className="lg:col-span-8 bg-[#060410]/95 border p-6 sm:p-8 backdrop-blur-md shadow-2xl flex flex-col justify-between relative space-y-6"
           >
             <div>
               {/* Dossier Header with Moodboard Barcode & QR Stamp */}
@@ -142,7 +135,7 @@ export default function OfficialTracks() {
                 <a
                   href="#timeline"
                   onClick={() => sound.playClick()}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#0b081a] border border-[#312856] hover:border-cyan-400 font-mono text-xs text-slate-100 hover:text-cyan-300 uppercase tracking-wider transition-colors shrink-0 shadow-lg"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#0b081a] border border-[#312856] hover:border-cyan-400 font-mono text-xs text-slate-100 hover:text-cyan-300 uppercase tracking-wider transition-colors shrink-0 shadow-lg cursor-pointer"
                 >
                   <span>ROADMAP</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -183,7 +176,7 @@ export default function OfficialTracks() {
               </span>
               <span className="text-slate-400">36-HOUR BUILD TRACK // MOD 2097</span>
             </div>
-          </div>
+          </HoloCard>
         </div>
       </div>
     </section>

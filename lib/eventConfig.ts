@@ -281,7 +281,23 @@ export const EVENT_CONFIG = {
         accent: 'emerald',
       },
     ],
-    specialPrizes: [],
+    specialPrizes: [
+      {
+        title: 'BEST ALL-WOMEN SQUAD',
+        amount: '₹12,000',
+        desc: 'Awarded to the most exceptional all-women squad engineering high-impact resilient architectures.',
+      },
+      {
+        title: 'BEST FRESHMAN / FIRST-TIME HACK',
+        amount: '₹12,000',
+        desc: 'Dedicated commendation and fast-track mentorship for outstanding first-time hackathon builders.',
+      },
+      {
+        title: 'BEST UI/UX CYBERNETIC DESIGN',
+        amount: '₹11,000',
+        desc: 'Recognizing the most immersive, accessible, and breathtaking interface and user journey design.',
+      },
+    ],
   },
 
   // FREQUENTLY ASKED QUESTIONS

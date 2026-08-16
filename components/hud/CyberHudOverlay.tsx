@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
-import { Compass, Radio, Menu, X, ArrowRight, ShieldCheck, Zap, Layers, Trophy, Sparkles, ExternalLink, Volume2, VolumeX } from 'lucide-react';
+import { Compass, Radio, Menu, X, ArrowRight, ShieldCheck, Zap, Layers, Trophy, Sparkles, ExternalLink, Volume2, VolumeX, Terminal } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import CyberTerminalModal from '@/components/terminal/CyberTerminalModal';
 
 interface CyberHudOverlayProps {
   scrollProgress: number;
@@ -12,6 +13,7 @@ interface CyberHudOverlayProps {
 
 export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: CyberHudOverlayProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(sound.getMuted());
   const isCollapse = scrollProgress >= 0.22 && scrollProgress <= 0.35;
   const isRebuilt = scrollProgress >= 0.70;
@@ -99,8 +101,21 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
             </div>
           </div>
 
-          {/* Top Right: Live Telemetry & Audio Toggle */}
+          {/* Top Right: Live Telemetry, Audio Toggle & Terminal */}
           <div className="flex items-center gap-2 font-mono text-xs text-slate-300">
+            {/* Terminal CLI Button */}
+            <button
+              type="button"
+              onClick={() => {
+                sound.playClick();
+                setIsTerminalOpen(true);
+              }}
+              className="flex items-center gap-1.5 bg-[#060410]/95 backdrop-blur-md px-3 py-1.5 sm:py-2 border border-[#312856] hover:border-cyan-400 text-cyan-300 hover:text-white hud-bracket shadow-lg active:scale-95 transition-all cursor-pointer text-[10px] sm:text-xs"
+            >
+              <Terminal className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+              <span className="hidden xs:inline font-bold">TERMINAL</span>
+            </button>
+
             {/* Audio Synth Toggle Button */}
             <button
               type="button"
@@ -349,6 +364,16 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
           </div>
         </div>
       )}
+
+      {/* 4. Interactive Cybernetic Command Terminal */}
+      <CyberTerminalModal
+        isOpen={isTerminalOpen}
+        onClose={() => setIsTerminalOpen(false)}
+        onWarpToSection={(id) => {
+          setIsTerminalOpen(false);
+          setTimeout(() => onWarpToSection(id), 50);
+        }}
+      />
     </>
   );
 }
