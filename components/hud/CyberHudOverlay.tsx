@@ -303,7 +303,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
           </div>
 
           {/* 10 Tactical Sector Tiles (2-Column Dense Grid on Phones with HoloCards) */}
-          <div className="my-auto grid grid-cols-2 gap-2 max-h-[68vh] overflow-y-auto py-2 pr-0.5 no-scrollbar">
+          <div className="my-auto grid grid-cols-2 gap-2.5 max-h-[78vh] overflow-y-auto py-2 pr-0.5 no-scrollbar">
             {navItems.map((item) => {
               const isActive = currentSection === item.id;
               const isRegister = item.id === 'register';
@@ -343,36 +343,10 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
             })}
           </div>
 
-          {/* Drawer Bottom Quick Action Bar */}
-          <div className="border-t border-[#312856] pt-3 flex flex-col gap-2 pb-[max(8px,env(safe-area-inset-bottom))]">
-            <div className="flex items-center justify-between text-[10px] text-slate-400">
-              <span className="text-slate-500 truncate max-w-[60%]">SECTOR: {sectorName}</span>
-              <span className="text-cyan-400 font-bold">WARP: {Math.round(scrollProgress * 100)}%</span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2 font-mono text-[11px]">
-              <a
-                href={EVENT_CONFIG.socials.unstop}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => sound.playClick()}
-                className="py-2 px-3 bg-gradient-to-r from-purple-400 to-cyan-400 text-black font-black uppercase tracking-wider text-center flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,240,255,0.4)] active:scale-95 cursor-pointer"
-              >
-                <span>REGISTER UNSTOP</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-
-              <a
-                href={EVENT_CONFIG.socials.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => sound.playClick()}
-                className="py-2 px-3 bg-[#0c081e] border border-pink-500/50 text-pink-300 font-bold uppercase tracking-wider text-center flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
-              >
-                <span>INSTAGRAM</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            </div>
+          {/* Drawer Bottom Status Telemetry */}
+          <div className="border-t border-[#312856] pt-3 flex items-center justify-between text-[10px] text-slate-400 pb-[max(8px,env(safe-area-inset-bottom))]">
+            <span className="text-slate-500 truncate max-w-[65%]">ACTIVE: {sectorName}</span>
+            <span className="text-cyan-400 font-bold">WARP: {Math.round(scrollProgress * 100)}%</span>
           </div>
         </div>
       )}
