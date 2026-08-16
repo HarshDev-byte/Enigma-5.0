@@ -48,10 +48,14 @@ export default function Home() {
     if (typeof window === 'undefined') return;
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      try {
-        window.history.replaceState(null, '', `#${id}`);
-      } catch {}
+      const navOffset = 70;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
+        behavior: 'smooth',
+      });
     }
   };
 
