@@ -74,16 +74,16 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
         </div>
       </div>
 
-      {/* Main Foreground Typography & Cinematic Composition */}
+      {/* Main Foreground Typography & Cinematic Composition — Centered Layout */}
       <div
-        className="relative z-10 max-w-7xl w-full mx-auto my-auto py-10 flex flex-col items-start justify-center transition-transform duration-500 ease-out"
+        className="relative z-10 max-w-5xl w-full mx-auto my-auto py-8 sm:py-12 flex flex-col items-center justify-center text-center transition-transform duration-500 ease-out"
         style={{
           transform: `translate3d(${mouseOffset.x * 0.8}px, ${mouseOffset.y * 0.8}px, 0)`,
         }}
       >
         {/* Moodboard Barcode & System Identifier Tag */}
-        <div className="flex flex-wrap items-center gap-3 mb-4">
-          <div className="inline-flex items-center gap-2 font-mono text-xs tracking-[0.35em] uppercase text-cyan-300 bg-[#060410]/90 px-3.5 py-1.5 border-l-2 border-cyan-400 border-y border-r border-[#312856] hud-bracket">
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
+          <div className="inline-flex items-center gap-2 font-mono text-xs tracking-[0.35em] uppercase text-cyan-300 bg-[#060410]/90 px-3.5 py-1.5 border border-cyan-400/80 hud-bracket shadow-[0_0_15px_rgba(0,240,255,0.2)]">
             <Cpu className="w-3.5 h-3.5 text-cyan-400" />
             <span className="font-bold">SYSTEM CLASSIFICATION: 2097.GENESIS</span>
           </div>
@@ -95,27 +95,28 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
         </div>
 
         {/* Monumental Hero Title — Moodboard Color Infusion */}
-        <div className="space-y-1 w-full">
-          <div className="font-mono text-xs sm:text-sm text-cyan-400 font-bold tracking-[0.4em] uppercase pb-1 flex items-center gap-3">
+        <div className="space-y-1 w-full text-center">
+          <div className="font-mono text-xs sm:text-sm text-cyan-400 font-bold tracking-[0.4em] uppercase pb-1 flex items-center justify-center gap-3">
+            <span className="w-8 sm:w-16 h-px bg-cyan-500/50 inline-block" />
             <span>// FLAGSHIP ARCHITECTURAL HACKATHON</span>
-            <span className="w-16 h-px bg-cyan-500/50 inline-block" />
+            <span className="w-8 sm:w-16 h-px bg-cyan-500/50 inline-block" />
           </div>
 
-          <h1 className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] font-black tracking-tighter uppercase font-mono leading-none break-words">
+          <h1 className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] font-black tracking-tighter uppercase font-mono leading-none break-words text-center">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 via-purple-300 to-pink-400 drop-shadow-[0_0_60px_rgba(168,85,247,0.6)] block">
               ENIGMA 5.0
             </span>
           </h1>
 
-          <div className="font-mono text-lg xs:text-xl sm:text-3xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 via-cyan-300 to-purple-400 tracking-[0.15em] sm:tracking-[0.25em] font-extrabold uppercase pt-2 flex flex-wrap items-center gap-2 sm:gap-4">
+          <div className="font-mono text-lg xs:text-xl sm:text-3xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 via-cyan-300 to-purple-400 tracking-[0.15em] sm:tracking-[0.25em] font-extrabold uppercase pt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4">
             <span>GENESIS</span>
             <span className="text-slate-600 hidden xs:inline">|</span>
             <span className="text-slate-200 font-light text-xs xs:text-base sm:text-2xl md:text-3xl">BEYOND THE FUTURE</span>
           </div>
         </div>
 
-        {/* Audio Waveform Spectrum Strip (from InstaMusic Reference #2) */}
-        <div className="mt-4 flex items-center gap-1.5 opacity-80">
+        {/* Audio Waveform Spectrum Strip (Centered) */}
+        <div className="mt-4 flex items-center justify-center gap-1.5 opacity-80">
           {[8, 14, 22, 10, 18, 28, 16, 24, 32, 20, 14, 26, 36, 18, 12, 24, 30, 16, 8, 20, 26, 14, 10, 22, 28].map((h, i) => (
             <span
               key={i}
@@ -131,21 +132,21 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
           </span>
         </div>
 
-        {/* Cinematic Manifesto Quote & System Brief */}
-        <div className="mt-6 max-w-3xl bg-[#060410]/90 backdrop-blur-md p-6 border-l-2 border-cyan-400 border-y border-r border-[#312856] hud-bracket shadow-2xl">
+        {/* Cinematic Manifesto Quote & System Brief (Centered) */}
+        <div className="mt-6 max-w-2xl w-full bg-[#060410]/90 backdrop-blur-md p-6 border border-[#312856] border-t-2 border-t-cyan-400 hud-bracket shadow-2xl text-center">
           <blockquote className="font-mono text-base sm:text-lg text-slate-100 leading-relaxed italic">
             "The future isn't waiting for us.
             <br />
             <strong className="text-cyan-300 font-bold not-italic">It's waiting to be fixed.</strong>"
           </blockquote>
-          <p className="font-mono text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+          <p className="font-mono text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed max-w-xl mx-auto">
             Humanity built hyper-intelligent systems in 2097. But the systems we created have begun to fail.
             What will you build when you get the chance to create it again?
           </p>
         </div>
 
-        {/* System Control CTA: ENTER GENESIS */}
-        <div className="mt-8 flex items-center">
+        {/* System Control CTA: ENTER GENESIS (Centered) */}
+        <div className="mt-8 flex items-center justify-center">
           <a
             href="#archive"
             onClick={() => {
