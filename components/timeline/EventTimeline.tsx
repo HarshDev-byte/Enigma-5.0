@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
 import { Calendar, Clock, CheckCircle2, Terminal, ArrowRight, Sparkles, FileCode, Award, Zap } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import HoloCard from '@/components/ui/HoloCard';
 
 export default function EventTimeline() {
   const timeline = EVENT_CONFIG.timeline;
@@ -53,23 +54,18 @@ export default function EventTimeline() {
               const isSelected = activeStep === idx;
 
               return (
-                <button
+                <HoloCard
                   key={item.step}
-                  type="button"
-                  onMouseEnter={() => sound.playHover()}
+                  glowColor={item.color}
                   onClick={() => {
                     sound.playClick();
                     setActiveStep(idx);
                   }}
-                  className={`p-4 sm:p-5 font-mono text-left border transition-all duration-300 hud-bracket backdrop-blur-md relative flex flex-col justify-between active:scale-95 ${
+                  className={`p-4 sm:p-5 font-mono text-left border transition-all duration-300 backdrop-blur-md relative flex flex-col justify-between active:scale-95 cursor-pointer ${
                     isSelected
                       ? 'bg-[#0b081a] text-white shadow-2xl scale-[1.02]'
                       : 'bg-[#060410]/90 text-slate-400 hover:text-slate-200 hover:border-purple-800'
                   }`}
-                  style={{
-                    borderColor: isSelected ? item.color : '#241a45',
-                    boxShadow: isSelected ? `0 0 25px ${item.color}40` : 'none',
-                  }}
                 >
                   <div>
                     <div className="flex items-center justify-between text-[10px] pb-2 border-b border-[#241a45]">
@@ -88,19 +84,16 @@ export default function EventTimeline() {
                     <span className="truncate">{item.tag}</span>
                     <ArrowRight className="w-3.5 h-3.5 shrink-0 ml-1" style={{ color: item.color }} />
                   </div>
-                </button>
+                </HoloCard>
               );
             })}
           </div>
         </div>
 
-        {/* Selected Stage Deep Showcase Dossier */}
-        <div
-          className="bg-[#060410]/95 border p-6 sm:p-10 hud-bracket backdrop-blur-md shadow-2xl space-y-6"
-          style={{
-            borderColor: current.color,
-            boxShadow: `0 0 40px ${current.color}30`,
-          }}
+        {/* Selected Stage Deep Showcase Dossier (HoloCard) */}
+        <HoloCard
+          glowColor={current.color}
+          className="bg-[#060410]/95 border p-6 sm:p-10 backdrop-blur-md shadow-2xl space-y-6"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#312856]">
             <div>
@@ -138,7 +131,7 @@ export default function EventTimeline() {
               <p className="font-mono text-xs text-slate-100 font-semibold">{current.tag}</p>
             </div>
           </div>
-        </div>
+        </HoloCard>
       </div>
     </section>
   );

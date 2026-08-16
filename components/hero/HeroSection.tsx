@@ -6,6 +6,8 @@ import { ShieldAlert, ArrowDownRight, Terminal, Cpu, Compass, Activity, Radio, S
 import { sound } from '@/lib/audio';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
 
+import HoloCard from '@/components/ui/HoloCard';
+
 interface HeroSectionProps {
   isGenesisActive: boolean;
   onInitializeGenesis: () => void;
@@ -138,8 +140,11 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
           </span>
         </button>
 
-        {/* Cinematic Manifesto Quote & System Brief (Centered) */}
-        <div className="mt-6 max-w-2xl w-full bg-[#060410]/90 backdrop-blur-md p-6 border border-[#312856] border-t-2 border-t-cyan-400 hud-bracket shadow-2xl text-center">
+        {/* Cinematic Manifesto Quote & System Brief (Holographic Card) */}
+        <HoloCard
+          glowColor="rgba(0, 240, 255, 0.4)"
+          className="mt-6 max-w-2xl w-full bg-[#060410]/90 backdrop-blur-md p-6 border border-[#312856] border-t-2 border-t-cyan-400 shadow-2xl text-center"
+        >
           <blockquote className="font-mono text-base sm:text-lg text-slate-100 leading-relaxed italic">
             "The future isn't waiting for us.
             <br />
@@ -149,7 +154,7 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
             Humanity built hyper-intelligent systems in 2097. But the systems we created have begun to fail.
             What will you build when you get the chance to create it again?
           </p>
-        </div>
+        </HoloCard>
 
         {/* System Control CTA: ENTER GENESIS (Centered) */}
         <div className="mt-8 flex items-center justify-center">
@@ -159,7 +164,7 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
               sound.playGenesisActivation();
               onInitializeGenesis();
             }}
-            className={`group relative font-mono text-xs sm:text-sm font-black uppercase px-10 py-4 tracking-widest border transition-all duration-300 focus:outline-none focus:ring-2 overflow-hidden ${
+            className={`group relative font-mono text-xs sm:text-sm font-black uppercase px-10 py-4 tracking-widest border transition-all duration-300 focus:outline-none focus:ring-2 overflow-hidden cursor-pointer ${
               isGenesisActive
                 ? 'bg-gradient-to-r from-emerald-400 to-teal-300 text-black border-emerald-300 hover:from-emerald-300 hover:to-teal-200 shadow-[0_0_30px_rgba(16,255,136,0.6)] focus:ring-emerald-400'
                 : 'bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 text-black border-cyan-300 hover:brightness-110 shadow-[0_0_35px_rgba(168,85,247,0.6)] focus:ring-cyan-400'
@@ -175,22 +180,22 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
         </div>
       </div>
 
-      {/* Bottom Technical Telemetry Grid with Moodboard Accents */}
+      {/* Bottom Technical Telemetry Grid with Holographic Prismatic Foil */}
       <div
         className="relative z-10 max-w-7xl w-full mx-auto pt-6 border-t border-[#312856]/80 grid grid-cols-2 md:grid-cols-4 gap-4 text-slate-300 font-mono text-[11px] transition-transform duration-300 ease-out"
         style={{
           transform: `translate3d(${mouseOffset.x * 0.3}px, ${mouseOffset.y * 0.3}px, 0)`,
         }}
       >
-        <div className="bg-[#060410]/90 p-3 border border-[#312856] hud-bracket">
+        <HoloCard glowColor="rgba(0, 240, 255, 0.4)" className="bg-[#060410]/90 p-3 border border-[#312856]">
           <div className="text-slate-400 text-[9px] uppercase tracking-wider flex items-center gap-1.5">
             <Compass className="w-3 h-3 text-cyan-400" />
             <span>EVENT TIMEFRAME</span>
           </div>
           <div className="text-slate-100 font-semibold mt-1">{EVENT_CONFIG.dates}</div>
-        </div>
+        </HoloCard>
 
-        <div className="bg-[#060410]/90 p-3 border border-[#312856] hud-bracket">
+        <HoloCard glowColor="rgba(168, 85, 247, 0.4)" className="bg-[#060410]/90 p-3 border border-[#312856]">
           <div className="text-slate-400 text-[9px] uppercase tracking-wider flex items-center gap-1.5">
             <Activity className="w-3 h-3 text-purple-400" />
             <span>TOTAL PRIZE VAULT</span>
@@ -198,23 +203,23 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
           <div className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-pink-400 font-bold mt-1">
             {EVENT_CONFIG.prizes.totalPool} REWARDS
           </div>
-        </div>
+        </HoloCard>
 
-        <div className="bg-[#060410]/90 p-3 border border-[#312856] hud-bracket">
+        <HoloCard glowColor="rgba(16, 255, 136, 0.4)" className="bg-[#060410]/90 p-3 border border-[#312856]">
           <div className="text-slate-400 text-[9px] uppercase tracking-wider flex items-center gap-1.5">
             <Terminal className="w-3 h-3 text-emerald-400" />
             <span>OPERATIONAL DURATION</span>
           </div>
           <div className="text-slate-100 font-semibold mt-1">{EVENT_CONFIG.duration}</div>
-        </div>
+        </HoloCard>
 
-        <div className="bg-[#060410]/90 p-3 border border-[#312856] hud-bracket">
+        <HoloCard glowColor="rgba(244, 63, 94, 0.4)" className="bg-[#060410]/90 p-3 border border-[#312856]">
           <div className="text-slate-400 text-[9px] uppercase tracking-wider flex items-center gap-1.5">
             <ShieldAlert className="w-3 h-3 text-rose-400" />
             <span>COLLAPSE DOMAINS</span>
           </div>
           <div className="text-rose-400 font-bold mt-1">HEALTH // FINANCE // EARTH</div>
-        </div>
+        </HoloCard>
       </div>
     </section>
   );

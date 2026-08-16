@@ -4,6 +4,7 @@ import React from 'react';
 import { RULE_PROTOCOLS } from '@/lib/constants';
 import { ShieldCheck, Scale, Award, Cpu, FileCode } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import HoloCard from '@/components/ui/HoloCard';
 
 export default function ProtocolRules() {
   return (
@@ -28,36 +29,41 @@ export default function ProtocolRules() {
           </p>
         </div>
 
-        {/* 4 Rules Grid */}
+        {/* 4 Rules Grid (HoloCards) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-          {RULE_PROTOCOLS.map((rule) => (
-            <div
-              key={rule.id}
-              className="bg-[#060410]/95 border border-[#312856] p-5 sm:p-8 hover:border-purple-500/60 transition-all hud-bracket flex flex-col justify-between shadow-xl"
-            >
-              <div>
-                <div className="flex items-center justify-between pb-3 border-b border-[#241a45] font-mono text-xs text-slate-400">
-                  <span className="text-cyan-400 font-bold">{rule.code}</span>
-                  <span className="text-[10px] text-purple-300 bg-black/60 px-2 py-0.5 border border-[#312856]">
-                    CLEARANCE: {rule.clearanceLevel}
-                  </span>
+          {RULE_PROTOCOLS.map((rule, idx) => {
+            const glow = idx % 2 === 0 ? 'rgba(0, 240, 255, 0.4)' : 'rgba(168, 85, 247, 0.4)';
+
+            return (
+              <HoloCard
+                key={rule.id}
+                glowColor={glow}
+                className="bg-[#060410]/95 border border-[#312856] p-5 sm:p-8 hover:border-purple-500/60 transition-all flex flex-col justify-between shadow-xl"
+              >
+                <div>
+                  <div className="flex items-center justify-between pb-3 border-b border-[#241a45] font-mono text-xs text-slate-400">
+                    <span className="text-cyan-400 font-bold">{rule.code}</span>
+                    <span className="text-[10px] text-purple-300 bg-black/60 px-2 py-0.5 border border-[#312856]">
+                      CLEARANCE: {rule.clearanceLevel}
+                    </span>
+                  </div>
+
+                  <h3 className="mt-4 font-mono text-lg font-black text-white uppercase">
+                    {rule.title}
+                  </h3>
+
+                  <p className="mt-2 font-mono text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    {rule.description}
+                  </p>
                 </div>
 
-                <h3 className="mt-4 font-mono text-lg font-black text-white uppercase">
-                  {rule.title}
-                </h3>
-
-                <p className="mt-2 font-mono text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {rule.description}
-                </p>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-[#241a45] flex items-center justify-between font-mono text-[10px] text-slate-400">
-                <span>COMPLIANCE: MANDATORY</span>
-                <span className="text-emerald-400 font-bold">VERIFIED PROTOCOL</span>
-              </div>
-            </div>
-          ))}
+                <div className="mt-6 pt-4 border-t border-[#241a45] flex items-center justify-between font-mono text-[10px] text-slate-400">
+                  <span>COMPLIANCE: MANDATORY</span>
+                  <span className="text-emerald-400 font-bold">VERIFIED PROTOCOL</span>
+                </div>
+              </HoloCard>
+            );
+          })}
         </div>
       </div>
     </section>

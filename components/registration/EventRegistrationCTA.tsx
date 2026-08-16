@@ -5,6 +5,7 @@ import { EVENT_CONFIG } from '@/lib/eventConfig';
 import { Terminal, ExternalLink, Zap, Sparkles, ShieldCheck } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { sound } from '@/lib/audio';
+import HoloCard from '@/components/ui/HoloCard';
 
 export default function EventRegistrationCTA() {
   const [isInitializing, setIsInitializing] = useState(false);
@@ -68,7 +69,7 @@ export default function EventRegistrationCTA() {
           <button
             onClick={() => handleRegisterClick(EVENT_CONFIG.urls.primaryRegistration)}
             disabled={isInitializing}
-            className="group relative w-full sm:w-auto px-12 py-5 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 hover:brightness-110 text-black font-mono text-base sm:text-lg font-black uppercase tracking-[0.25em] transition-all flex items-center justify-center gap-3 shadow-[0_0_35px_rgba(168,85,247,0.6)] focus:outline-none focus:ring-2 focus:ring-purple-400 overflow-hidden"
+            className="group relative w-full sm:w-auto px-12 py-5 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 hover:brightness-110 text-black font-mono text-base sm:text-lg font-black uppercase tracking-[0.25em] transition-all flex items-center justify-center gap-3 shadow-[0_0_35px_rgba(168,85,247,0.6)] focus:outline-none focus:ring-2 focus:ring-purple-400 overflow-hidden cursor-pointer"
           >
             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
             <span className="relative flex items-center gap-3">
@@ -79,37 +80,50 @@ export default function EventRegistrationCTA() {
           </button>
         </div>
 
-        {/* Direct Submission & Social Endpoints */}
+        {/* Direct Submission & Social Endpoints with HoloCards */}
         <div className="pt-4 flex flex-wrap items-center justify-center gap-4 font-mono text-xs">
           <span className="text-slate-400 uppercase tracking-widest mr-2">OFFICIAL PLATFORMS:</span>
 
-          <button
+          <HoloCard
+            glowColor="rgba(0, 240, 255, 0.4)"
             onClick={() => handleRegisterClick(EVENT_CONFIG.socials.unstop)}
-            className="px-6 py-3 bg-[#060410]/95 hover:bg-[#0b081a] border border-[#312856] hover:border-cyan-400 text-slate-100 hover:text-cyan-300 flex items-center gap-2 transition-all hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] shadow-md"
+            className="px-6 py-3 bg-[#060410]/95 hover:bg-[#0b081a] border border-[#312856] text-slate-100 hover:text-cyan-300 flex items-center gap-2 transition-all shadow-md cursor-pointer"
           >
             <span>UNSTOP PORTAL</span>
             <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
-          </button>
+          </HoloCard>
 
-          <a
-            href={EVENT_CONFIG.socials.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-3 bg-[#060410]/95 hover:bg-[#0b081a] border border-[#312856] hover:border-pink-400 text-slate-100 hover:text-pink-300 flex items-center gap-2 transition-all hover:shadow-[0_0_15px_rgba(236,72,153,0.3)] shadow-md"
+          <HoloCard
+            glowColor="rgba(236, 72, 153, 0.4)"
+            className="px-6 py-3 bg-[#060410]/95 hover:bg-[#0b081a] border border-[#312856] text-slate-100 hover:text-pink-300 flex items-center gap-2 transition-all shadow-md cursor-pointer"
           >
-            <span>INSTAGRAM</span>
-            <ExternalLink className="w-3.5 h-3.5 text-pink-400" />
-          </a>
+            <a
+              href={EVENT_CONFIG.socials.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => sound.playClick()}
+              className="flex items-center gap-2"
+            >
+              <span>INSTAGRAM</span>
+              <ExternalLink className="w-3.5 h-3.5 text-pink-400" />
+            </a>
+          </HoloCard>
 
-          <a
-            href={EVENT_CONFIG.socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-3 bg-[#060410]/95 hover:bg-[#0b081a] border border-[#312856] hover:border-blue-400 text-slate-100 hover:text-blue-300 flex items-center gap-2 transition-all hover:shadow-[0_0_15px_rgba(96,165,250,0.3)] shadow-md"
+          <HoloCard
+            glowColor="rgba(96, 165, 250, 0.4)"
+            className="px-6 py-3 bg-[#060410]/95 hover:bg-[#0b081a] border border-[#312856] text-slate-100 hover:text-blue-300 flex items-center gap-2 transition-all shadow-md cursor-pointer"
           >
-            <span>LINKEDIN</span>
-            <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
-          </a>
+            <a
+              href={EVENT_CONFIG.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => sound.playClick()}
+              className="flex items-center gap-2"
+            >
+              <span>LINKEDIN</span>
+              <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
+            </a>
+          </HoloCard>
         </div>
       </div>
     </section>

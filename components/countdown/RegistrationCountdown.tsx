@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
 import { ShieldAlert, Timer, ArrowRight, Zap, Radio, Lock, Clock, ExternalLink } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import HoloCard from '@/components/ui/HoloCard';
 
 export default function RegistrationCountdown() {
   const [timeLeft, setTimeLeft] = useState({
@@ -79,7 +80,7 @@ export default function RegistrationCountdown() {
           </div>
         </div>
 
-        {/* Monumental Holographic Countdown Matrix */}
+        {/* Monumental Holographic Countdown Matrix (HoloCards) */}
         {!timeLeft.isExpired ? (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {timeUnits.map((unit) => {
@@ -87,13 +88,11 @@ export default function RegistrationCountdown() {
               const progressPct = Math.min(100, Math.max(5, (unit.value / unit.max) * 100));
 
               return (
-                <div
+                <HoloCard
                   key={unit.label}
-                  className="bg-[#060410]/95 border border-[#312856] p-6 sm:p-8 hud-bracket backdrop-blur-md relative overflow-hidden group hover:border-purple-400 transition-all duration-300 shadow-2xl flex flex-col justify-between"
+                  glowColor={unit.color}
+                  className="bg-[#060410]/95 border border-[#312856] p-6 sm:p-8 backdrop-blur-md relative overflow-hidden group hover:border-purple-400 transition-all duration-300 shadow-2xl flex flex-col justify-between"
                 >
-                  {/* Subtle Scan Line */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent -translate-y-full group-hover:translate-y-full transition-transform duration-1000 pointer-events-none" />
-
                   {/* Unit Header */}
                   <div className="flex items-center justify-between text-xs font-mono pb-4 border-b border-[#241a45]">
                     <span className="text-slate-400 font-bold uppercase tracking-widest">{unit.label}</span>
@@ -131,7 +130,7 @@ export default function RegistrationCountdown() {
                       />
                     </div>
                   </div>
-                </div>
+                </HoloCard>
               );
             })}
           </div>
@@ -141,8 +140,11 @@ export default function RegistrationCountdown() {
           </div>
         )}
 
-        {/* Live Capacity Telemetry Strip */}
-        <div className="bg-[#060410]/95 border border-[#312856] p-6 hud-bracket backdrop-blur-md grid grid-cols-1 md:grid-cols-3 gap-6 items-center shadow-xl">
+        {/* Live Capacity Telemetry Strip (HoloCard) */}
+        <HoloCard
+          glowColor="rgba(168, 85, 247, 0.4)"
+          className="bg-[#060410]/95 border border-[#312856] p-6 backdrop-blur-md grid grid-cols-1 md:grid-cols-3 gap-6 items-center shadow-xl"
+        >
           <div className="flex items-center gap-3">
             <div className="p-3 bg-purple-950/50 border border-purple-500/40 text-purple-300">
               <Zap className="w-5 h-5" />
@@ -166,13 +168,14 @@ export default function RegistrationCountdown() {
           <div className="flex justify-start md:justify-end">
             <a
               href="#register"
-              className="w-full md:w-auto px-8 py-3.5 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 hover:brightness-110 text-black font-mono text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_25px_rgba(168,85,247,0.5)] flex items-center justify-center gap-2"
+              onClick={() => sound.playClick()}
+              className="w-full md:w-auto px-8 py-3.5 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 hover:brightness-110 text-black font-mono text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_25px_rgba(168,85,247,0.5)] flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>SECURE CLEARANCE</span>
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
-        </div>
+        </HoloCard>
       </div>
     </section>
   );

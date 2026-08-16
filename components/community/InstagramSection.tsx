@@ -4,6 +4,7 @@ import React from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
 import { Radio, ArrowRight, ExternalLink, Sparkles, Bell } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import HoloCard from '@/components/ui/HoloCard';
 
 function InstagramIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
@@ -59,7 +60,7 @@ export default function InstagramSection() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => sound.playClick()}
-            className="group relative w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500 hover:brightness-110 text-white font-mono text-sm sm:text-base font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 shadow-[0_0_35px_rgba(236,72,153,0.5)] border border-pink-400/60 overflow-hidden"
+            className="group relative w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500 hover:brightness-110 text-white font-mono text-sm sm:text-base font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 shadow-[0_0_35px_rgba(236,72,153,0.5)] border border-pink-400/60 overflow-hidden cursor-pointer"
           >
             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
             <InstagramIcon className="w-5 h-5 text-white" />
@@ -68,22 +69,22 @@ export default function InstagramSection() {
           </a>
         </div>
 
-        {/* Live Broadcast Telemetry Strip */}
+        {/* Live Broadcast Telemetry Strip (HoloCards) */}
         <div className="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center font-mono text-xs">
-          <div className="bg-[#060410]/95 border border-[#312856] p-4 hud-bracket shadow-lg">
+          <HoloCard glowColor="rgba(236, 72, 153, 0.4)" className="bg-[#060410]/95 border border-[#312856] p-4 shadow-lg">
             <div className="text-pink-400 font-bold uppercase mb-1">LIVE DISPATCHES</div>
             <div className="text-slate-400 text-[11px]">Instant reveals & timeline updates</div>
-          </div>
+          </HoloCard>
 
-          <div className="bg-[#060410]/95 border border-[#312856] p-4 hud-bracket shadow-lg">
+          <HoloCard glowColor="rgba(168, 85, 247, 0.4)" className="bg-[#060410]/95 border border-[#312856] p-4 shadow-lg">
             <div className="text-purple-400 font-bold uppercase mb-1">BEHIND THE SCENES</div>
             <div className="text-slate-400 text-[11px]">Council logs & lab preparations</div>
-          </div>
+          </HoloCard>
 
-          <div className="bg-[#060410]/95 border border-[#312856] p-4 hud-bracket shadow-lg">
+          <HoloCard glowColor="rgba(0, 240, 255, 0.4)" className="bg-[#060410]/95 border border-[#312856] p-4 shadow-lg">
             <div className="text-cyan-400 font-bold uppercase mb-1">WINNER ANNOUNCEMENTS</div>
             <div className="text-slate-400 text-[11px]">Podium broadcasts & trophy galas</div>
-          </div>
+          </HoloCard>
         </div>
       </div>
     </section>

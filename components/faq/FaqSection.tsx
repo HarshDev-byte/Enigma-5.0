@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
 import { ChevronDown, HelpCircle, Terminal, Search, Filter, CheckCircle2 } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import HoloCard from '@/components/ui/HoloCard';
 
 export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -60,7 +61,7 @@ export default function FaqSection() {
                     sound.playClick();
                     setActiveCategory(cat);
                   }}
-                  className={`px-3 sm:px-4 py-2 border uppercase tracking-wider transition-all whitespace-nowrap active:scale-95 ${
+                  className={`px-3 sm:px-4 py-2 border uppercase tracking-wider transition-all whitespace-nowrap active:scale-95 cursor-pointer ${
                     isSelected
                       ? 'bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 text-black font-black border-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.4)]'
                       : 'bg-[#060410]/90 border-[#241a45] text-slate-400 hover:text-slate-200 hover:border-purple-800'
@@ -85,23 +86,24 @@ export default function FaqSection() {
           </div>
         </div>
 
-        {/* FAQ Accordion List */}
+        {/* FAQ Accordion List (HoloCards) */}
         <div className="space-y-3">
           {filteredFaqs.length > 0 ? (
             filteredFaqs.map((faq, index) => {
               const isOpen = openIndex === index;
 
               return (
-                <div
+                <HoloCard
                   key={index}
-                  className={`border transition-all duration-200 hud-bracket shadow-lg overflow-hidden ${
+                  glowColor={isOpen ? 'rgba(168, 85, 247, 0.5)' : 'rgba(0, 240, 255, 0.25)'}
+                  className={`border transition-all duration-200 shadow-lg overflow-hidden ${
                     isOpen ? 'border-purple-400 bg-[#0b081a]' : 'border-[#241a45] bg-[#060410]/95 hover:border-purple-800'
                   }`}
                 >
                   <button
                     onClick={() => toggleFaq(index)}
                     aria-expanded={isOpen}
-                    className="w-full p-4 sm:p-6 text-left flex items-center justify-between gap-4 font-mono focus:outline-none"
+                    className="w-full p-4 sm:p-6 text-left flex items-center justify-between gap-4 font-mono focus:outline-none cursor-pointer"
                   >
                     <div className="flex items-center gap-3">
                       <span className={`text-xs font-bold ${isOpen ? 'text-purple-400' : 'text-slate-500'}`}>
@@ -127,7 +129,7 @@ export default function FaqSection() {
                       </div>
                     </div>
                   )}
-                </div>
+                </HoloCard>
               );
             })
           ) : (

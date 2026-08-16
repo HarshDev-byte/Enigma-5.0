@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
-import { Database, Calendar, Users, Trophy, Code2, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { Archive, Users, Trophy, Code2, Sparkles, ShieldCheck } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import HoloCard from '@/components/ui/HoloCard';
 
 export default function EnigmaArchive() {
   const [selectedIdx, setSelectedIdx] = useState(0);
@@ -13,22 +14,22 @@ export default function EnigmaArchive() {
   return (
     <section
       id="archive"
-      aria-label="Enigma Past Editions Archive"
+      aria-label="Enigma Past Editions and Legacy"
       className="relative py-28 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
       {/* Background Volumetric Glow */}
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-purple-500/10 blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/10 blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
+      <div className="max-w-7xl mx-auto space-y-10 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between pb-6 border-b border-[#312856] gap-4">
           <div>
             <div className="font-mono text-xs text-cyan-400 tracking-widest uppercase mb-2 flex items-center gap-2">
-              <Database className="w-3.5 h-3.5" />
-              <span>ENIGMA // ARCHIVE // PREVIOUS SYSTEMS</span>
+              <Archive className="w-3.5 h-3.5" />
+              <span>THE CHRONICLES // ARCHIVAL RECORDS</span>
             </div>
             <h2 className="text-3xl sm:text-5xl md:text-6xl font-mono font-black tracking-tight text-white uppercase">
-              PAST EDITIONS
+              ENIGMA ARCHIVE
             </h2>
           </div>
           <p className="font-mono text-xs sm:text-sm text-slate-300 max-w-md">
@@ -36,20 +37,19 @@ export default function EnigmaArchive() {
           </p>
         </div>
 
-        {/* Edition Selector Tabs (Mobile 2x2, Desktop 4x1) */}
+        {/* Edition Selector Tabs (HoloCards) */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
           {editions.map((item, idx) => {
             const isSelected = idx === selectedIdx;
             return (
-              <button
+              <HoloCard
                 key={item.edition}
-                type="button"
-                onMouseEnter={() => sound.playHover()}
+                glowColor={item.accent}
                 onClick={() => {
                   sound.playClick();
                   setSelectedIdx(idx);
                 }}
-                className={`p-3 sm:p-4 font-mono text-left transition-all border hud-bracket backdrop-blur-md relative overflow-hidden active:scale-95 ${
+                className={`p-3 sm:p-4 font-mono text-left transition-all border backdrop-blur-md relative overflow-hidden active:scale-95 cursor-pointer ${
                   isSelected
                     ? 'bg-[#0b081a] border-purple-400 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)]'
                     : 'bg-[#060410]/90 border-[#241a45] text-slate-400 hover:text-slate-200 hover:border-purple-800'
@@ -68,13 +68,16 @@ export default function EnigmaArchive() {
                 {isSelected && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400" />
                 )}
-              </button>
+              </HoloCard>
             );
           })}
         </div>
 
-        {/* Active Archive Showcase Dossier */}
-        <div className="bg-[#060410]/95 border border-[#312856] p-5 sm:p-10 hud-bracket backdrop-blur-md grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center shadow-2xl">
+        {/* Active Archive Showcase Dossier (HoloCard) */}
+        <HoloCard
+          glowColor={current.accent}
+          className="bg-[#060410]/95 border border-[#312856] p-5 sm:p-10 backdrop-blur-md grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center shadow-2xl"
+        >
           {/* Left: Cinematic Visual Terminal Card */}
           <div className="lg:col-span-6 relative aspect-video w-full bg-[#0b081a] border border-[#241a45] flex flex-col justify-between p-4 sm:p-6 overflow-hidden group shadow-inner">
             {/* Tech Pattern Grid */}
@@ -160,7 +163,7 @@ export default function EnigmaArchive() {
               </div>
             </div>
           </div>
-        </div>
+        </HoloCard>
       </div>
     </section>
   );
