@@ -1,5 +1,5 @@
-// Cybernetic Web Audio API Synthesizer Engine
-// Generates purely synthesized, zero-latency sci-fi audio effects without external audio files
+// Cybernetic Web Audio API Synthesizer Engine & Mobile Haptic Driver
+// Generates purely synthesized, zero-latency sci-fi audio effects and mobile haptics
 
 class SoundEngine {
   private ctx: AudioContext | null = null;
@@ -21,8 +21,18 @@ class SoundEngine {
     }
   }
 
+  // Mobile Tactile Haptic Vibration Trigger
+  public triggerHaptic(duration: number | number[] = 15) {
+    try {
+      if (typeof window !== 'undefined' && 'vibrate' in navigator) {
+        navigator.vibrate(duration as VibratePattern);
+      }
+    } catch {}
+  }
+
   public toggleMute(): boolean {
     this.isMuted = !this.isMuted;
+    this.triggerHaptic(20);
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : 0.25, this.ctx.currentTime);
     }
@@ -33,8 +43,9 @@ class SoundEngine {
     return this.isMuted;
   }
 
-  // Tactile Cybernetic Click
+  // Tactile Cybernetic Click with Mobile Haptic Pulse
   public playClick() {
+    this.triggerHaptic(12);
     if (this.isMuted) return;
     try {
       this.init();
@@ -85,6 +96,7 @@ class SoundEngine {
 
   // Terminal Keystroke Blip
   public playKeypress() {
+    this.triggerHaptic(8);
     if (this.isMuted) return;
     try {
       this.init();
@@ -109,6 +121,7 @@ class SoundEngine {
 
   // Cryptographic Glitch / Distortion
   public playGlitch() {
+    this.triggerHaptic([20, 30, 20]);
     if (this.isMuted) return;
     try {
       this.init();
@@ -133,8 +146,9 @@ class SoundEngine {
     } catch {}
   }
 
-  // Genesis Activation / Hyper-Warp Chord
+  // Genesis Activation / Hyper-Warp Chord with Cosmic Haptic Pulse
   public playGenesisActivation() {
+    this.triggerHaptic([30, 50, 40, 60, 30]);
     if (this.isMuted) return;
     try {
       this.init();
@@ -166,6 +180,7 @@ class SoundEngine {
 
   // Access Granted Chime
   public playAccessGranted() {
+    this.triggerHaptic([25, 40, 50]);
     if (this.isMuted) return;
     try {
       this.init();

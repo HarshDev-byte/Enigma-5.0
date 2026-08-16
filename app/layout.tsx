@@ -23,9 +23,12 @@ const rajdhani = Rajdhani({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#030508',
+  themeColor: '#040308',
   width: 'device-width',
   initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover',
 };
 
 export const metadata: Metadata = {
@@ -43,6 +46,12 @@ export const metadata: Metadata = {
     'Next-Gen Architects',
   ],
   authors: [{ name: 'ENIGMA Architectural Council' }],
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'ENIGMA 5.0',
+  },
   openGraph: {
     title: 'ENIGMA 5.0 — GENESIS: BEYOND THE FUTURE',
     description: 'What will you build when you get the chance to create it again?',
@@ -65,7 +74,7 @@ export default function RootLayout({
       lang="en"
       className={`${orbitron.variable} ${jetbrainsMono.variable} ${rajdhani.variable} scroll-smooth antialiased`}
     >
-      <body className="min-h-screen bg-[#030508] text-[#f0f6fc] font-mono selection:bg-[#00f0ff] selection:text-black">
+      <body className="min-h-screen bg-[#040308] text-[#f0f6fc] font-mono selection:bg-[#00f0ff] selection:text-black overflow-x-hidden">
         {children}
         <Analytics />
       </body>
