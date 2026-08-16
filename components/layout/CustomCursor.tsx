@@ -1,25 +1,62 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
+  const dotRef = useRef<HTMLDivElement | null>(null);
+  const ringRef = useRef<HTMLDivElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isClicking, setIsClicking] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isTouch, setIsTouch] = useState(true);
 
   useEffect(() => {
-    // Disable custom cursor on touch devices for mobile accessibility
-    if (window.matchMedia('(pointer: coarse)').matches) {
+    // Check for touch device or reduced motion
+    if (
+      typeof window === 'undefined' ||
+      window.matchMedia('(pointer: coarse)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       setIsTouch(true);
       return;
     }
     setIsTouch(false);
 
+    let mouseX = -100;
+    let mouseY = -100;
+    let ringX = -100;
+    let ringY = -100;
+    let animId: number;
+
     const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
       if (!isVisible) setIsVisible(true);
+
+      // Instant pinpoint tracking for the center laser dot
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+      }
     };
+
+    // Smooth physical lerp animation for the outer reticle ring
+    const render = () => {
+      // 0.22 lerp factor for snappy yet silky trailing physics
+      ringX += (mouseX - ringX) * 0.22;
+      ringY += (mouseY - ringY) * 0.22;
+
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+      }
+
+      animId = requestAnimationFrame(render);
+    };
+
+    animId = requestAnimationFrame(render);
+
+    const handleMouseDown = () => setIsClicking(true);
+    const handleMouseUp = () => setIsClicking(false);
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
@@ -41,11 +78,16 @@ export default function CustomCursor() {
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
     window.addEventListener('mouseover', handleMouseOver);
     document.documentElement.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
+      cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mouseover', handleMouseOver);
       document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
     };
@@ -54,32 +96,69 @@ export default function CustomCursor() {
   if (isTouch || !isVisible) return null;
 
   return (
-    <div
-      className="fixed top-0 left-0 pointer-events-none z-50 transition-transform duration-75 ease-out"
-      style={{
-        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-      }}
-      aria-hidden="true"
-    >
-      {/* Precision reticle crosshair */}
+    <>
+      {/* 1. Instant Precision Central Laser Dot */}
       <div
-        className={`relative -top-3 -left-3 flex items-center justify-center transition-all duration-200 ${
-          isHovered ? 'scale-150' : 'scale-100'
-        }`}
+        ref={dotRef}
+        className="fixed top-0 left-0 pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 will-change-transform"
+        aria-hidden="true"
       >
-        <div className="w-6 h-6 border border-cyan-400/50 rounded-none relative">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-cyan-400" />
-          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-[1px] h-1 bg-cyan-400" />
-          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[1px] h-1 bg-cyan-400" />
-          <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-1 h-[1px] bg-cyan-400" />
-          <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-1 h-[1px] bg-cyan-400" />
-        </div>
+        <div
+          className={`w-1.5 h-1.5 rounded-full transition-all duration-150 ${
+            isHovered
+              ? 'bg-purple-400 scale-150 shadow-[0_0_12px_rgba(168,85,247,0.9)]'
+              : 'bg-cyan-400 shadow-[0_0_8px_rgba(0,240,255,0.8)]'
+          }`}
+        />
+      </div>
 
-        {/* Real-time coordinates readout */}
-        <div className="absolute left-7 top-1 whitespace-nowrap font-mono text-[9px] text-cyan-400/80 tracking-widest bg-black/80 px-1 py-0.5 border border-cyan-500/30">
-          X:{String(Math.round(position.x)).padStart(4, '0')} Y:{String(Math.round(position.y)).padStart(4, '0')}
+      {/* 2. Silky Trailing Holographic Target Reticle Ring */}
+      <div
+        ref={ringRef}
+        className="fixed top-0 left-0 pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 will-change-transform"
+        aria-hidden="true"
+      >
+        <div
+          className={`relative flex items-center justify-center transition-all duration-200 ease-out ${
+            isClicking
+              ? 'scale-75'
+              : isHovered
+              ? 'scale-150'
+              : 'scale-100'
+          }`}
+        >
+          {/* Outer Rotating Geometric Reticle */}
+          <div
+            className={`w-8 h-8 rounded-full border transition-all duration-300 ${
+              isHovered
+                ? 'border-purple-400 bg-purple-500/10 shadow-[0_0_20px_rgba(168,85,247,0.4)] border-dashed animate-[spin_10s_linear_infinite]'
+                : 'border-cyan-400/40'
+            }`}
+          />
+
+          {/* 4 Precision Crosshair Notches */}
+          <div
+            className={`absolute -top-1 left-1/2 -translate-x-1/2 w-0.5 h-1 transition-colors ${
+              isHovered ? 'bg-purple-400' : 'bg-cyan-400/60'
+            }`}
+          />
+          <div
+            className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-0.5 h-1 transition-colors ${
+              isHovered ? 'bg-purple-400' : 'bg-cyan-400/60'
+            }`}
+          />
+          <div
+            className={`absolute top-1/2 -left-1 -translate-y-1/2 w-1 h-0.5 transition-colors ${
+              isHovered ? 'bg-purple-400' : 'bg-cyan-400/60'
+            }`}
+          />
+          <div
+            className={`absolute top-1/2 -right-1 -translate-y-1/2 w-1 h-0.5 transition-colors ${
+              isHovered ? 'bg-purple-400' : 'bg-cyan-400/60'
+            }`}
+          />
         </div>
       </div>
-    </div>
+    </>
   );
 }
