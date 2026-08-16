@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
-import { Compass, Radio, Terminal, Volume2, VolumeX, Sparkles, ChevronRight, Zap } from 'lucide-react';
+import { Compass, Radio, Terminal, Volume2, VolumeX, Zap, Trophy, Globe, Calendar, ExternalLink, Sparkles, Layers } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import CyberTerminalModal from '@/components/terminal/CyberTerminalModal';
 
@@ -15,27 +15,35 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(sound.getMuted());
   const [activeSection, setActiveSection] = useState('hero');
-  const mobileNavRef = useRef<HTMLDivElement | null>(null);
 
   const isCollapse = scrollProgress >= 0.22 && scrollProgress <= 0.35;
   const isRebuilt = scrollProgress >= 0.70;
 
-  const navItems = [
-    { id: 'hero', label: 'HERO', num: '01', desc: 'Summit & Megacity', sector: 'WORLD 01 // CYBER MEGACITY' },
-    { id: 'archive', label: 'ARCHIVE', num: '02', desc: 'Past Editions', sector: 'ENIGMA ARCHIVE // PAST EDITIONS' },
-    { id: 'countdown', label: 'CLOCK', num: '03', desc: 'Urgency Clock', sector: 'SYSTEM ALERT // COUNTDOWN' },
-    { id: 'tracks', label: 'TRACKS', num: '04', desc: '03 Worlds', sector: 'OFFICIAL TRACKS // 03 WORLDS' },
-    { id: 'timeline', label: 'TIMELINE', num: '05', desc: '4-Stage Plan', sector: 'EVENT TIMELINE // MISSION ROADMAP' },
-    { id: 'prizes', label: 'PRIZES', num: '06', desc: '₹1.5L+ Vault', sector: 'PRIZE VAULT // BOUNTY MATRIX' },
-    { id: 'protocols', label: 'RULES', num: '07', desc: 'Protocols', sector: 'SECURITY PROTOCOLS // RULES' },
-    { id: 'faq', label: 'FAQ', num: '08', desc: 'Directives', sector: 'SYSTEM FAQ // CLEARANCE DIRECTIVES' },
-    { id: 'community', label: 'SOCIAL', num: '09', desc: 'Instagram', sector: 'OFFICIAL COMMUNITY // INSTAGRAM' },
-    { id: 'register', label: 'REGISTER', num: '10', desc: 'Unstop Portal', sector: 'GATEWAY 10 // ARCHITECT ACCESS' },
+  const allNavItems = [
+    { id: 'hero', label: 'HERO', num: '01', sector: 'WORLD 01 // CYBER MEGACITY' },
+    { id: 'archive', label: 'ARCHIVE', num: '02', sector: 'ENIGMA ARCHIVE // PAST EDITIONS' },
+    { id: 'countdown', label: 'CLOCK', num: '03', sector: 'SYSTEM ALERT // COUNTDOWN' },
+    { id: 'tracks', label: 'TRACKS', num: '04', sector: 'OFFICIAL TRACKS // 03 WORLDS' },
+    { id: 'timeline', label: 'TIMELINE', num: '05', sector: 'EVENT TIMELINE // MISSION ROADMAP' },
+    { id: 'prizes', label: 'PRIZES', num: '06', sector: 'PRIZE VAULT // BOUNTY MATRIX' },
+    { id: 'protocols', label: 'RULES', num: '07', sector: 'SECURITY PROTOCOLS // RULES' },
+    { id: 'faq', label: 'FAQ', num: '08', sector: 'SYSTEM FAQ // CLEARANCE DIRECTIVES' },
+    { id: 'community', label: 'SOCIAL', num: '09', sector: 'OFFICIAL COMMUNITY // INSTAGRAM' },
+    { id: 'register', label: 'REGISTER', num: '10', sector: 'GATEWAY 10 // ARCHITECT ACCESS' },
+  ];
+
+  // 5 Primary Quick Keys for Mobile Screen (< 768px)
+  const mobilePrimaryKeys = [
+    { id: 'hero', label: 'GENESIS', icon: Zap },
+    { id: 'tracks', label: 'TRACKS', icon: Globe },
+    { id: 'prizes', label: 'PRIZES', icon: Trophy },
+    { id: 'timeline', label: 'ROADMAP', icon: Calendar },
+    { id: 'register', label: 'UNSTOP', icon: ExternalLink, isCta: true },
   ];
 
   useEffect(() => {
     const handleScrollDetect = () => {
-      const sectionIds = navItems.map((n) => n.id);
+      const sectionIds = allNavItems.map((n) => n.id);
       const scrollPosition = window.scrollY + 180;
 
       for (let i = sectionIds.length - 1; i >= 0; i--) {
@@ -55,17 +63,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
     return () => window.removeEventListener('scroll', handleScrollDetect);
   }, []);
 
-  // Auto-scroll the active mobile pill into center view
-  useEffect(() => {
-    if (mobileNavRef.current) {
-      const activeBtn = mobileNavRef.current.querySelector(`[data-nav-id="${activeSection}"]`);
-      if (activeBtn) {
-        activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      }
-    }
-  }, [activeSection]);
-
-  const currentNavItem = navItems.find((n) => n.id === activeSection) || navItems[0];
+  const currentNavItem = allNavItems.find((n) => n.id === activeSection) || allNavItems[0];
   const sectorName = currentNavItem.sector;
   const currentSection = activeSection;
 
@@ -158,34 +156,33 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
 
         {/* Bottom Floating Navigation Frame */}
         <div className="flex flex-col gap-2 max-w-6xl w-full mx-auto pointer-events-auto pb-[max(6px,env(safe-area-inset-bottom))] px-1 sm:px-0">
-          {/* 1. ULTRA-SLEEK MOBILE FLOATING CYBER DOCK (< 768px) */}
+          {/* 1. ULTRA-SLEEK 5-KEY PRO CYBER DOCK FOR MOBILE (< 768px) */}
           <nav
-            aria-label="Mobile Ergonomic Cyber Dock"
-            ref={mobileNavRef}
-            className="flex md:hidden bg-[#060410]/98 backdrop-blur-2xl px-2 py-1.5 border border-purple-500/40 rounded-full shadow-[0_12px_35px_rgba(0,0,0,0.95)] items-center gap-1.5 font-mono w-full overflow-x-auto no-scrollbar scroll-smooth"
+            aria-label="Mobile Cyber Navigation Dock"
+            className="flex md:hidden bg-[#060410]/98 backdrop-blur-2xl px-1.5 py-1.5 border border-purple-500/50 rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.95)] items-center justify-between font-mono w-full"
           >
-            {navItems.map((item) => {
+            {mobilePrimaryKeys.map((item) => {
               const isActive = currentSection === item.id;
-              const isRegister = item.id === 'register';
+              const isCta = item.isCta;
+              const Icon = item.icon;
 
               return (
                 <button
                   key={item.id}
-                  data-nav-id={item.id}
                   type="button"
                   onClick={() => handleNavClick(item.id)}
-                  className={`py-2 px-3.5 rounded-full text-[11px] uppercase font-mono tracking-wider whitespace-nowrap transition-all duration-200 shrink-0 flex items-center gap-1.5 active:scale-95 cursor-pointer ${
-                    isRegister
-                      ? 'bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 text-black font-black shadow-[0_0_18px_rgba(168,85,247,0.7)] ml-auto'
+                  className={`flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer ${
+                    isCta
+                      ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-400 text-black font-black shadow-[0_0_15px_rgba(168,85,247,0.7)]'
                       : isActive
-                      ? 'bg-gradient-to-r from-purple-600/90 to-cyan-600/90 text-white font-black border border-cyan-400/80 shadow-[0_0_15px_rgba(0,240,255,0.5)]'
-                      : 'bg-[#0e0a24]/80 text-slate-300 hover:text-white border border-[#312856]/60'
+                      ? 'bg-purple-950/80 border border-cyan-400/80 text-cyan-300 shadow-[0_0_12px_rgba(0,240,255,0.4)]'
+                      : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  <span className={`text-[9px] ${isRegister ? 'text-black/80 font-black' : isActive ? 'text-cyan-300 font-black' : 'text-purple-400'}`}>
-                    {item.num}
+                  <Icon className={`w-4 h-4 mb-0.5 ${isCta ? 'text-black fill-black' : isActive ? 'text-cyan-400' : 'text-slate-400'}`} />
+                  <span className={`text-[9.5px] uppercase font-mono tracking-wider ${isCta ? 'font-black' : isActive ? 'font-black text-white' : 'font-medium'}`}>
+                    {item.label}
                   </span>
-                  <span>{item.label}</span>
                 </button>
               );
             })}
@@ -205,7 +202,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
 
             {/* Navigation Items */}
             <div className="flex items-center justify-between w-full gap-0.5 sm:gap-1 md:gap-1.5 text-[9px] sm:text-[11px] md:text-xs">
-              {navItems.map((item) => {
+              {allNavItems.map((item) => {
                 const isActive = currentSection === item.id;
                 const isRegister = item.id === 'register';
 
