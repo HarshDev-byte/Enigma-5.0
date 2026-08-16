@@ -89,6 +89,10 @@ section {
   -webkit-backdrop-filter: blur(12px);
 }
 
+section[id] {
+  scroll-margin-top: 70px;
+}
+
 /* Futuristic Scanline Overlay */
 .scanlines {
   background: linear-gradient(

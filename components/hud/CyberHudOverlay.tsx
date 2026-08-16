@@ -61,13 +61,10 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
     { id: 'register', label: 'REGISTER', num: '10', desc: 'Unstop Portal' },
   ];
 
-  const handleMobileNavWarp = (id: string) => {
+  const handleNavClick = (id: string) => {
     sound.playClick();
     setIsMobileMenuOpen(false);
-    // Allow state transition to cleanly finalize before triggering smooth scroll
-    setTimeout(() => {
-      onWarpToSection(id);
-    }, 60);
+    onWarpToSection(id);
   };
 
   return (
@@ -120,8 +117,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
             {/* SECTORS MATRIX TRIGGER */}
             <button
               type="button"
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 sound.playClick();
                 setIsMobileMenuOpen(true);
               }}
@@ -131,13 +127,12 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
               <span>SECTORS</span>
             </button>
 
-            {/* 04 TRACKS BUTTON */}
-            <button
-              type="button"
+            {/* 04 TRACKS LINK */}
+            <a
+              href="#tracks"
               onClick={(e) => {
-                e.stopPropagation();
-                sound.playClick();
-                onWarpToSection('tracks');
+                e.preventDefault();
+                handleNavClick('tracks');
               }}
               className={`flex-1 py-2 px-2 text-center text-[11px] font-bold uppercase tracking-wider border active:scale-95 transition-all truncate cursor-pointer ${
                 currentSection === 'tracks'
@@ -146,15 +141,14 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
               }`}
             >
               04 TRACKS
-            </button>
+            </a>
 
-            {/* 06 PRIZES BUTTON */}
-            <button
-              type="button"
+            {/* 06 PRIZES LINK */}
+            <a
+              href="#prizes"
               onClick={(e) => {
-                e.stopPropagation();
-                sound.playClick();
-                onWarpToSection('prizes');
+                e.preventDefault();
+                handleNavClick('prizes');
               }}
               className={`flex-1 py-2 px-2 text-center text-[11px] font-bold uppercase tracking-wider border active:scale-95 transition-all truncate cursor-pointer ${
                 currentSection === 'prizes'
@@ -163,20 +157,19 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
               }`}
             >
               06 PRIZES
-            </button>
+            </a>
 
-            {/* HIGH-VOLTAGE REGISTER CTA BUTTON */}
-            <button
-              type="button"
+            {/* HIGH-VOLTAGE REGISTER CTA LINK */}
+            <a
+              href="#register"
               onClick={(e) => {
-                e.stopPropagation();
-                sound.playClick();
-                onWarpToSection('register');
+                e.preventDefault();
+                handleNavClick('register');
               }}
               className="py-2 px-3 text-center text-[11px] font-black text-black bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 shadow-[0_0_18px_rgba(168,85,247,0.6)] active:scale-95 transition-all shrink-0 uppercase tracking-wider cursor-pointer"
             >
               🚀 UNSTOP
-            </button>
+            </a>
           </nav>
 
           {/* 2. DESKTOP AEROSPACE RIBBON (>= 768px) */}
@@ -198,12 +191,12 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
                 const isRegister = item.id === 'register';
 
                 return (
-                  <button
+                  <a
                     key={item.id}
-                    type="button"
-                    onClick={() => {
-                      sound.playClick();
-                      onWarpToSection(item.id);
+                    href={`#${item.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(item.id);
                     }}
                     className={`group relative flex-1 text-center py-1 sm:py-1.5 px-0.5 sm:px-1.5 md:px-2 transition-all duration-200 uppercase font-mono tracking-wider flex items-center justify-center gap-0.5 sm:gap-1 focus:outline-none focus:ring-1 focus:ring-purple-400 whitespace-nowrap cursor-pointer ${
                       isRegister
@@ -217,7 +210,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
                       {item.num}
                     </span>
                     <span className="truncate">{item.label}</span>
-                  </button>
+                  </a>
                 );
               })}
             </div>
@@ -267,10 +260,13 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
               const isRegister = item.id === 'register';
 
               return (
-                <button
+                <a
                   key={item.id}
-                  type="button"
-                  onClick={() => handleMobileNavWarp(item.id)}
+                  href={`#${item.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.id);
+                  }}
                   className={`p-3 border transition-all text-left flex flex-col justify-between hud-bracket active:scale-95 min-h-[76px] cursor-pointer ${
                     isRegister
                       ? 'bg-gradient-to-br from-purple-900/40 via-pink-900/30 to-cyan-900/40 border-cyan-400 text-white shadow-[0_0_15px_rgba(0,240,255,0.3)] col-span-2'
@@ -296,7 +292,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
                     <div className="font-mono text-xs font-black uppercase tracking-wider">{item.label}</div>
                     <div className="text-[9px] text-slate-400 truncate">{item.desc}</div>
                   </div>
-                </button>
+                </a>
               );
             })}
           </div>

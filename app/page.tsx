@@ -48,9 +48,10 @@ export default function Home() {
     if (typeof window === 'undefined') return;
     const el = document.getElementById(id);
     if (el) {
-      const yOffset = -20;
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      try {
+        window.history.replaceState(null, '', `#${id}`);
+      } catch {}
     }
   };
 
