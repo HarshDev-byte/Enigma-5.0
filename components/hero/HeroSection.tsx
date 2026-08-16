@@ -101,16 +101,16 @@ export default function HeroSection({ isGenesisActive, onInitializeGenesis }: He
             <span className="w-16 h-px bg-cyan-500/50 inline-block" />
           </div>
 
-          <h1 className="text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] font-black tracking-tighter uppercase font-mono leading-none">
+          <h1 className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] font-black tracking-tighter uppercase font-mono leading-none break-words">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 via-purple-300 to-pink-400 drop-shadow-[0_0_60px_rgba(168,85,247,0.6)] block">
               ENIGMA 5.0
             </span>
           </h1>
 
-          <div className="font-mono text-xl sm:text-3xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 via-cyan-300 to-purple-400 tracking-[0.25em] font-extrabold uppercase pt-2 flex items-center gap-4">
+          <div className="font-mono text-lg xs:text-xl sm:text-3xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 via-cyan-300 to-purple-400 tracking-[0.15em] sm:tracking-[0.25em] font-extrabold uppercase pt-2 flex flex-wrap items-center gap-2 sm:gap-4">
             <span>GENESIS</span>
-            <span className="text-slate-600">|</span>
-            <span className="text-slate-200 font-light text-base sm:text-2xl md:text-3xl">BEYOND THE FUTURE</span>
+            <span className="text-slate-600 hidden xs:inline">|</span>
+            <span className="text-slate-200 font-light text-xs xs:text-base sm:text-2xl md:text-3xl">BEYOND THE FUTURE</span>
           </div>
         </div>
 

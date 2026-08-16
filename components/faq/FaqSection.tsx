@@ -30,27 +30,27 @@ export default function FaqSection() {
     <section
       id="faq"
       aria-label="Frequently Asked Questions"
-      className="relative py-32 px-4 sm:px-8 lg:px-12 bg-[#020408] border-b border-[#162436] hud-grid overflow-hidden"
+      className="relative py-32 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
-      <div className="max-w-5xl mx-auto space-y-12 relative z-10">
+      <div className="max-w-5xl mx-auto space-y-10 sm:space-y-12 relative z-10">
         {/* Header */}
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 font-mono text-xs text-cyan-300 bg-[#03060c]/90 px-4 py-1.5 border border-cyan-500/40 uppercase tracking-widest hud-bracket">
-            <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
+        <div className="text-center space-y-3 sm:space-y-4">
+          <div className="inline-flex items-center gap-2 font-mono text-xs text-purple-300 bg-[#060410]/95 px-4 py-1.5 border border-purple-500/40 uppercase tracking-widest hud-bracket shadow-lg">
+            <HelpCircle className="w-3.5 h-3.5 text-purple-400" />
             <span>KNOWLEDGE ARCHIVE // DIRECTIVES & PROTOCOLS</span>
           </div>
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-mono font-black tracking-tight text-white uppercase">
-            FREQUENTLY ASKED QUESTIONS
+            SYSTEM FAQ
           </h2>
-          <p className="font-mono text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
+          <p className="font-mono text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
             Instant intelligence on participation criteria, squad allocations, technological freedoms, submission parameters, and judging standards.
           </p>
         </div>
 
         {/* Filter Toolbar: Categories & Search Input */}
-        <div className="space-y-4">
-          {/* Category Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 font-mono text-xs">
+        <div className="space-y-3 sm:space-y-4">
+          {/* Category Tabs (Horizontal Touch Scroll on Mobile) */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 font-mono text-xs no-scrollbar">
             {categories.map((cat) => {
               const isSelected = activeCategory === cat;
               return (
@@ -59,12 +59,11 @@ export default function FaqSection() {
                   onClick={() => {
                     sound.playClick();
                     setActiveCategory(cat);
-                    setOpenIndex(0);
                   }}
-                  className={`px-4 py-2 border uppercase tracking-wider whitespace-nowrap transition-all hud-bracket ${
+                  className={`px-3 sm:px-4 py-2 border uppercase tracking-wider transition-all whitespace-nowrap active:scale-95 ${
                     isSelected
-                      ? 'bg-cyan-400 text-black font-black border-cyan-300 shadow-[0_0_15px_rgba(0,240,255,0.4)]'
-                      : 'bg-[#03060c]/90 text-slate-400 hover:text-white border-[#162436] hover:border-slate-600'
+                      ? 'bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 text-black font-black border-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.4)]'
+                      : 'bg-[#060410]/90 border-[#241a45] text-slate-400 hover:text-slate-200 hover:border-purple-800'
                   }`}
                 >
                   {cat}
@@ -72,56 +71,70 @@ export default function FaqSection() {
               );
             })}
           </div>
+
+          {/* Search Input Field */}
+          <div className="relative">
+            <Search className="w-4 h-4 text-purple-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="SEARCH PROTOCOLS OR DIRECTIVES..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-11 pr-4 py-3 bg-[#060410]/95 border border-[#312856] font-mono text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 tracking-wider shadow-inner"
+            />
+          </div>
         </div>
 
-        {/* Interactive FAQ Accordion List */}
-        <div className="space-y-3.5">
-          {filteredFaqs.map((faq, idx) => {
-            const isOpen = openIndex === idx;
+        {/* FAQ Accordion List */}
+        <div className="space-y-3">
+          {filteredFaqs.length > 0 ? (
+            filteredFaqs.map((faq, index) => {
+              const isOpen = openIndex === index;
 
-            return (
-              <div
-                key={idx}
-                className={`bg-[#03060c]/95 border transition-all duration-300 hud-bracket backdrop-blur-md overflow-hidden ${
-                  isOpen
-                    ? 'border-cyan-400/80 shadow-[0_0_20px_rgba(0,240,255,0.15)]'
-                    : 'border-[#162436] hover:border-slate-600'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => toggleFaq(idx)}
-                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-mono focus:outline-none focus:bg-[#070c14]"
-                  aria-expanded={isOpen}
+              return (
+                <div
+                  key={index}
+                  className={`border transition-all duration-200 hud-bracket shadow-lg overflow-hidden ${
+                    isOpen ? 'border-purple-400 bg-[#0b081a]' : 'border-[#241a45] bg-[#060410]/95 hover:border-purple-800'
+                  }`}
                 >
-                  <div className="flex items-center gap-3.5">
-                    <span className="text-cyan-400 font-mono text-xs font-bold bg-cyan-950/40 px-2 py-1 border border-cyan-500/30">
-                      [{String(idx + 1).padStart(2, '0')}]
-                    </span>
-                    <span className="text-sm sm:text-base font-bold text-white uppercase tracking-wide">
-                      {faq.q}
-                    </span>
-                  </div>
-
-                  <ChevronDown
-                    className={`w-4 h-4 text-cyan-400 shrink-0 transition-transform duration-300 ${
-                      isOpen ? 'rotate-180 text-emerald-400' : ''
-                    }`}
-                  />
-                </button>
-
-                {isOpen && (
-                  <div className="px-6 pb-6 pt-2 font-mono text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-[#162436]/60 bg-[#020306]/90 space-y-3">
-                    <div className="flex items-center gap-2 text-[10px] text-cyan-400 font-bold uppercase tracking-widest">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>DIRECTIVE CLASSIFICATION: {faq.category}</span>
+                  <button
+                    onClick={() => toggleFaq(index)}
+                    aria-expanded={isOpen}
+                    className="w-full p-4 sm:p-6 text-left flex items-center justify-between gap-4 font-mono focus:outline-none"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className={`text-xs font-bold ${isOpen ? 'text-purple-400' : 'text-slate-500'}`}>
+                        // 0{index + 1}
+                      </span>
+                      <h3 className="text-sm sm:text-base font-bold text-white uppercase tracking-tight">
+                        {faq.q}
+                      </h3>
                     </div>
-                    <p>{faq.a}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                    <ChevronDown
+                      className={`w-5 h-5 shrink-0 transition-transform duration-300 ${
+                        isOpen ? 'rotate-180 text-purple-400' : 'text-slate-500'
+                      }`}
+                    />
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-4 sm:px-6 pb-5 sm:pb-6 pt-2 font-mono text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-[#241a45]/80 animate-in fade-in duration-200">
+                      <p>{faq.a}</p>
+                      <div className="mt-3 pt-3 border-t border-[#241a45]/50 flex items-center gap-2 text-[10px] text-purple-400">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-purple-400" />
+                        <span className="uppercase">CATEGORY: {faq.category}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          ) : (
+            <div className="p-8 text-center font-mono text-xs text-slate-500 border border-[#241a45] bg-[#060410]">
+              NO MATCHING DIRECTIVES FOUND IN ARCHIVE.
+            </div>
+          )}
         </div>
       </div>
     </section>

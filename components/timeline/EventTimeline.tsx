@@ -14,17 +14,17 @@ export default function EventTimeline() {
     <section
       id="timeline"
       aria-label="Official Event Timeline and Roadmap"
-      className="relative py-32 px-4 sm:px-8 lg:px-12 bg-[#020306] border-b border-[#162436] hud-grid overflow-hidden"
+      className="relative py-32 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
       {/* Background Volumetric Ambient Radial */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-96 blur-3xl opacity-15 pointer-events-none transition-colors duration-700"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-96 blur-[140px] opacity-15 pointer-events-none transition-colors duration-700"
         style={{ backgroundColor: current.color }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+      <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12 relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between pb-6 border-b border-[#162436] gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between pb-6 border-b border-[#312856] gap-4">
           <div>
             <div className="font-mono text-xs text-cyan-400 tracking-widest uppercase mb-2 flex items-center gap-2">
               <Terminal className="w-3.5 h-3.5" />
@@ -34,7 +34,7 @@ export default function EventTimeline() {
               EVENT TIMELINE
             </h2>
           </div>
-          <div className="font-mono text-xs text-slate-400 max-w-md">
+          <div className="font-mono text-xs sm:text-sm text-slate-300 max-w-md">
             The 36-hour sprint journey mapped into four precision operational milestones. Click any phase to inspect deliverables and protocols.
           </div>
         </div>
@@ -42,13 +42,13 @@ export default function EventTimeline() {
         {/* Interactive Cybernetic Milestone Stepper & Progress Wire */}
         <div className="relative">
           {/* Connecting Circuit Line */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-[#162436] -translate-y-1/2 z-0" />
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-[#312856] -translate-y-1/2 z-0" />
           <div
-            className="hidden lg:block absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-cyan-400 via-pink-400 to-emerald-400 -translate-y-1/2 z-0 transition-all duration-500"
+            className="hidden lg:block absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 -translate-y-1/2 z-0 transition-all duration-500"
             style={{ width: `${((activeStep + 1) / timeline.length) * 100}%` }}
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 relative z-10">
             {timeline.map((item, idx) => {
               const isSelected = activeStep === idx;
 
@@ -59,49 +59,32 @@ export default function EventTimeline() {
                     sound.playClick();
                     setActiveStep(idx);
                   }}
-                  className={`p-5 sm:p-6 text-left font-mono border transition-all duration-300 hud-bracket backdrop-blur-md relative flex flex-col justify-between ${
+                  className={`p-4 sm:p-5 font-mono text-left border transition-all duration-300 hud-bracket backdrop-blur-md relative flex flex-col justify-between active:scale-95 ${
                     isSelected
-                      ? 'bg-[#070c14] text-white shadow-2xl scale-[1.02]'
-                      : 'bg-[#03060c]/85 text-slate-400 hover:text-slate-200 hover:border-slate-600'
+                      ? 'bg-[#0b081a] text-white shadow-2xl scale-[1.02]'
+                      : 'bg-[#060410]/90 text-slate-400 hover:text-slate-200 hover:border-purple-800'
                   }`}
                   style={{
-                    borderColor: isSelected ? item.color : '#162436',
-                    boxShadow: isSelected ? `0 0 25px ${item.color}30` : 'none',
+                    borderColor: isSelected ? item.color : '#241a45',
+                    boxShadow: isSelected ? `0 0 25px ${item.color}40` : 'none',
                   }}
                 >
                   <div>
-                    {/* Top Tag & Status */}
-                    <div className="flex items-center justify-between pb-3 border-b border-[#162436] text-xs">
+                    <div className="flex items-center justify-between text-[10px] pb-2 border-b border-[#241a45]">
                       <span className="font-bold tracking-wider" style={{ color: item.color }}>
-                        [{item.step}] {item.stage}
+                        STAGE // {item.step}
                       </span>
-                      <span
-                        className={`text-[9px] font-bold px-2 py-0.5 border ${
-                          item.status === 'ACTIVE'
-                            ? 'text-cyan-300 bg-cyan-950/40 border-cyan-400 animate-pulse'
-                            : 'text-slate-500 bg-black/40 border-[#162436]'
-                        }`}
-                      >
-                        {item.status}
-                      </span>
+                      <span className="text-slate-400 font-bold">{item.date}</span>
                     </div>
 
-                    <h3 className="mt-4 font-mono text-lg sm:text-xl font-black text-white uppercase tracking-tight leading-snug">
+                    <h3 className="font-mono text-base sm:text-lg font-black text-white mt-3 uppercase tracking-tight">
                       {item.title}
                     </h3>
-
-                    <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
-                      <Calendar className="w-3.5 h-3.5" style={{ color: item.color }} />
-                      <span className="text-white font-medium">{item.date}</span>
-                    </div>
                   </div>
 
-                  <div className="mt-6 pt-3 border-t border-[#162436] flex items-center justify-between text-[11px]">
-                    <span className="text-slate-400 font-semibold">{isSelected ? '● INSPECTING' : '○ CLICK TO EXPAND'}</span>
-                    <ArrowRight
-                      className="w-3.5 h-3.5 transition-transform"
-                      style={{ color: item.color, transform: isSelected ? 'translateX(4px)' : 'none' }}
-                    />
+                  <div className="mt-3 pt-2 border-t border-[#241a45] flex items-center justify-between text-[10px] text-slate-400">
+                    <span className="truncate">{item.tag}</span>
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0 ml-1" style={{ color: item.color }} />
                   </div>
                 </button>
               );
@@ -109,50 +92,48 @@ export default function EventTimeline() {
           </div>
         </div>
 
-        {/* Active Phase Deep Dossier Showcase */}
+        {/* Selected Stage Deep Showcase Dossier */}
         <div
-          className="bg-[#03060c]/95 border p-8 sm:p-12 hud-bracket backdrop-blur-md shadow-2xl space-y-8 relative overflow-hidden"
-          style={{ borderColor: current.color }}
+          className="bg-[#060410]/95 border p-6 sm:p-10 hud-bracket backdrop-blur-md shadow-2xl space-y-6"
+          style={{
+            borderColor: current.color,
+            boxShadow: `0 0 40px ${current.color}30`,
+          }}
         >
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[#162436]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#312856]">
             <div>
-              <div className="font-mono text-xs font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: current.color }}>
-                <Sparkles className="w-4 h-4" />
-                <span>{current.tag}</span>
+              <div className="font-mono text-xs font-bold uppercase tracking-widest" style={{ color: current.color }}>
+                STAGE // {current.step} OPERATIONAL SPECIFICATION
               </div>
-              <h3 className="font-mono text-3xl sm:text-4xl font-black text-white mt-1 uppercase tracking-tight">
+              <h3 className="font-mono text-2xl sm:text-4xl font-black text-white mt-1 uppercase">
                 {current.title}
               </h3>
             </div>
-
-            {/* Stage Badge & Timestamp */}
-            <div className="flex items-center gap-3 font-mono text-xs bg-[#070c14] px-4 py-2.5 border border-[#162436]">
-              <Clock className="w-4 h-4 text-cyan-400" />
-              <span className="text-slate-300">WINDOW:</span>
-              <span className="text-white font-bold">{current.time}</span>
+            <div className="font-mono text-xs text-slate-300 bg-[#0b081a] px-3.5 py-1.5 border border-[#312856] flex items-center gap-2 self-start sm:self-auto">
+              <Clock className="w-3.5 h-3.5 text-cyan-400" />
+              <span>TIMEFRAME: {current.date}</span>
             </div>
           </div>
 
-          <p className="font-mono text-base sm:text-lg text-slate-200 leading-relaxed max-w-4xl">
+          <p className="font-mono text-xs sm:text-base text-slate-200 leading-relaxed max-w-4xl">
             {current.description}
           </p>
 
-          {/* Phase Objectives & Deliverables Strip */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-            <div className="bg-[#070c14]/90 border border-[#162436] p-5 font-mono text-xs space-y-2">
-              <div className="text-slate-400 font-bold uppercase tracking-wider flex items-center gap-2">
-                <FileCode className="w-4 h-4" style={{ color: current.color }} />
-                <span>PRIMARY MANDATE & DELIVERABLE:</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-[#312856]">
+            <div className="bg-[#0b081a]/90 p-4 border border-[#241a45] space-y-1">
+              <div className="font-mono text-[10px] text-slate-400 uppercase font-bold flex items-center gap-1.5">
+                <FileCode className="w-3.5 h-3.5 text-cyan-400" />
+                <span>PRIMARY OBJECTIVE & DELIVERABLE</span>
               </div>
-              <p className="text-white text-sm font-semibold">{current.deliverable}</p>
+              <p className="font-mono text-xs text-slate-100 font-semibold">{current.deliverable}</p>
             </div>
 
-            <div className="bg-[#070c14]/90 border border-[#162436] p-5 font-mono text-xs space-y-2">
-              <div className="text-slate-400 font-bold uppercase tracking-wider flex items-center gap-2">
-                <Zap className="w-4 h-4 text-emerald-400" />
-                <span>SECURITY & SYSTEM CHECKPOINTS:</span>
+            <div className="bg-[#0b081a]/90 p-4 border border-[#241a45] space-y-1">
+              <div className="font-mono text-[10px] text-slate-400 uppercase font-bold flex items-center gap-1.5">
+                <Award className="w-3.5 h-3.5 text-emerald-400" />
+                <span>COUNCIL PROTOCOL & SPRINT IMPACT</span>
               </div>
-              <p className="text-slate-300 text-xs">Continuous mentor feedback, code sanity checks, and milestone verifications.</p>
+              <p className="font-mono text-xs text-slate-100 font-semibold">{current.tag}</p>
             </div>
           </div>
         </div>

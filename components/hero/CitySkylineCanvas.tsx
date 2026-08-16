@@ -40,7 +40,15 @@ export default function CitySkylineCanvas({ isGenesisActive = false }: CitySkyli
       targetMouseY = e.clientY;
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        targetMouseX = e.touches[0].clientX;
+        targetMouseY = e.touches[0].clientY;
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
     // Buildings generation with Moodboard Cyber Violet & Obsidian Palette
     interface Building {
@@ -313,6 +321,7 @@ export default function CitySkylineCanvas({ isGenesisActive = false }: CitySkyli
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
     };
   }, [isGenesisActive]);
 
