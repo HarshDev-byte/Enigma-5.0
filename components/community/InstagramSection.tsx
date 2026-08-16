@@ -29,7 +29,7 @@ export default function InstagramSection() {
     <section
       id="community"
       aria-label="Enigma Official Instagram Community"
-      className="relative py-28 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
+      className="relative pt-20 pb-36 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
       {/* Background Volumetric Magenta / Cyan Atmospheric Pool */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-72 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-cyan-500/10 blur-[130px] pointer-events-none" />

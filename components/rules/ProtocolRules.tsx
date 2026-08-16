@@ -11,7 +11,7 @@ export default function ProtocolRules() {
     <section
       id="protocols"
       aria-label="Security Protocols and Evaluation Rules"
-      className="relative py-28 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
+      className="relative pt-20 pb-36 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
       <div className="max-w-7xl mx-auto space-y-10">
         {/* Header */}

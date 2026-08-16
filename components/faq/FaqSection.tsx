@@ -31,7 +31,7 @@ export default function FaqSection() {
     <section
       id="faq"
       aria-label="Frequently Asked Questions"
-      className="relative py-32 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
+      className="relative pt-20 pb-36 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
       <div className="max-w-5xl mx-auto space-y-10 sm:space-y-12 relative z-10">
         {/* Header */}

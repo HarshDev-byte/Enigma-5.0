@@ -13,7 +13,7 @@ export default function PrizesSection() {
     <section
       id="prizes"
       aria-label="Enigma 5.0 Hackathon Prize Pool and Rewards"
-      className="relative py-32 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
+      className="relative pt-20 pb-36 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
       {/* Background Volumetric Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-80 bg-purple-500/10 blur-[130px] pointer-events-none" />

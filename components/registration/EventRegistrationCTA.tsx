@@ -33,7 +33,7 @@ export default function EventRegistrationCTA() {
     <section
       id="register"
       aria-label="Architect Event Registration"
-      className="relative py-32 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
+      className="relative pt-20 pb-36 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
       {/* Background Volumetric Center Beam with Moodboard Violet/Cyan Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[2px] bg-gradient-to-r from-transparent via-purple-400 to-transparent" />

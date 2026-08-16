@@ -15,7 +15,7 @@ export default function EventTimeline() {
     <section
       id="timeline"
       aria-label="Official Event Timeline and Roadmap"
-      className="relative py-32 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
+      className="relative pt-20 pb-36 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
       {/* Background Volumetric Ambient Radial */}
       <div

@@ -21,7 +21,7 @@ export default function OfficialTracks() {
     <section
       id="tracks"
       aria-label="Official ENIGMA 5.0 Hackathon Tracks"
-      className="relative py-28 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
+      className="relative pt-20 pb-36 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
       {/* Dynamic Background Glow matching active track */}
       <div

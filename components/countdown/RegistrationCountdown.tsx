@@ -50,7 +50,7 @@ export default function RegistrationCountdown() {
     <section
       id="countdown"
       aria-label="Registration Window Urgency and Live Countdown"
-      className="relative py-32 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
+      className="relative pt-20 pb-36 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
     >
       {/* Dynamic Ambient Plasma Pulse */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-6xl h-96 bg-gradient-to-r from-purple-500/15 via-cyan-500/10 to-pink-500/15 blur-[130px] pointer-events-none" />

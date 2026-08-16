@@ -15,62 +15,55 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(sound.getMuted());
+  const [activeSection, setActiveSection] = useState('hero');
+
   const isCollapse = scrollProgress >= 0.22 && scrollProgress <= 0.35;
   const isRebuilt = scrollProgress >= 0.70;
 
-  // Determine current active section from scrollProgress
-  let currentSection = 'hero';
-  let sectorName = 'WORLD 01 // CYBER MEGACITY';
-
-  if (scrollProgress >= 0.08 && scrollProgress < 0.18) {
-    currentSection = 'archive';
-    sectorName = 'ENIGMA ARCHIVE // PAST EDITIONS';
-  } else if (scrollProgress >= 0.18 && scrollProgress < 0.28) {
-    currentSection = 'countdown';
-    sectorName = 'SYSTEM ALERT // COUNTDOWN';
-  } else if (scrollProgress >= 0.28 && scrollProgress < 0.40) {
-    currentSection = 'tracks';
-    sectorName = 'OFFICIAL TRACKS // 03 WORLDS';
-  } else if (scrollProgress >= 0.40 && scrollProgress < 0.52) {
-    currentSection = 'timeline';
-    sectorName = 'EVENT TIMELINE // MISSION ROADMAP';
-  } else if (scrollProgress >= 0.52 && scrollProgress < 0.64) {
-    currentSection = 'prizes';
-    sectorName = 'PRIZE VAULT // BOUNTY MATRIX';
-  } else if (scrollProgress >= 0.64 && scrollProgress < 0.74) {
-    currentSection = 'protocols';
-    sectorName = 'SECURITY PROTOCOLS // RULES';
-  } else if (scrollProgress >= 0.74 && scrollProgress < 0.84) {
-    currentSection = 'faq';
-    sectorName = 'SYSTEM FAQ // CLEARANCE DIRECTIVES';
-  } else if (scrollProgress >= 0.84 && scrollProgress < 0.92) {
-    currentSection = 'community';
-    sectorName = 'OFFICIAL COMMUNITY // INSTAGRAM';
-  } else if (scrollProgress >= 0.92) {
-    currentSection = 'register';
-    sectorName = 'GATEWAY 10 // ARCHITECT ACCESS';
-  }
-
   const navItems = [
-    { id: 'hero', label: 'HERO', num: '01', desc: 'Summit & Megacity' },
-    { id: 'archive', label: 'ARCHIVE', num: '02', desc: 'Past Editions' },
-    { id: 'countdown', label: 'CLOCK', num: '03', desc: 'Urgency Clock' },
-    { id: 'tracks', label: 'TRACKS', num: '04', desc: '03 Worlds' },
-    { id: 'timeline', label: 'TIMELINE', num: '05', desc: '4-Stage Plan' },
-    { id: 'prizes', label: 'PRIZES', num: '06', desc: '₹1.5L+ Vault' },
-    { id: 'protocols', label: 'RULES', num: '07', desc: 'Protocols' },
-    { id: 'faq', label: 'FAQ', num: '08', desc: 'Directives' },
-    { id: 'community', label: 'SOCIAL', num: '09', desc: 'Instagram' },
-    { id: 'register', label: 'REGISTER', num: '10', desc: 'Unstop Portal' },
+    { id: 'hero', label: 'HERO', num: '01', desc: 'Summit & Megacity', sector: 'WORLD 01 // CYBER MEGACITY' },
+    { id: 'archive', label: 'ARCHIVE', num: '02', desc: 'Past Editions', sector: 'ENIGMA ARCHIVE // PAST EDITIONS' },
+    { id: 'countdown', label: 'CLOCK', num: '03', desc: 'Urgency Clock', sector: 'SYSTEM ALERT // COUNTDOWN' },
+    { id: 'tracks', label: 'TRACKS', num: '04', desc: '03 Worlds', sector: 'OFFICIAL TRACKS // 03 WORLDS' },
+    { id: 'timeline', label: 'TIMELINE', num: '05', desc: '4-Stage Plan', sector: 'EVENT TIMELINE // MISSION ROADMAP' },
+    { id: 'prizes', label: 'PRIZES', num: '06', desc: '₹1.5L+ Vault', sector: 'PRIZE VAULT // BOUNTY MATRIX' },
+    { id: 'protocols', label: 'RULES', num: '07', desc: 'Protocols', sector: 'SECURITY PROTOCOLS // RULES' },
+    { id: 'faq', label: 'FAQ', num: '08', desc: 'Directives', sector: 'SYSTEM FAQ // CLEARANCE DIRECTIVES' },
+    { id: 'community', label: 'SOCIAL', num: '09', desc: 'Instagram', sector: 'OFFICIAL COMMUNITY // INSTAGRAM' },
+    { id: 'register', label: 'REGISTER', num: '10', desc: 'Unstop Portal', sector: 'GATEWAY 10 // ARCHITECT ACCESS' },
   ];
+
+  React.useEffect(() => {
+    const handleScrollDetect = () => {
+      const sectionIds = navItems.map((n) => n.id);
+      const scrollPosition = window.scrollY + 180;
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el) {
+          const top = el.offsetTop;
+          if (scrollPosition >= top) {
+            setActiveSection(sectionIds[i]);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollDetect, { passive: true });
+    handleScrollDetect();
+    return () => window.removeEventListener('scroll', handleScrollDetect);
+  }, []);
+
+  const currentNavItem = navItems.find((n) => n.id === activeSection) || navItems[0];
+  const sectorName = currentNavItem.sector;
+  const currentSection = activeSection;
 
   const handleNavClick = (id: string) => {
     sound.playClick();
+    setActiveSection(id);
     setIsMobileMenuOpen(false);
     onWarpToSection(id);
-    setTimeout(() => {
-      onWarpToSection(id);
-    }, 100);
   };
 
   const toggleSound = () => {
