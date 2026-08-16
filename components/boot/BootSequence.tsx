@@ -13,14 +13,9 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   const [isFlash, setIsFlash] = useState(false);
 
   useEffect(() => {
-    // Check if user already saw boot sequence this session
-    try {
-      if (sessionStorage.getItem('enigma_boot_seen')) {
-        onComplete();
-        return;
-      }
-    } catch {
-      // sessionStorage unavailable
+    // Reset scroll position to summit on boot
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
     }
 
     const keyListener = (e: KeyboardEvent) => {
@@ -30,23 +25,20 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     };
     window.addEventListener('keydown', keyListener);
 
-    // Sequence timing
+    // Sequence timing (compact, cinematic & punchy)
     const timers = [
-      setTimeout(() => { setStage(1); sound.playKeypress(); }, 400),
-      setTimeout(() => { setStage(2); sound.playKeypress(); }, 900),
-      setTimeout(() => { setStage(3); sound.playKeypress(); }, 1400),
-      setTimeout(() => { setStage(4); sound.playGlitch(); }, 2100),
-      setTimeout(() => { setStage(5); sound.playGenesisActivation(); }, 2800),
+      setTimeout(() => { setStage(1); sound.playKeypress(); }, 300),
+      setTimeout(() => { setStage(2); sound.playKeypress(); }, 700),
+      setTimeout(() => { setStage(3); sound.playKeypress(); }, 1200),
+      setTimeout(() => { setStage(4); sound.playGlitch(); }, 1700),
+      setTimeout(() => { setStage(5); sound.playGenesisActivation(); }, 2200),
       setTimeout(() => {
         setIsGlitching(true);
         setIsFlash(true);
-        try {
-          sessionStorage.setItem('enigma_boot_seen', 'true');
-        } catch {}
-      }, 3500),
+      }, 2700),
       setTimeout(() => {
         onComplete();
-      }, 3800),
+      }, 2900),
     ];
 
     return () => {
@@ -56,9 +48,6 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
   }, [onComplete]);
 
   const skipBoot = () => {
-    try {
-      sessionStorage.setItem('enigma_boot_seen', 'true');
-    } catch {}
     sound.playClick();
     onComplete();
   };

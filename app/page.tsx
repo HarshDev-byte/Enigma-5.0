@@ -23,6 +23,15 @@ export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
+    // Reset scroll to top and prevent browser auto-jumping to #register on refresh
+    if (typeof window !== 'undefined') {
+      window.history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+      if (window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+    }
+
     const handleScroll = () => {
       const winScroll = document.documentElement.scrollTop || window.scrollY;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
