@@ -55,6 +55,8 @@ export default function EventTimeline() {
               return (
                 <button
                   key={item.step}
+                  type="button"
+                  onMouseEnter={() => sound.playHover()}
                   onClick={() => {
                     sound.playClick();
                     setActiveStep(idx);

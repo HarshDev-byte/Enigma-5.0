@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
-import { Compass, Radio, Menu, X, ArrowRight, ShieldCheck, Zap, Layers, Trophy, Sparkles, ExternalLink } from 'lucide-react';
+import { Compass, Radio, Menu, X, ArrowRight, ShieldCheck, Zap, Layers, Trophy, Sparkles, ExternalLink, Volume2, VolumeX } from 'lucide-react';
 import { sound } from '@/lib/audio';
 
 interface CyberHudOverlayProps {
@@ -12,6 +12,7 @@ interface CyberHudOverlayProps {
 
 export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: CyberHudOverlayProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(sound.getMuted());
   const isCollapse = scrollProgress >= 0.22 && scrollProgress <= 0.35;
   const isRebuilt = scrollProgress >= 0.70;
 
@@ -64,10 +65,17 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
   const handleNavClick = (id: string) => {
     sound.playClick();
     setIsMobileMenuOpen(false);
-    // 50ms buffer allows the fixed modal to unmount cleanly before scrolling
     setTimeout(() => {
       onWarpToSection(id);
     }, 50);
+  };
+
+  const toggleSound = () => {
+    const muted = sound.toggleMute();
+    setIsMuted(muted);
+    if (!muted) {
+      sound.playAccessGranted();
+    }
   };
 
   return (
@@ -76,7 +84,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
         {/* Top Aerospace HUD Frame */}
         <div className="flex justify-between items-center gap-2 pointer-events-auto">
           {/* Top Left: Node ID & Sector Status */}
-          <div className="flex items-center gap-2 bg-[#060410]/95 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 border border-[#312856] hud-bracket shadow-lg max-w-[88vw] sm:max-w-none truncate">
+          <div className="flex items-center gap-2 bg-[#060410]/95 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 border border-[#312856] hud-bracket shadow-lg max-w-[70vw] sm:max-w-none truncate">
             <span
               className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full shrink-0 ${
                 isCollapse ? 'bg-pink-500 animate-ping' : isRebuilt ? 'bg-emerald-400 animate-pulse' : 'bg-cyan-400 animate-ping'
@@ -91,16 +99,38 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
             </div>
           </div>
 
-          {/* Top Right: Live Telemetry Status */}
-          <div className="hidden md:flex items-center gap-3 bg-[#060410]/95 backdrop-blur-md px-4 py-2 border border-[#312856] font-mono text-xs text-slate-300 hud-bracket shadow-lg">
-            <span className="flex items-center gap-1.5 text-cyan-400 font-bold">
-              <Radio className="w-3.5 h-3.5 animate-pulse" />
-              <span>LIVE_NODE</span>
-            </span>
-            <span className="text-slate-600">|</span>
-            <span>ALT: {Math.round((1 - scrollProgress) * 320)}M</span>
-            <span className="text-slate-600">|</span>
-            <span className="text-purple-400 font-bold">WARP: {Math.round(scrollProgress * 100)}%</span>
+          {/* Top Right: Live Telemetry & Audio Toggle */}
+          <div className="flex items-center gap-2 font-mono text-xs text-slate-300">
+            {/* Audio Synth Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleSound}
+              className="flex items-center gap-1.5 bg-[#060410]/95 backdrop-blur-md px-3 py-1.5 sm:py-2 border border-[#312856] hover:border-purple-400 text-slate-300 hover:text-white hud-bracket shadow-lg active:scale-95 transition-all cursor-pointer text-[10px] sm:text-xs"
+            >
+              {isMuted ? (
+                <>
+                  <VolumeX className="w-3.5 h-3.5 text-rose-400" />
+                  <span className="hidden xs:inline text-rose-300">SYNTH: OFF</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+                  <span className="hidden xs:inline text-cyan-300">SYNTH: ON</span>
+                </>
+              )}
+            </button>
+
+            {/* Desktop Telemetry Data */}
+            <div className="hidden md:flex items-center gap-3 bg-[#060410]/95 backdrop-blur-md px-4 py-2 border border-[#312856] hud-bracket shadow-lg">
+              <span className="flex items-center gap-1.5 text-cyan-400 font-bold">
+                <Radio className="w-3.5 h-3.5 animate-pulse" />
+                <span>LIVE_NODE</span>
+              </span>
+              <span className="text-slate-600">|</span>
+              <span>ALT: {Math.round((1 - scrollProgress) * 320)}M</span>
+              <span className="text-slate-600">|</span>
+              <span className="text-purple-400 font-bold">WARP: {Math.round(scrollProgress * 100)}%</span>
+            </div>
           </div>
         </div>
 
@@ -188,6 +218,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
                   <button
                     key={item.id}
                     type="button"
+                    onMouseEnter={() => sound.playHover()}
                     onClick={() => handleNavClick(item.id)}
                     className={`group relative flex-1 text-center py-1 sm:py-1.5 px-0.5 sm:px-1.5 md:px-2 transition-all duration-200 uppercase font-mono tracking-wider flex items-center justify-center gap-0.5 sm:gap-1 focus:outline-none focus:ring-1 focus:ring-purple-400 whitespace-nowrap cursor-pointer ${
                       isRegister

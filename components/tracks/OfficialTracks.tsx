@@ -56,6 +56,8 @@ export default function OfficialTracks() {
               return (
                 <button
                   key={track.id}
+                  type="button"
+                  onMouseEnter={() => sound.playHover()}
                   onClick={() => {
                     sound.playClick();
                     setSelectedTrackId(track.id);

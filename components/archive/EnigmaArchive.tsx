@@ -43,6 +43,8 @@ export default function EnigmaArchive() {
             return (
               <button
                 key={item.edition}
+                type="button"
+                onMouseEnter={() => sound.playHover()}
                 onClick={() => {
                   sound.playClick();
                   setSelectedIdx(idx);

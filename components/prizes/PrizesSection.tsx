@@ -47,6 +47,7 @@ export default function PrizesSection() {
             return (
               <div
                 key={prize.rank}
+                onMouseEnter={() => sound.playHover()}
                 className={`p-6 sm:p-8 bg-[#060410]/95 border transition-all duration-300 hud-bracket flex flex-col justify-between relative backdrop-blur-md shadow-2xl ${
                   isFirst
                     ? 'border-amber-400 shadow-[0_0_35px_rgba(252,238,10,0.3)] order-first md:order-2 md:-translate-y-4 bg-gradient-to-b from-[#151004] via-[#0b081a] to-[#060410]'
