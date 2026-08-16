@@ -76,6 +76,13 @@ body {
   }
 }
 
+/* Hide default OS cursor on desktop devices with fine pointers */
+@media (pointer: fine) {
+  *, *::before, *::after, html, body, a, button, input, textarea, select, [role="button"] {
+    cursor: none !important;
+  }
+}
+
 ::selection {
   background: var(--color-violet);
   color: #ffffff;
