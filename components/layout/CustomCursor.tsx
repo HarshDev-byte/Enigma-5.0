@@ -11,7 +11,7 @@ export default function CustomCursor() {
   const [isTouch, setIsTouch] = useState(true);
 
   useEffect(() => {
-    // Check for touch device or reduced motion
+    // Disable on touch devices or reduced motion
     if (
       typeof window === 'undefined' ||
       window.matchMedia('(pointer: coarse)').matches ||
@@ -34,20 +34,19 @@ export default function CustomCursor() {
 
       if (!isVisible) setIsVisible(true);
 
-      // Instant pinpoint tracking for the center laser dot
+      // Instant pinpoint tracking perfectly centered on hotspot
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
       }
     };
 
-    // Smooth physical lerp animation for the outer reticle ring
+    // Smooth physical lerp animation for the outer reticle ring perfectly centered
     const render = () => {
-      // 0.22 lerp factor for snappy yet silky trailing physics
       ringX += (mouseX - ringX) * 0.22;
       ringY += (mouseY - ringY) * 0.22;
 
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+        ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
       }
 
       animId = requestAnimationFrame(render);
@@ -100,7 +99,7 @@ export default function CustomCursor() {
       {/* 1. Instant Precision Central Laser Dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 will-change-transform"
+        className="fixed top-0 left-0 pointer-events-none z-50 will-change-transform"
         aria-hidden="true"
       >
         <div
@@ -115,7 +114,7 @@ export default function CustomCursor() {
       {/* 2. Silky Trailing Holographic Target Reticle Ring */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 will-change-transform"
+        className="fixed top-0 left-0 pointer-events-none z-50 will-change-transform"
         aria-hidden="true"
       >
         <div
