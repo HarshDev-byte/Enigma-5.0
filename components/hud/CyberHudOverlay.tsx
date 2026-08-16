@@ -11,40 +11,53 @@ interface CyberHudOverlayProps {
 }
 
 export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: CyberHudOverlayProps) {
-  const isCollapse = scrollProgress >= 0.28 && scrollProgress <= 0.45;
-  const isRebuilt = scrollProgress >= 0.75;
+  const isCollapse = scrollProgress >= 0.22 && scrollProgress <= 0.35;
+  const isRebuilt = scrollProgress >= 0.70;
 
   // Determine current active section from scrollProgress
   let currentSection = 'hero';
   let sectorName = 'WORLD 01 // CYBER MEGACITY';
-  if (scrollProgress >= 0.12 && scrollProgress < 0.28) {
+
+  if (scrollProgress >= 0.08 && scrollProgress < 0.18) {
     currentSection = 'archive';
     sectorName = 'ENIGMA ARCHIVE // PAST EDITIONS';
-  } else if (scrollProgress >= 0.28 && scrollProgress < 0.44) {
+  } else if (scrollProgress >= 0.18 && scrollProgress < 0.28) {
     currentSection = 'countdown';
     sectorName = 'SYSTEM ALERT // COUNTDOWN';
-  } else if (scrollProgress >= 0.44 && scrollProgress < 0.60) {
+  } else if (scrollProgress >= 0.28 && scrollProgress < 0.40) {
     currentSection = 'tracks';
     sectorName = 'OFFICIAL TRACKS // 03 WORLDS';
-  } else if (scrollProgress >= 0.60 && scrollProgress < 0.75) {
+  } else if (scrollProgress >= 0.40 && scrollProgress < 0.52) {
     currentSection = 'timeline';
     sectorName = 'EVENT TIMELINE // MISSION ROADMAP';
-  } else if (scrollProgress >= 0.75 && scrollProgress < 0.88) {
+  } else if (scrollProgress >= 0.52 && scrollProgress < 0.64) {
+    currentSection = 'prizes';
+    sectorName = 'PRIZE VAULT // BOUNTY MATRIX';
+  } else if (scrollProgress >= 0.64 && scrollProgress < 0.74) {
+    currentSection = 'protocols';
+    sectorName = 'SECURITY PROTOCOLS // RULES';
+  } else if (scrollProgress >= 0.74 && scrollProgress < 0.84) {
     currentSection = 'faq';
     sectorName = 'SYSTEM FAQ // CLEARANCE DIRECTIVES';
-  } else if (scrollProgress >= 0.88) {
+  } else if (scrollProgress >= 0.84 && scrollProgress < 0.92) {
+    currentSection = 'community';
+    sectorName = 'OFFICIAL COMMUNITY // INSTAGRAM';
+  } else if (scrollProgress >= 0.92) {
     currentSection = 'register';
-    sectorName = 'GATEWAY 07 // ARCHITECT ACCESS';
+    sectorName = 'GATEWAY 10 // ARCHITECT ACCESS';
   }
 
   const navItems = [
     { id: 'hero', label: 'HERO', num: '01' },
     { id: 'archive', label: 'ARCHIVE', num: '02' },
-    { id: 'countdown', label: 'COUNTDOWN', num: '03' },
+    { id: 'countdown', label: 'CLOCK', num: '03' },
     { id: 'tracks', label: 'TRACKS', num: '04' },
     { id: 'timeline', label: 'TIMELINE', num: '05' },
-    { id: 'faq', label: 'FAQ', num: '06' },
-    { id: 'register', label: 'REGISTER', num: '07' },
+    { id: 'prizes', label: 'PRIZES', num: '06' },
+    { id: 'protocols', label: 'RULES', num: '07' },
+    { id: 'faq', label: 'FAQ', num: '08' },
+    { id: 'community', label: 'SOCIAL', num: '09' },
+    { id: 'register', label: 'REGISTER', num: '10' },
   ];
 
   return (
@@ -82,21 +95,21 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
         </div>
       </div>
 
-      {/* Bottom Floating Aerospace Navbar — 100% NON-SCROLLABLE & PERFECTLY FITTED */}
-      <div className="flex flex-col gap-2 max-w-5xl w-full mx-auto pointer-events-auto pb-1">
+      {/* Bottom Floating Aerospace Navbar — ALL 10 SECTIONS IN NON-SCROLLABLE FIT */}
+      <div className="flex flex-col gap-2 max-w-6xl w-full mx-auto pointer-events-auto pb-1">
         <nav
           aria-label="Futuristic HUD Navigation"
-          className="bg-[#03060c]/95 backdrop-blur-lg px-2 sm:px-4 md:px-6 py-2.5 sm:py-3 border border-[#162436] shadow-[0_10px_35px_rgba(0,0,0,0.8)] hud-bracket flex items-center justify-between gap-1 sm:gap-2 font-mono w-full"
+          className="bg-[#03060c]/95 backdrop-blur-lg px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 border border-[#162436] shadow-[0_10px_35px_rgba(0,0,0,0.8)] hud-bracket flex items-center justify-between gap-1 sm:gap-1.5 font-mono w-full"
         >
-          <div className="hidden md:flex items-center gap-2 text-xs text-slate-400 shrink-0 mr-2">
-            <Compass className="w-4 h-4 text-cyan-400 shrink-0" />
-            <span className="uppercase tracking-wider text-cyan-400 text-xs font-black">
+          <div className="hidden lg:flex items-center gap-1.5 text-xs text-slate-400 shrink-0 mr-1.5">
+            <Compass className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+            <span className="uppercase tracking-wider text-cyan-400 text-[11px] font-black">
               ENIGMA:
             </span>
           </div>
 
-          {/* Navigation Items — Non-scrollable flex layout */}
-          <div className="flex items-center justify-between w-full gap-1 sm:gap-1.5 md:gap-2 text-[10px] sm:text-xs md:text-sm">
+          {/* Navigation Items — All 10 sections evenly fitted */}
+          <div className="flex items-center justify-between w-full gap-0.5 sm:gap-1 md:gap-1.5 text-[9px] sm:text-[11px] md:text-xs">
             {navItems.map((item) => {
               const isActive = currentSection === item.id;
               const isRegister = item.id === 'register';
@@ -108,15 +121,15 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
                     sound.playClick();
                     onWarpToSection(item.id);
                   }}
-                  className={`group relative flex-1 text-center py-1.5 px-1 sm:px-2 md:px-3 transition-all duration-200 uppercase font-mono tracking-wider flex items-center justify-center gap-1 focus:outline-none focus:ring-1 focus:ring-cyan-400 whitespace-nowrap ${
+                  className={`group relative flex-1 text-center py-1 sm:py-1.5 px-0.5 sm:px-1.5 md:px-2 transition-all duration-200 uppercase font-mono tracking-wider flex items-center justify-center gap-0.5 sm:gap-1 focus:outline-none focus:ring-1 focus:ring-cyan-400 whitespace-nowrap ${
                     isRegister
-                      ? 'bg-cyan-400 text-black font-black hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,240,255,0.4)]'
+                      ? 'bg-cyan-400 text-black font-black hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,240,255,0.45)]'
                       : isActive
-                      ? 'text-cyan-300 font-bold bg-cyan-950/50 border border-cyan-500/60 shadow-[0_0_12px_rgba(0,240,255,0.25)]'
+                      ? 'text-cyan-300 font-bold bg-cyan-950/60 border border-cyan-500/60 shadow-[0_0_10px_rgba(0,240,255,0.3)]'
                       : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
                   }`}
                 >
-                  <span className={`hidden sm:inline text-[9px] md:text-[10px] ${isRegister ? 'text-black/70 font-bold' : isActive ? 'text-cyan-400' : 'text-slate-600'}`}>
+                  <span className={`hidden xl:inline text-[9px] ${isRegister ? 'text-black/70 font-bold' : isActive ? 'text-cyan-400' : 'text-slate-600'}`}>
                     {item.num}
                   </span>
                   <span className="truncate">{item.label}</span>
