@@ -65,16 +65,16 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
       {/* Top Aerospace HUD Frame */}
       <div className="flex flex-wrap justify-between items-center gap-4">
         {/* Top Left: Node ID & Sector Status */}
-        <div className="flex items-center gap-3 bg-[#03060c]/90 backdrop-blur-md px-4 py-2 border border-[#162436] pointer-events-auto hud-bracket shadow-lg">
+        <div className="flex items-center gap-3 bg-[#060410]/95 backdrop-blur-md px-4 py-2 border border-[#312856] pointer-events-auto hud-bracket shadow-lg">
           <span
             className={`w-2.5 h-2.5 rounded-full ${
-              isCollapse ? 'bg-rose-500 animate-ping' : isRebuilt ? 'bg-emerald-400 animate-pulse' : 'bg-cyan-400 animate-ping'
+              isCollapse ? 'bg-pink-500 animate-ping' : isRebuilt ? 'bg-emerald-400 animate-pulse' : 'bg-cyan-400 animate-ping'
             }`}
           />
           <div className="font-mono text-xs text-slate-300 flex items-center gap-2">
             <span className="font-extrabold text-cyan-400 uppercase tracking-wider">{EVENT_CONFIG.eventName}</span>
             <span className="text-slate-600">|</span>
-            <span className={isCollapse ? 'text-rose-400 font-bold' : 'text-slate-300 font-medium'}>
+            <span className={isCollapse ? 'text-pink-400 font-bold' : 'text-slate-300 font-medium'}>
               {sectorName}
             </span>
           </div>
@@ -82,7 +82,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
 
         {/* Top Right: System Status & Live Signal */}
         <div className="flex items-center gap-3 pointer-events-auto">
-          <div className="hidden sm:flex items-center gap-3 bg-[#03060c]/90 backdrop-blur-md px-4 py-2 border border-[#162436] font-mono text-xs text-slate-300 hud-bracket">
+          <div className="hidden sm:flex items-center gap-3 bg-[#060410]/95 backdrop-blur-md px-4 py-2 border border-[#312856] font-mono text-xs text-slate-300 hud-bracket shadow-lg">
             <span className="flex items-center gap-1.5 text-cyan-400 font-bold">
               <Radio className="w-3.5 h-3.5 animate-pulse" />
               <span>LIVE_NODE</span>
@@ -90,7 +90,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
             <span className="text-slate-600">|</span>
             <span>ALT: {Math.round((1 - scrollProgress) * 320)}M</span>
             <span className="text-slate-600">|</span>
-            <span className="text-emerald-400 font-bold">WARP: {Math.round(scrollProgress * 100)}%</span>
+            <span className="text-purple-400 font-bold">WARP: {Math.round(scrollProgress * 100)}%</span>
           </div>
         </div>
       </div>
@@ -99,7 +99,7 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
       <div className="flex flex-col gap-2 max-w-6xl w-full mx-auto pointer-events-auto pb-1">
         <nav
           aria-label="Futuristic HUD Navigation"
-          className="bg-[#03060c]/95 backdrop-blur-lg px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 border border-[#162436] shadow-[0_10px_35px_rgba(0,0,0,0.8)] hud-bracket flex items-center justify-between gap-1 sm:gap-1.5 font-mono w-full"
+          className="bg-[#060410]/95 backdrop-blur-lg px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 border border-[#312856] shadow-[0_10px_35px_rgba(0,0,0,0.8)] hud-bracket flex items-center justify-between gap-1 sm:gap-1.5 font-mono w-full"
         >
           <div className="hidden lg:flex items-center gap-1.5 text-xs text-slate-400 shrink-0 mr-1.5">
             <Compass className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
@@ -121,15 +121,15 @@ export default function CyberHudOverlay({ scrollProgress, onWarpToSection }: Cyb
                     sound.playClick();
                     onWarpToSection(item.id);
                   }}
-                  className={`group relative flex-1 text-center py-1 sm:py-1.5 px-0.5 sm:px-1.5 md:px-2 transition-all duration-200 uppercase font-mono tracking-wider flex items-center justify-center gap-0.5 sm:gap-1 focus:outline-none focus:ring-1 focus:ring-cyan-400 whitespace-nowrap ${
+                  className={`group relative flex-1 text-center py-1 sm:py-1.5 px-0.5 sm:px-1.5 md:px-2 transition-all duration-200 uppercase font-mono tracking-wider flex items-center justify-center gap-0.5 sm:gap-1 focus:outline-none focus:ring-1 focus:ring-purple-400 whitespace-nowrap ${
                     isRegister
-                      ? 'bg-cyan-400 text-black font-black hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,240,255,0.45)]'
+                      ? 'bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 text-black font-black hover:brightness-110 shadow-[0_0_15px_rgba(168,85,247,0.5)]'
                       : isActive
-                      ? 'text-cyan-300 font-bold bg-cyan-950/60 border border-cyan-500/60 shadow-[0_0_10px_rgba(0,240,255,0.3)]'
+                      ? 'text-purple-300 font-bold bg-purple-950/70 border border-purple-500/70 shadow-[0_0_12px_rgba(168,85,247,0.4)]'
                       : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
                   }`}
                 >
-                  <span className={`hidden xl:inline text-[9px] ${isRegister ? 'text-black/70 font-bold' : isActive ? 'text-cyan-400' : 'text-slate-600'}`}>
+                  <span className={`hidden xl:inline text-[9px] ${isRegister ? 'text-black/80 font-bold' : isActive ? 'text-purple-400' : 'text-slate-500'}`}>
                     {item.num}
                   </span>
                   <span className="truncate">{item.label}</span>

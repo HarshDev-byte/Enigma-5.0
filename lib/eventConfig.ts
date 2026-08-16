@@ -63,8 +63,8 @@ export const EVENT_CONFIG = {
       number: '01',
       title: 'HEALTHCARE',
       subtitle: 'REIMAGINE HEALTHCARE THROUGH TECHNOLOGY',
-      themeColor: '#ec4899', // Pink / Magenta
-      accentGlow: 'rgba(236, 72, 153, 0.3)',
+      themeColor: '#d946ef', // Neon Magenta / Purple (Moodboard Palette 1)
+      accentGlow: 'rgba(217, 70, 239, 0.45)',
       tagline: 'Engineer resilient, human-centered medical intelligence and diagnostics.',
       description:
         'Create autonomous systems that bridge clinical intelligence and human care. Build software and hardware solutions that prevent systemic failure, protect patient autonomy, and democratize access to diagnostics.',
@@ -84,8 +84,8 @@ export const EVENT_CONFIG = {
       number: '02',
       title: 'FINTECH',
       subtitle: 'ECONOMIC INTELLIGENCE & TRUSTED SYSTEMS',
-      themeColor: '#8b5cf6', // Violet / Blue
-      accentGlow: 'rgba(139, 92, 246, 0.3)',
+      themeColor: '#00f0ff', // Electric Cyan / Blue (Moodboard Palette 2)
+      accentGlow: 'rgba(0, 240, 255, 0.45)',
       tagline: 'Tame runaway complexity with anti-fragile financial architecture.',
       description:
         'Re-evaluate financial networks from first principles. Design algorithmic circuit breakers, transparent liquidity tools, fraud prevention engines, and inclusive financial instruments that empower individuals.',
@@ -105,8 +105,8 @@ export const EVENT_CONFIG = {
       number: '03',
       title: 'SUSTAINABILITY',
       subtitle: 'PLANETARY RESILIENCE & CLIMATE TECH',
-      themeColor: '#10ff88', // Emerald / Green
-      accentGlow: 'rgba(16, 255, 136, 0.3)',
+      themeColor: '#00ff66', // Toxic Matrix Green (Moodboard Palette 3 - InstaMusic)
+      accentGlow: 'rgba(0, 255, 102, 0.45)',
       tagline: 'Balance infinite compute with finite planetary physics.',
       description:
         'Harness technology to protect and restore ecological balance. Construct carbon-aware compute frameworks, circular economy protocols, clean energy routing, and planetary sensor arrays.',
