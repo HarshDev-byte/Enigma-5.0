@@ -122,20 +122,22 @@ export default function PrizesSection() {
         <div className="pt-4 border-t border-slate-800">
           <div className="font-mono text-xs text-red-400 font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
             <Award className="w-4 h-4 text-red-500" />
-            <span>CATEGORY BOUNTIES & TRACK WINNERS</span>
+            <span>SPECIAL CATEGORY AWARDS</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
-            {prizes.trackPrizes.map((tp, idx) => (
+            {prizes.specialPrizes.map((sp, idx) => (
               <div
                 key={idx}
-                className="p-3.5 sm:p-4 bg-[#060410]/95 border border-slate-800/90 rounded-xl flex items-center justify-between"
+                className="p-3.5 sm:p-4 bg-[#060410]/95 border border-slate-800/90 rounded-xl hover:border-red-500/50 transition-all duration-300"
               >
-                <div>
-                  <div className="text-[10px] text-slate-400 font-bold uppercase">{tp.category}</div>
-                  <div className="text-sm font-black text-white mt-0.5">{tp.title}</div>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <div className="text-sm font-black text-white mb-1">{sp.title}</div>
+                    <div className="text-[10px] text-slate-400 leading-relaxed">{sp.desc}</div>
+                  </div>
+                  <div className="text-lg font-black text-red-400 whitespace-nowrap">{sp.amount}</div>
                 </div>
-                <div className="text-base font-black text-red-400">{tp.amount}</div>
               </div>
             ))}
           </div>
