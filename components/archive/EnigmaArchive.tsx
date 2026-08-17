@@ -105,8 +105,8 @@ export default function EnigmaArchive() {
 
             {/* Bottom Telemetry Bar */}
             <div className="relative z-10 flex justify-between items-center font-mono text-[9px] sm:text-[11px] text-slate-400 border-t border-slate-800/80 pt-2">
-              <span className="truncate">{current.teams} ATTENDEES</span>
-              <span className="text-white font-bold">{current.prize} POOL</span>
+              <span className="truncate">{current.participants}</span>
+              <span className="text-white font-bold">{current.prizeVault} POOL</span>
             </div>
           </div>
 
@@ -132,7 +132,7 @@ export default function EnigmaArchive() {
                   <span>TOTAL BUILDERS</span>
                 </div>
                 <div className="text-base sm:text-xl font-black text-white mt-1">
-                  {current.teams}
+                  {current.participants}
                 </div>
               </div>
 
@@ -142,7 +142,7 @@ export default function EnigmaArchive() {
                   <span>PRIZE REWARDS</span>
                 </div>
                 <div className="text-base sm:text-xl font-black text-white mt-1">
-                  {current.prize}
+                  {current.prizeVault}
                 </div>
               </div>
             </div>
@@ -154,10 +154,10 @@ export default function EnigmaArchive() {
                 <span>GRAND CHAMPION SQUAD</span>
               </div>
               <div className="text-sm sm:text-base font-black text-white">
-                {current.winner}
+                {current.projects}
               </div>
               <div className="text-[10px] sm:text-xs text-slate-400">
-                {current.highlight}
+                {current.description}
               </div>
             </div>
           </div>
