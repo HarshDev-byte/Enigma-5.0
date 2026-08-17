@@ -15,40 +15,25 @@
     --space-10: 96px;
     --space-11: 128px;
 
-    /* Moodboard Color Palettes */
+    /* Background & Surface */
     --color-background: #040308;
-    --color-surface: rgba(10, 8, 22, 0.75);
-    --color-surface-elevated: rgba(18, 14, 38, 0.85);
-    --color-surface-translucent: rgba(8, 6, 18, 0.65);
-    
-    --color-border: #1a1630;
-    --color-border-bright: #312856;
-    
-    --color-text-primary: #f5f3ff;
-    --color-text-secondary: #a78bfa;
-    --color-text-muted: #6d6494;
-    
-    /* Cyber Violet / Neon Magenta (Moodboard Theme 1) */
-    --color-purple: #8b5cf6;
-    --color-violet: #a855f7;
-    --color-magenta: #d946ef;
-    --color-magenta-glow: rgba(217, 70, 239, 0.5);
-    --color-violet-glow: rgba(168, 85, 247, 0.5);
-    
-    /* Electric Cyan / Blue (Moodboard Theme 2) */
-    --color-cyan: #00f0ff;
-    --color-cyan-glow: rgba(0, 240, 255, 0.5);
-    --color-royal: #3b82f6;
-    
-    /* Toxic Matrix Green / Cyber Emerald (Moodboard Theme 3 - InstaMusic) */
-    --color-emerald: #10ff88;
-    --color-toxic-green: #00ff66;
-    --color-emerald-glow: rgba(16, 255, 136, 0.5);
-    
-    /* Cyberpunk Amber / Red (X-Wear & Cyberpunk 2077 Theme) */
-    --color-amber: #fcee0a;
-    --color-warning: #ff0055;
-    --color-warning-glow: rgba(255, 0, 85, 0.5);
+    --color-surface: rgba(10, 10, 15, 0.75);
+    --color-surface-elevated: rgba(18, 18, 24, 0.85);
+    --color-surface-translucent: rgba(8, 8, 12, 0.55);
+
+    /* Borders */
+    --color-border: #1e293b;
+    --color-border-bright: #334155;
+
+    /* Text */
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #94a3b8;
+    --color-text-muted: #64748b;
+
+    /* Dynamic Theme System: Steel Grey -> Neon Crimson Red */
+    --color-primary-grey: #94a3b8;
+    --color-primary-red: #ff2a55;
+    --color-red-glow: rgba(255, 42, 85, 0.6);
   }
 }
 
@@ -78,45 +63,30 @@ body {
 }
 
 ::selection {
-  background: var(--color-violet);
+  background: #ff2a55;
   color: #ffffff;
 }
 
-/* Translucent Section Backdrops allowing 3D World to shine through */
+/* 100% Razor-Sharp Background Visibility: ZERO BLUR OVER SCROLL TRIGGER FRAMES */
 section {
-  background: rgba(4, 3, 10, 0.65) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(4, 3, 10, 0.35) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 section[id], div[id], header[id], footer[id] {
   scroll-margin-top: 80px;
 }
 
-/* Futuristic Scanline Overlay */
-.scanlines {
-  background: linear-gradient(
-    rgba(18, 14, 28, 0) 50%, 
-    rgba(0, 0, 0, 0.3) 50%
-  ), linear-gradient(
-    90deg,
-    rgba(168, 85, 247, 0.02),
-    rgba(0, 240, 255, 0.02),
-    rgba(16, 255, 136, 0.02)
-  );
-  background-size: 100% 3px, 6px 100%;
-  pointer-events: none;
-}
-
-/* Cybernetic HUD Grid */
+/* Subtle Cybernetic Grid & Reticle Lines */
 .hud-grid {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(139, 92, 246, 0.12) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 240, 255, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
-/* 4-Corner Reticle Styling (from Moodboard Reference #2 & #3) */
+/* Corner Reticle Brackets */
 .hud-bracket {
   position: relative;
 }
@@ -125,125 +95,88 @@ section[id], div[id], header[id], footer[id] {
 .hud-bracket::after {
   content: '';
   position: absolute;
-  width: 8px;
-  height: 8px;
-  border-color: var(--color-cyan);
+  width: 6px;
+  height: 6px;
   pointer-events: none;
-  transition: all 0.3s ease;
 }
 
 .hud-bracket::before {
   top: 0;
   left: 0;
-  border-top: 2px solid;
-  border-left: 2px solid;
+  border-top: 2px solid rgba(255, 255, 255, 0.4);
+  border-left: 2px solid rgba(255, 255, 255, 0.4);
 }
 
 .hud-bracket::after {
   bottom: 0;
   right: 0;
-  border-bottom: 2px solid;
-  border-right: 2px solid;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  border-right: 2px solid rgba(255, 255, 255, 0.4);
 }
 
-.hud-bracket:hover::before {
-  border-color: var(--color-violet);
-  transform: scale(1.15);
+/* Glow Utilities */
+.glow-red {
+  box-shadow: 0 0 25px rgba(255, 42, 85, 0.5);
 }
 
-.hud-bracket:hover::after {
-  border-color: var(--color-magenta);
-  transform: scale(1.15);
+.glow-grey {
+  box-shadow: 0 0 20px rgba(148, 163, 184, 0.3);
 }
 
-/* Full 4-Corner Target Frame */
-.corner-frame {
-  position: relative;
+/* Hide scrollbar for touch carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.corner-frame::before {
-  content: '┌';
-  position: absolute;
-  top: 2px;
-  left: 4px;
-  font-family: monospace;
-  font-size: 14px;
-  line-height: 1;
-  color: var(--color-cyan);
-  pointer-events: none;
+/* Animations for God-Tier Mobile Navigation */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.corner-frame::after {
-  content: '┘';
-  position: absolute;
-  bottom: 2px;
-  right: 4px;
-  font-family: monospace;
-  font-size: 14px;
-  line-height: 1;
-  color: var(--color-emerald);
-  pointer-events: none;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Diagonal Hazard Stripes */
-.hazard-stripe {
-  background: repeating-linear-gradient(
-    -45deg,
-    rgba(244, 63, 94, 0.15),
-    rgba(244, 63, 94, 0.15) 6px,
-    transparent 6px,
-    transparent 12px
-  );
+@keyframes spinOnce {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(90deg);
+  }
 }
 
-/* Glitch Text Animations */
-@keyframes glitch-skew {
-  0% { transform: skew(0deg); }
-  20% { transform: skew(-2deg); }
-  40% { transform: skew(2deg); }
-  60% { transform: skew(-1deg); }
-  80% { transform: skew(1deg); }
-  100% { transform: skew(0deg); }
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
 }
 
-.glitch-hover:hover {
-  animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+  will-change: opacity;
 }
 
-/* Neon Glow Utilities */
-.glow-purple {
-  filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.5));
-}
-.glow-cyan {
-  filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.5));
-}
-.glow-toxic {
-  filter: drop-shadow(0 0 15px rgba(0, 255, 102, 0.5));
-}
-.glow-amber {
-  filter: drop-shadow(0 0 15px rgba(252, 238, 10, 0.5));
+.animate-spin-once {
+  animation: spinOnce 0.2s ease-out forwards;
 }
 
-/* Custom Cyber Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #040308;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #241a45;
-  border-radius: 0px;
-  border: 1px solid rgba(168, 85, 247, 0.4);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-violet);
-}
-
-/* Reduced Motion Compliance */
+/* Accessibility: Respect Prefers Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -254,3 +187,4 @@ section[id], div[id], header[id], footer[id] {
     scroll-behavior: auto !important;
   }
 }
+

@@ -45,8 +45,17 @@ export default function CyberTerminalModal({ isOpen, onClose, onWarpToSection }:
       case 'help':
         newHist.push({
           type: 'resp',
-          text: 'AVAILABLE DIRECTIVES:\n• tracks - Inspect the 03 Official Competition Vectors\n• prizes - Access the ₹1,50,000+ Prize Vault breakdown\n• timeline - View the 4-Stage Sprint Roadmap\n• rules - Review Security Protocols and Evaluation vectors\n• register - Launch the Unstop Registration Portal\n• status - Run live system diagnostic audit\n• clear - Flush terminal buffer',
+          text: 'AVAILABLE DIRECTIVES:\n• tracks - Inspect the 03 Official Competition Vectors\n• prizes - Access the ₹1,50,000+ Prize Vault breakdown\n• timeline - View the 4-Stage Sprint Roadmap\n• rules - Review Security Protocols and Evaluation vectors\n• register - Launch the Unstop Registration Portal\n• pass / badge - Open 2097 Squad ID Pass Generator\n• status - Run live system diagnostic audit\n• clear - Flush terminal buffer',
         });
+        break;
+
+      case 'pass':
+      case 'badge':
+        newHist.push({
+          type: 'resp',
+          text: 'GENERATING 2097 ARCHITECT DIGITAL ID PASS // Unsealing holographic badge matrix...',
+        });
+        sound.playAccessGranted();
         break;
 
       case 'tracks':
@@ -60,7 +69,7 @@ export default function CyberTerminalModal({ isOpen, onClose, onWarpToSection }:
       case 'prizes':
         newHist.push({
           type: 'resp',
-          text: `PRIZE POOL BREAKDOWN:\n• Total Vault: ${EVENT_CONFIG.prizes.totalPool}\n• 1st Place Champion: ₹60,000+\n• 2nd Place Runner-Up: ₹40,000+\n• 3rd Place Third Rank: ₹25,000+\n• Category Bounties: ₹25,000+\n\nWarpgate opening to Sector 06...`,
+          text: `PRIZE POOL BREAKDOWN:\n• Total Vault: ${EVENT_CONFIG.prizes.totalPool}\n• 1st Place Champion: ₹75,000+\n• 2nd Place Runner-Up: ₹45,000+\n• 3rd Place Third Rank: ₹30,000+\n• Category Bounties: ₹25,000+\n\nWarpgate opening to Sector 06...`,
         });
         onWarpToSection('prizes');
         break;
@@ -68,7 +77,7 @@ export default function CyberTerminalModal({ isOpen, onClose, onWarpToSection }:
       case 'timeline':
         newHist.push({
           type: 'resp',
-          text: 'MISSION SPRINT TIMELINE:\n• Round 01: Oct 01 - Oct 20 (Abstract)\n• Round 02: Oct 24 - 25 (36-Hour Continuous Build)\n• Round 03: Oct 26 (Jury Defense)\n• Finale: Oct 26 (Awards Gala)\n\nWarpgate opening to Sector 05...',
+          text: 'MISSION SPRINT TIMELINE:\n• Stage 01: Registration & Ideation (Oct 01 - 20)\n• Stage 02: Shortlisting & Prototyping (Oct 21)\n• Stage 03: 36-Hour Hackathon Finale (Oct 24 - 25)\n• Stage 04: Grand Evaluation & Vault Distribution (Oct 26)\n\nWarpgate opening to Sector 05...',
         });
         onWarpToSection('timeline');
         break;
@@ -90,11 +99,20 @@ export default function CyberTerminalModal({ isOpen, onClose, onWarpToSection }:
         onWarpToSection('register');
         break;
 
+      case 'matrix':
+      case 'genesis':
+        sound.playGenesisActivation();
+        newHist.push({
+          type: 'resp',
+          text: '>> HARMONIC OVERDRIVE DETECTED // 2097 GENESIS MATRIX AWAKENED!\n>> QUANTUM PARITY: 100% // ARCHITECT SOVEREIGNTY CONFIRMED.',
+        });
+        break;
+
       case 'status':
         sound.playGlitch();
         newHist.push({
           type: 'resp',
-          text: 'SYSTEM DIAGNOSTICS:\n[✓] 3D WebGL Matrix: OPERATIONAL\n[✓] Audio Synthesizer: ONLINE (4.8 THz)\n[✓] Security Firewall: ACTIVE\n[✓] Registration Window: CLOSING SOON\n[!] ANOMALY: GENESIS CORE HARMONIC STABLE',
+          text: 'SYSTEM DIAGNOSTICS:\n[✓] 240-Frame 60 FPS Canvas: OPERATIONAL\n[✓] Audio Synthesizer: ONLINE (4.8 THz)\n[✓] Security Protocols: ACTIVE\n[✓] Holo-Vision: READY\n[!] STATUS: GREEN ➔ RED SYSTEM SHIFT SYNCHRONIZED',
         });
         break;
 

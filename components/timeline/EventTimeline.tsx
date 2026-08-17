@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
-import { Calendar, Clock, CheckCircle2, Terminal, ArrowRight, Sparkles, FileCode, Award, Zap } from 'lucide-react';
+import { Calendar, Clock, Terminal, ArrowRight, Zap, CheckCircle2 } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import HoloCard from '@/components/ui/HoloCard';
 
@@ -15,23 +15,17 @@ export default function EventTimeline() {
     <section
       id="timeline"
       aria-label="Official Event Timeline and Roadmap"
-      className="relative pt-20 pb-36 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
+      className="relative pt-12 pb-16 sm:pt-20 sm:pb-24 px-3.5 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1e293b] hud-grid overflow-hidden"
     >
-      {/* Background Volumetric Ambient Radial */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-96 blur-[140px] opacity-15 pointer-events-none transition-colors duration-700"
-        style={{ backgroundColor: current.color }}
-      />
-
-      <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12 relative z-10">
+      <div className="max-w-7xl mx-auto space-y-6 sm:space-y-12 relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between pb-6 border-b border-[#312856] gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between pb-4 sm:pb-6 border-b border-slate-800 gap-3 sm:gap-4">
           <div>
-            <div className="font-mono text-xs text-cyan-400 tracking-widest uppercase mb-2 flex items-center gap-2">
-              <Terminal className="w-3.5 h-3.5" />
+            <div className="font-mono text-[11px] sm:text-xs text-red-400 tracking-widest uppercase mb-1.5 sm:mb-2 flex items-center gap-2 font-bold">
+              <Terminal className="w-3.5 h-3.5 text-red-500" />
               <span>MISSION ROADMAP // 4-STAGE SEQUENTIAL ARCHITECTURE</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-mono font-black tracking-tight text-white uppercase">
+            <h2 className="text-2xl sm:text-5xl md:text-6xl font-mono font-black tracking-tight text-white uppercase">
               EVENT TIMELINE
             </h2>
           </div>
@@ -42,47 +36,47 @@ export default function EventTimeline() {
 
         {/* Interactive Cybernetic Milestone Stepper & Progress Wire */}
         <div className="relative">
-          {/* Connecting Circuit Line */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-[#312856] -translate-y-1/2 z-0" />
+          {/* Connecting Circuit Line on Desktop */}
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-800 -translate-y-1/2 z-0" />
           <div
-            className="hidden lg:block absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 -translate-y-1/2 z-0 transition-all duration-500"
+            className="hidden lg:block absolute top-1/2 left-0 h-0.5 bg-red-500 -translate-y-1/2 z-0 transition-all duration-500 shadow-[0_0_10px_rgba(255,42,85,0.8)]"
             style={{ width: `${((activeStep + 1) / timeline.length) * 100}%` }}
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 relative z-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6 relative z-10">
             {timeline.map((item, idx) => {
               const isSelected = activeStep === idx;
 
               return (
                 <HoloCard
                   key={item.step}
-                  glowColor={item.color}
+                  glowColor="rgba(255, 42, 85, 0.45)"
                   onClick={() => {
                     sound.playClick();
                     setActiveStep(idx);
                   }}
-                  className={`p-4 sm:p-5 font-mono text-left border transition-all duration-300 backdrop-blur-md relative flex flex-col justify-between active:scale-95 cursor-pointer ${
+                  className={`p-3 sm:p-5 font-mono text-left border transition-all duration-300 relative flex flex-col justify-between active:scale-95 cursor-pointer rounded-xl ${
                     isSelected
-                      ? 'bg-[#0b081a] text-white shadow-2xl scale-[1.02]'
-                      : 'bg-[#060410]/90 text-slate-400 hover:text-slate-200 hover:border-purple-800'
+                      ? 'bg-[#0f0a14] border-red-500 text-white shadow-[0_0_20px_rgba(255,42,85,0.3)] scale-[1.02]'
+                      : 'bg-[#060410]/90 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-600'
                   }`}
                 >
                   <div>
-                    <div className="flex items-center justify-between text-[10px] pb-2 border-b border-[#241a45]">
-                      <span className="font-bold tracking-wider" style={{ color: item.color }}>
+                    <div className="flex items-center justify-between text-[9px] sm:text-[10px] pb-1.5 sm:pb-2 border-b border-slate-800">
+                      <span className="font-bold tracking-wider text-red-400">
                         STAGE // {item.step}
                       </span>
                       <span className="text-slate-400 font-bold">{item.date}</span>
                     </div>
 
-                    <h3 className="font-mono text-base sm:text-lg font-black text-white mt-3 uppercase tracking-tight">
+                    <h3 className="font-mono text-xs sm:text-lg font-black text-white mt-2 sm:mt-3 uppercase tracking-tight truncate">
                       {item.title}
                     </h3>
                   </div>
 
-                  <div className="mt-3 pt-2 border-t border-[#241a45] flex items-center justify-between text-[10px] text-slate-400">
+                  <div className="mt-2 sm:mt-3 pt-1.5 sm:pt-2 border-t border-slate-800 flex items-center justify-between text-[9px] sm:text-[10px] text-slate-400">
                     <span className="truncate">{item.tag}</span>
-                    <ArrowRight className="w-3.5 h-3.5 shrink-0 ml-1" style={{ color: item.color }} />
+                    <ArrowRight className="w-3 h-3 text-red-400 shrink-0 ml-1" />
                   </div>
                 </HoloCard>
               );
@@ -90,45 +84,45 @@ export default function EventTimeline() {
           </div>
         </div>
 
-        {/* Selected Stage Deep Showcase Dossier (HoloCard) */}
+        {/* Selected Stage Deep Showcase Dossier */}
         <HoloCard
-          glowColor={current.color}
-          className="bg-[#060410]/95 border p-6 sm:p-10 backdrop-blur-md shadow-2xl space-y-6"
+          glowColor="rgba(255, 42, 85, 0.4)"
+          className="bg-[#060410]/90 border border-slate-800 p-4 sm:p-10 shadow-2xl space-y-4 sm:space-y-6 rounded-2xl"
         >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#312856]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-slate-800">
             <div>
-              <div className="font-mono text-xs font-bold uppercase tracking-widest" style={{ color: current.color }}>
-                STAGE // {current.step} OPERATIONAL SPECIFICATION
+              <div className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-red-400">
+                CURRENTLY INSPECTING: STAGE {current.step}
               </div>
-              <h3 className="font-mono text-2xl sm:text-4xl font-black text-white mt-1 uppercase">
+              <h3 className="font-mono text-xl sm:text-3xl font-black text-white mt-1 uppercase tracking-tight">
                 {current.title}
               </h3>
             </div>
-            <div className="font-mono text-xs text-slate-300 bg-[#0b081a] px-3.5 py-1.5 border border-[#312856] flex items-center gap-2 self-start sm:self-auto">
-              <Clock className="w-3.5 h-3.5 text-cyan-400" />
-              <span>TIMEFRAME: {current.date}</span>
+
+            <div className="flex items-center gap-2 font-mono text-xs text-slate-300">
+              <Calendar className="w-4 h-4 text-red-400" />
+              <span>{current.date}</span>
             </div>
           </div>
 
-          <p className="font-mono text-xs sm:text-base text-slate-200 leading-relaxed max-w-4xl">
+          <p className="font-mono text-xs sm:text-sm text-slate-300 leading-relaxed">
             {current.description}
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-[#312856]">
-            <div className="bg-[#0b081a]/90 p-4 border border-[#241a45] space-y-1">
-              <div className="font-mono text-[10px] text-slate-400 uppercase font-bold flex items-center gap-1.5">
-                <FileCode className="w-3.5 h-3.5 text-cyan-400" />
-                <span>PRIMARY OBJECTIVE & DELIVERABLE</span>
-              </div>
-              <p className="font-mono text-xs text-slate-100 font-semibold">{current.deliverable}</p>
+          {/* Deliverables Checklist */}
+          <div className="space-y-2 pt-2 border-t border-slate-800">
+            <div className="font-mono text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">
+              KEY DELIVERABLES & OBJECTIVES:
             </div>
-
-            <div className="bg-[#0b081a]/90 p-4 border border-[#241a45] space-y-1">
-              <div className="font-mono text-[10px] text-slate-400 uppercase font-bold flex items-center gap-1.5">
-                <Award className="w-3.5 h-3.5 text-emerald-400" />
-                <span>COUNCIL PROTOCOL & SPRINT IMPACT</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-xs text-slate-300">
+              <div className="flex items-center gap-2 p-2 bg-[#090614] border border-slate-800 rounded-lg text-[11px]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-red-400 shrink-0" />
+                <span>Synchronous check-in & milestone verification</span>
               </div>
-              <p className="font-mono text-xs text-slate-100 font-semibold">{current.tag}</p>
+              <div className="flex items-center gap-2 p-2 bg-[#090614] border border-slate-800 rounded-lg text-[11px]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-red-400 shrink-0" />
+                <span>Mentor review & engineering telemetry feedback</span>
+              </div>
             </div>
           </div>
         </HoloCard>

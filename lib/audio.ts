@@ -235,6 +235,38 @@ class SoundEngine {
       });
     } catch {}
   }
+
+  // Cyber Synth Arpeggio Sequence (C minor pentatonic 2097 cyberpunk melody)
+  public playSynthArpeggio() {
+    this.hasInteracted = true;
+    this.triggerHaptic([20, 30, 40, 50, 60, 40, 30, 20]);
+    if (this.isMuted) return;
+    try {
+      if (!this.init() || !this.ctx || !this.masterGain) return;
+
+      const now = this.ctx.currentTime;
+      // C4, Eb4, F4, G4, Bb4, C5, Eb5, G5
+      const scale = [261.63, 311.13, 349.23, 392.00, 466.16, 523.25, 622.25, 783.99];
+
+      scale.forEach((freq, idx) => {
+        if (!this.ctx || !this.masterGain) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = idx % 2 === 0 ? 'sawtooth' : 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.09);
+
+        gain.gain.setValueAtTime(0.18, now + idx * 0.09);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.25);
+
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+
+        osc.start(now + idx * 0.09);
+        osc.stop(now + idx * 0.09 + 0.25);
+      });
+    } catch {}
+  }
 }
 
 export const sound = new SoundEngine();

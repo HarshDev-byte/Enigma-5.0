@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { EVENT_CONFIG } from '@/lib/eventConfig';
-import { ChevronDown, HelpCircle, Terminal, Search, Filter, CheckCircle2 } from 'lucide-react';
+import { ChevronDown, HelpCircle, Search, X } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import HoloCard from '@/components/ui/HoloCard';
 
@@ -31,16 +31,16 @@ export default function FaqSection() {
     <section
       id="faq"
       aria-label="Frequently Asked Questions"
-      className="relative pt-20 pb-36 px-4 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1a1630] hud-grid overflow-hidden"
+      className="relative py-14 sm:py-32 px-3.5 sm:px-8 lg:px-12 bg-[#040308] border-b border-[#1e293b] hud-grid overflow-hidden"
     >
-      <div className="max-w-5xl mx-auto space-y-10 sm:space-y-12 relative z-10">
+      <div className="max-w-5xl mx-auto space-y-6 sm:space-y-12 relative z-10">
         {/* Header */}
-        <div className="text-center space-y-3 sm:space-y-4">
-          <div className="inline-flex items-center gap-2 font-mono text-xs text-purple-300 bg-[#060410]/95 px-4 py-1.5 border border-purple-500/40 uppercase tracking-widest hud-bracket shadow-lg">
-            <HelpCircle className="w-3.5 h-3.5 text-purple-400" />
-            <span>KNOWLEDGE ARCHIVE // DIRECTIVES & PROTOCOLS</span>
+        <div className="text-center space-y-2 sm:space-y-4">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-xs text-red-400 bg-[#060410]/90 px-3 sm:px-4 py-1.5 border border-red-500/40 uppercase tracking-widest hud-bracket shadow-lg">
+            <HelpCircle className="w-3.5 h-3.5 text-red-500" />
+            <span>KNOWLEDGE ARCHIVE // DIRECTIVES</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-mono font-black tracking-tight text-white uppercase">
+          <h2 className="text-2xl sm:text-5xl md:text-6xl font-mono font-black tracking-tight text-white uppercase">
             SYSTEM FAQ
           </h2>
           <p className="font-mono text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
@@ -50,21 +50,22 @@ export default function FaqSection() {
 
         {/* Filter Toolbar: Categories & Search Input */}
         <div className="space-y-3 sm:space-y-4">
-          {/* Category Tabs (Horizontal Touch Scroll on Mobile) */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 font-mono text-xs no-scrollbar">
+          {/* Category Tabs */}
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 font-mono text-xs no-scrollbar">
             {categories.map((cat) => {
               const isSelected = activeCategory === cat;
               return (
                 <button
                   key={cat}
+                  type="button"
                   onClick={() => {
                     sound.playClick();
                     setActiveCategory(cat);
                   }}
-                  className={`px-3 sm:px-4 py-2 border uppercase tracking-wider transition-all whitespace-nowrap active:scale-95 cursor-pointer ${
+                  className={`px-3 sm:px-4 py-2 border uppercase tracking-wider transition-all whitespace-nowrap active:scale-95 cursor-pointer rounded-xl text-[10px] sm:text-xs font-bold ${
                     isSelected
-                      ? 'bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 text-black font-black border-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.4)]'
-                      : 'bg-[#060410]/90 border-[#241a45] text-slate-400 hover:text-slate-200 hover:border-purple-800'
+                      ? 'bg-red-600 text-white border-red-500 shadow-[0_0_12px_rgba(255,42,85,0.4)]'
+                      : 'bg-[#060410]/90 border-slate-800 text-slate-400 hover:text-slate-200'
                   }`}
                 >
                   {cat}
@@ -75,19 +76,28 @@ export default function FaqSection() {
 
           {/* Search Input Field */}
           <div className="relative">
-            <Search className="w-4 h-4 text-purple-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="w-4 h-4 text-red-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               placeholder="SEARCH PROTOCOLS OR DIRECTIVES..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 bg-[#060410]/95 border border-[#312856] font-mono text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 tracking-wider shadow-inner"
+              className="w-full pl-10 pr-10 py-2.5 sm:py-3 bg-[#060410]/90 border border-slate-800 font-mono text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-red-400 tracking-wider shadow-inner rounded-xl"
             />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
 
-        {/* FAQ Accordion List (HoloCards) */}
-        <div className="space-y-3">
+        {/* FAQ Accordion List */}
+        <div className="space-y-2.5 sm:space-y-3">
           {filteredFaqs.length > 0 ? (
             filteredFaqs.map((faq, index) => {
               const isOpen = openIndex === index;
@@ -95,37 +105,40 @@ export default function FaqSection() {
               return (
                 <HoloCard
                   key={index}
-                  glowColor={isOpen ? 'rgba(168, 85, 247, 0.5)' : 'rgba(0, 240, 255, 0.25)'}
-                  className={`border transition-all duration-200 shadow-lg overflow-hidden ${
-                    isOpen ? 'border-purple-400 bg-[#0b081a]' : 'border-[#241a45] bg-[#060410]/95 hover:border-purple-800'
+                  glowColor={isOpen ? 'rgba(255, 42, 85, 0.45)' : 'rgba(255, 255, 255, 0.15)'}
+                  className={`border transition-all duration-200 shadow-lg overflow-hidden rounded-xl ${
+                    isOpen ? 'border-red-500 bg-[#0f0a14]' : 'border-slate-800 bg-[#060410]/90 hover:border-slate-600'
                   }`}
                 >
                   <button
+                    type="button"
                     onClick={() => toggleFaq(index)}
-                    aria-expanded={isOpen}
-                    className="w-full p-4 sm:p-6 text-left flex items-center justify-between gap-4 font-mono focus:outline-none cursor-pointer"
+                    className="w-full p-3.5 sm:p-5 flex items-center justify-between text-left gap-3 focus:outline-none cursor-pointer"
                   >
-                    <div className="flex items-center gap-3">
-                      <span className={`text-xs font-bold ${isOpen ? 'text-purple-400' : 'text-slate-500'}`}>
-                        // 0{index + 1}
+                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                      <span className="font-mono text-[10px] sm:text-xs font-extrabold text-red-400 shrink-0">
+                        Q.{index < 9 ? `0${index + 1}` : index + 1}
                       </span>
-                      <h3 className="text-sm sm:text-base font-bold text-white uppercase tracking-tight">
+                      <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase tracking-tight truncate">
                         {faq.q}
-                      </h3>
+                      </span>
                     </div>
-                    <ChevronDown
-                      className={`w-5 h-5 shrink-0 transition-transform duration-300 ${
-                        isOpen ? 'rotate-180 text-purple-400' : 'text-slate-500'
+
+                    <div
+                      className={`p-1 rounded bg-black/40 border border-slate-800 text-red-400 transition-transform duration-300 shrink-0 ${
+                        isOpen ? 'rotate-180 bg-red-950/60 border-red-500' : ''
                       }`}
-                    />
+                    >
+                      <ChevronDown className="w-3.5 h-3.5" />
+                    </div>
                   </button>
 
                   {isOpen && (
-                    <div className="px-4 sm:px-6 pb-5 sm:pb-6 pt-2 font-mono text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-[#241a45]/80 animate-in fade-in duration-200">
+                    <div className="px-3.5 sm:px-5 pb-3.5 sm:pb-5 pt-1 text-xs sm:text-sm font-mono text-slate-300 border-t border-slate-800/80 leading-relaxed animate-fade-in space-y-2">
                       <p>{faq.a}</p>
-                      <div className="mt-3 pt-3 border-t border-[#241a45]/50 flex items-center gap-2 text-[10px] text-purple-400">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-purple-400" />
-                        <span className="uppercase">CATEGORY: {faq.category}</span>
+                      <div className="pt-2 text-[9px] text-slate-500 font-mono flex items-center justify-between">
+                        <span>CATEGORY: {faq.category}</span>
+                        <span className="text-red-400 font-bold">OFFICIAL DIRECTIVE</span>
                       </div>
                     </div>
                   )}
@@ -133,8 +146,8 @@ export default function FaqSection() {
               );
             })
           ) : (
-            <div className="p-8 text-center font-mono text-xs text-slate-500 border border-[#241a45] bg-[#060410]">
-              NO MATCHING DIRECTIVES FOUND IN ARCHIVE.
+            <div className="p-8 text-center bg-[#060410]/90 border border-slate-800 font-mono text-xs text-slate-400 rounded-xl">
+              NO DIRECTIVES FOUND MATCHING &quot;{searchQuery}&quot;
             </div>
           )}
         </div>
